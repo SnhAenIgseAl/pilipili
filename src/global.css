@@ -1,0 +1,39 @@
+.el-tooltip__trigger {
+    z-index: 9;
+}
+
+.el-textarea__inner {
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+}
+
+.el-carousel__arrow {
+    background-color: #333 !important;
+}
+
+.el-drawer__body {
+    padding: unset !important;
+}
+
+.el-drawer__footer {
+    padding: unset !important;
+}
+
+.el-tabs__header {
+    margin: 0 !important;
+}
+
+.el-tabs__item {
+    padding: 0 16px !important;
+    height: 60px !important;
+}
+
+.el-dialog {
+    position: absolute !important;
+	z-index: 9999 !important;
+	margin: 0 !important;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	border-radius: 10px !important;
+}

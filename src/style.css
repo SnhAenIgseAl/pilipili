@@ -1,0 +1,173 @@
+:root {
+	--cl-primary: #fb7299;
+	--cl-pink: #fb7299;
+	--cl-red: #f00;
+	--cl-yellow: #FEC107;
+	--cl-green: #8BC24B;
+	--cl-blue: #2095F4;
+	--cl-purple: #9B27B0;
+	--cl-black: #141414;
+	--cl-white: #fff;
+	--cl-lucency: rgba(0, 0, 0, 0);
+	--cl-white-75: rgba(250, 250, 250, .75);
+	--cl-white-50: rgba(250, 250, 250, .5);
+	--cl-white-25: rgba(250, 250, 250, .25);
+	--cl-white-10: rgba(250, 250, 250, .1);
+	--cl-black-75: rgba(0, 0, 0, .75);
+	--cl-black-50: rgba(0, 0, 0, .5);
+	--cl-black-25: rgba(0, 0, 0, .25);
+	--cl-black-10: rgba(0, 0, 0, .1);
+}
+
+html.pink {
+	--cl-primary: var(--cl-pink);
+	--el-color-primary: var(--cl-pink) !important;
+}
+html.red {
+	--cl-primary: var(--cl-red);
+	--el-color-primary: var(--cl-red) !important;
+}
+html.yellow {
+	--cl-primary: var(--cl-yellow);
+	--el-color-primary: var(--cl-yellow) !important;
+}
+html.green {
+	--cl-primary: var(--cl-green);
+	--el-color-primary: var(--cl-green) !important;
+}
+html.blue {
+	--cl-primary: var(--cl-blue);
+	--el-color-primary: var(--cl-blue) !important;
+}
+html.purple {
+	--cl-primary: var(--cl-purple);
+	--el-color-primary: var(--cl-purple) !important;
+}
+html.black {
+	--cl-primary: var(--cl-black);
+	--el-color-primary: var(--cl-black) !important;
+}
+.drak {
+	color: #eee !important;
+	background: #333 !important;
+}
+.light {
+	/* color: #eee; */
+	background: #fff;
+}
+
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+
+
+body {
+	font-family: PingFang SC, HarmonyOS_Medium, Helvetica Neue, Microsoft YaHei, sans-serif;
+	overflow-y: scroll;
+}
+
+a {
+	text-decoration: none;
+	color: var(--cl-black);
+
+	&:hover {
+		text-decoration: none;
+		color: var(--cl-primary);
+	}
+
+	&:active {
+		text-decoration: none;
+		color: var(--cl-black);
+	}
+
+	&:visited {
+		text-decoration: none;
+		color: var(--cl-black);
+	}
+}
+
+
+
+@font-face {
+	font-family: 'iconfont';
+	src: url('./assets/iconfont/iconfont.ttf') format('truetype'),
+		url('./assets/iconfont/iconfont.woff') format('woff'),
+		url('./assets/iconfont/iconfont.woff2') format('woff2');
+}
+
+
+
+i {
+	font-family: 'iconfont' !important;
+	font-style: normal;
+	margin-right: 8px;
+}
+
+
+
+.main-box {
+	max-width: 720px;
+	min-width: 600px;
+	/* background-color: #d3e9e8; */
+	margin: 60px auto;
+	padding: 10px;
+}
+
+.subtitle {
+	font-size: 16px !important;
+	line-height: 30px;
+	font-weight: 500;
+	color: var(--cl-black) !important;
+}
+
+.video-list {
+	display: flex;
+    flex-flow: row wrap;
+	width: 100%;
+	height: auto;
+}
+
+.video-item {
+	position: relative;
+    flex: 1;
+	max-width: 640px;
+    min-width: 300px;
+	height: 180px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+	transition: all 0.3s;
+
+	&:hover{
+		cursor: pointer;
+	}
+}
+
+.video-info {
+	position: absolute;
+	color: #fff;
+    width: 100%;
+	padding: 1rem;
+	bottom: 0;
+	background: linear-gradient(to top, var(--cl-black), var(--cl-lucency));
+
+	.video-title {
+        width: 100%;
+		margin-bottom: 0.5rem;
+		line-height: 1.5rem;
+	}
+
+	.video-stat {
+		font-size: 14px;
+		color: var(--cl-white-75);
+
+		span {
+			margin-right: 1rem;
+		}
+	}
+}
+
