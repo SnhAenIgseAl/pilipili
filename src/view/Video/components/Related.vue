@@ -11,17 +11,19 @@
         <el-scrollbar>
 
             <div v-for="(item, index) in relatedList" :key="index">
-            <RouterLink :to="`/video/${item.bvid}`"><div class="related-item" :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.pic}@600w.webp)`}">
-
-                <div class="related-info">
-                    <div class="related-title">
-                        {{ item.title }}
+                <div class="related-item" 
+                    :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.pic}@600w.webp)`}"
+                    @click="goToVideo(item.bvid)">
+                    <div class="related-info">
+                        <div class="related-title">
+                            {{ item.title }}
+                        </div>
+                        <span><i>&#xe81a;</i>{{ item.stat.view }}</span>
+                        <span><i>&#xe81a;</i>{{ item.stat.danmaku }}</span>
+                        <span><i>&#xe644;</i>{{ item.stat.like }}</span>
                     </div>
-                    <span><i>&#xe81a;</i>{{ item.stat.view }}</span>
-                    <span><i>&#xe81a;</i>{{ item.stat.danmaku }}</span>
-                    <span><i>&#xe644;</i>{{ item.stat.like }}</span>
                 </div>
-            </div></RouterLink></div>
+            </div>
 
         </el-scrollbar>
 
@@ -29,9 +31,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import type BiliResType from '../../../type/BiliResType'
+import { fetchData } from '../../../utils/fetchData';
 
 const props = defineProps({
     bvid: String
@@ -39,26 +42,29 @@ const props = defineProps({
 
 
 
-const relatedVisible = ref(false)
+const relatedVisible: Ref<boolean> = ref(false)
+const relatedList: Ref<any[]> = ref([])
 
-const relatedList: any = ref(null)
+
 
 // 获取视频相关推荐
 const getRelatedList = async () => {
-    try {
-        let res = await fetch(`/api/video/related?bvid=${props.bvid}`)
-        let data: BiliResType = await res.json()
-
-        console.log(data)
-
+    await fetchData(`/api/video/related?bvid=${props.bvid}`, {
+    }, (data: BiliResType) => {
         if (data.code === 0) {
             relatedList.value = data.data
         } else {
             ElMessage({message: data.message, type: 'error'})
         }
-    } catch (err) {
-        ElMessage({message: '网络未连接', type: 'error'})
-    }
+    })  
+}
+
+
+
+// 视频跳转
+const goToVideo = (bvid: string) => {
+    window.location.href = `/video/${bvid}`
+    // window.location.reload()
 }
 
 </script>
@@ -74,6 +80,10 @@ const getRelatedList = async () => {
     background-size: cover;
     background-position: center;
     overflow: hidden;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .related-info {

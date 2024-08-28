@@ -18,7 +18,7 @@
     <el-dialog v-if="!hasCoined" 
         v-model="coinDialogVisible" 
         title="投币数量" 
-        :size="100">
+        :width="600">
         <el-radio-group v-model="coinNum" size="large" class="coin-group">
             <el-radio label="1" value="1" border class="coin-radio" />
             <el-radio label="2" value="2" border class="coin-radio" />

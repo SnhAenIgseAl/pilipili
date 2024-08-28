@@ -1,4 +1,4 @@
-import { createWebHistory, createWebHashHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 
 const routes = [
 	{
@@ -82,8 +82,8 @@ const routes = [
 const router = createRouter({
 	history: createWebHistory(),
 	routes,
-	scrollBehavior(to, from, savedPosition) {
-		// 始终滚动到顶部
+	scrollBehavior() {
+		// 切换页面时回到顶部
 		return { top: 0 }
 	},
 })

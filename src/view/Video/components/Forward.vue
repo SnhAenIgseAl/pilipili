@@ -1,14 +1,32 @@
 <template>
 
     <div style="width: 120px;">
-        <el-button text size="large" @click="drawer = true">
-            <i>&#xe6eb;</i>{{ shareCount }}
-        </el-button>
+
+        <el-popover placement="top"
+            :width="90"
+            trigger="click">
+
+            <template #reference>
+                <el-button text size="large">
+                    <i>&#xe6eb;</i>{{ shareCount }}
+                </el-button>
+            </template>
+
+            <template #default>
+                <el-button class="forward-item" text>
+                    <i>&#xe6bf;</i>复制视频链接
+                </el-button>
+                <Forward :dynId="dynId" txt="分享到动态" />
+                <el-button class="forward-item" text @click="drawer = true">
+                    <i>&#xe69b;</i>生成海报
+                </el-button>
+            </template>
+
+        </el-popover>
     </div>
 
-	<el-dialog 
-        v-model="drawer" 
-        title="分享视频" 
+	<el-dialog v-model="drawer" 
+        title="视频海报" 
         width="752"
 		@opened="shareVideoImg">
 
@@ -19,7 +37,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
+import Forward from '../../../components/Card/components/Forward.vue';
 
 const props = defineProps({
     videoInfo: Object,
@@ -27,7 +46,7 @@ const props = defineProps({
 })
 
 const shareCount = ref(props.num)
-
+const dynId: Ref<string> = ref(props.videoInfo?.aid.toString())
 
 
 // 分享歌单海报
@@ -44,13 +63,12 @@ const shareVideoImg = () => {
 
 		context.rect(0, 0, shareRef.width, shareRef.height)
 		context.fill()
-
         
-        const drawVideoPic = new Promise<void>((resolve) => {
+        new Promise<void>((resolve) => {
 
             // 视频封面，等比放大高度至900像素，居中
             var videoImg = new Image()
-            videoImg.src = `https://images.weserv.nl/?url=${videoInfo.pic}@1440w.webp`
+            videoImg.src = `https://images.weserv.nl/?url=${videoInfo.pic}@720w.webp`
             videoImg.onload = () => {
 
                 let scale = 900 / videoImg.naturalHeight
@@ -67,7 +85,7 @@ const shareVideoImg = () => {
 
             return new Promise<void>((resolve) => {
                 var textShadow = new Image()
-                textShadow.src = `https://images.weserv.nl/?url=https://i.ibb.co/FJjZd0d/share-album-shadow.png`
+                textShadow.src = `https://i.ibb.co/FJjZd0d/share-album-shadow.png@360w.webp`
                 textShadow.onload = () => {
                     context.drawImage(textShadow, 0, 540, 1600, 360)
 
@@ -84,7 +102,7 @@ const shareVideoImg = () => {
             return new Promise<void>((resolve) => {
                 // 二维码
                 var qrImg = new Image()
-                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=210x210&qzone=2&data=https://www.bilibili.com/video/${videoInfo.bvid}`
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=210x210&qzone=2&data=https://www.bilibili.com/video/${videoInfo.bvid}@210w.webp`
                 qrImg.onload = () => {
                     context.drawImage(qrImg, 1, 1, 208, 208, 60, 470, 210, 210)
 
@@ -92,10 +110,6 @@ const shareVideoImg = () => {
                 }
             })
         })
-
-		// 直接一起画
-		const draw = await Promise.all([drawVideoPic])
-		draw()
     }
 }
 
@@ -109,4 +123,8 @@ const shareVideoImg = () => {
 	background: #333 !important;
 }
 
+.forward-item {
+    width: 100%;
+    /* text-align: left; */
+}
 </style>

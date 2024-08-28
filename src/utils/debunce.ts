@@ -1,5 +1,5 @@
 export const debunce = function (callback: Function, wait: number) {
-    let timeout: number | null = null
+    let timeout: NodeJS.Timeout
 
     return function () {
         if (timeout) {

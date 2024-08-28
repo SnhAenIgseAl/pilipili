@@ -5,19 +5,21 @@
 
         <div class="video-action">
             <!-- 视频推荐 -->
-            <Related :bvid="bv" />
+            <Related :bvid="videoInfo.bvid" />
 
             <!-- 视频简介 -->
-            <Desc :text="videoInfo.desc" />
+            <Desc :videoInfo="videoInfo" />
 
             <!-- 视频操作 -->
             <Like :aid="videoInfo.aid" :num="videoInfo.stat.like" />
             <TouBi :aid="videoInfo.aid" :num="videoInfo.stat.coin" />
+            <Collect :rid="videoInfo.aid" :num="videoInfo.stat.favorite"/>
             <Forward :videoInfo="videoInfo" :num="videoInfo.stat.share" />
 
             <!-- 视频评论 -->
-            <Comments :type="1" :oid="bv" :comments="videoInfo.stat.reply" />
+            <Comments :type="1" :oid="`${videoInfo.aid}`" :comments="videoInfo.stat.reply" />
 
+            <!-- up信息 -->
             <div class="video-up">
                 <RouterLink :to="`/space/${videoInfo.owner.mid}/home`" class="up-link">
                     <img :src="`https://images.weserv.nl/?url=${videoInfo.owner.face}@80w.webp`" class="up-face" />
@@ -41,6 +43,7 @@ import Related from './components/Related.vue'
 import Desc from './components/Desc.vue'
 import Like from './components/Like.vue'
 import TouBi from './components/TouBi.vue'
+import Collect from './components/Collect.vue'
 import Forward from './components/Forward.vue'
 import Comments from '../../components/Comments.vue'
 import VideoControl from './components/VideoControl.vue'
@@ -57,18 +60,19 @@ const cid = ref(null)
 const playerInfo: any = ref(null)
 
 // 获取视频信息及播放地址
-const getVideoInfo = async (bvid: String) => {
+const getVideoInfo = async (bvid: string | string[]) => {
     try {
         let res = await fetch(`/api/video?bvid=${bvid}`)
         let data: BiliResType = await res.json()
 
         if (data.code === 0) {
-            console.log(data.data)
+            // console.log(data.data)
 
             // 转换时间戳
-            data.data.pubdate = parseTime(data.data.pubdate)
+            data.data.View.pubdate = parseTime(data.data.View.pubdate)
 
             videoInfo.value = data.data.View
+            console.log(videoInfo.value)
             upInfo.value = data.data.Card
             attr.value = data.data.Card.following ? 2 : 0
             bv.value = data.data.View.bvid
@@ -85,7 +89,7 @@ const getVideoInfo = async (bvid: String) => {
         let data: BiliResType = await res.json()
 
         if (data.code === 0) {
-            console.log(data)
+            // console.log(data)
             playerInfo.value = data.data
         } else if (data.code === 87007) {
             ElMessage.warning({ message: 'OnlyFans' })
@@ -99,10 +103,9 @@ const getVideoInfo = async (bvid: String) => {
 
 
 
-watch(() => route.params.bvid, async (newValue: String, oldValue: String) => {
-    if (newValue !== oldValue) {
-        await getVideoInfo(newValue)
-    }
+watch(() => route.params.bvid, async (newValue: string | string[]) => {
+    console.log(route.params.bvid)
+    await getVideoInfo(newValue)
 }, {
     immediate: true
 })
@@ -112,6 +115,7 @@ watch(() => route.params.bvid, async (newValue: String, oldValue: String) => {
 <style scoped>
 html,
 body {
+    overflow-x: hidden;
     height: 100%;
 }
 

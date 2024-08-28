@@ -36,8 +36,23 @@
                 <el-radio-group v-model="USER_RECOMMEND_VIDEO_PLATFORM" 
                     size="large"
                     @change="changeVideoPlatform">
-                    <el-radio-button label="电脑端" value="PC" />
-                    <el-radio-button label="移动端" value="APP" />
+
+                    <el-radio-button value="PC">
+                        <template #default>
+                            <div class="video-platform-radio">
+                                <i>&#xe742;</i>电脑端
+                            </div>
+                        </template>
+                    </el-radio-button>
+
+                    <el-radio-button label="移动端" value="APP">
+                        <template #default>
+                            <div class="video-platform-radio">
+                                <i>&#xe704;</i>移动端
+                            </div>
+                        </template>
+                    </el-radio-button>
+
                 </el-radio-group>
             </div>
         </div>
@@ -81,6 +96,7 @@
         <div class="setting-item">
             <div class="setting-item_title">
                 表情、言论过滤
+                <el-text type="info">（只屏蔽关键词，剩余的正常显示）</el-text>
             </div>
 
             <div class="setting-item_body">
@@ -106,6 +122,40 @@
                 </el-button>
             </div>
         </div>
+
+
+
+        <div class="setting-item">
+            <div class="setting-item_title">
+                弹幕屏蔽
+                <el-text type="info">（含有关键词的弹幕不再显示）</el-text>
+            </div>
+
+            <div class="setting-item_body">
+                <el-tag v-for="tag in USER_FILTER_DANMAKU" :key="tag" 
+                    closable 
+                    color="#FFF"
+                    size="large"
+                    type="info"
+                    @close="danmakuRemove(tag)"
+                >
+                    {{ tag }}
+                </el-tag>
+                <el-input
+                    v-if="danmakuInputVisible"
+                    ref="danmakuInputRef"
+                    v-model="danmakuInput"
+                    size="large"
+                    @keyup.enter="danmakuInputConfirm"
+                    @blur="danmakuInputConfirm"
+                />
+                <el-button v-else text @click="showDanmakuInput">
+                    + 弹幕关键词
+                </el-button>
+            </div>
+        </div>
+
+
 
         <div class="setting-item">
             <div class="setting-item_title">
@@ -138,7 +188,8 @@ const {
     USER_RECOMMEND_VIDEO_NUM,
     USER_RECOMMEND_VIDEO_PLATFORM,
     USER_RECOMMEND_VIDEO_FRESH,
-    USER_FILTER_EMOJI
+    USER_FILTER_EMOJI,
+    USER_FILTER_DANMAKU
 } = toRefs(useSettingStore())
 
 
@@ -183,7 +234,7 @@ const emojiInputVisible = ref(false)
 const emojiInput = ref('')
 const emojiInputRef = ref<InstanceType<typeof ElInput>>()
 
-const emojiRemove = (tag: string) => {
+const emojiRemove = (tag: String) => {
     USER_FILTER_EMOJI.value.splice(USER_FILTER_EMOJI.value.indexOf(tag), 1)
 }
 
@@ -197,11 +248,41 @@ const showEmojiInput = () => {
 const emojiInputConfirm = () => {
     if (emojiInput.value) {
         USER_FILTER_EMOJI.value.push(emojiInput.value)
+        USER_FILTER_EMOJI.value = Array.from(new Set(USER_FILTER_EMOJI.value))
         console.log(USER_FILTER_EMOJI.value)
     }
 
     emojiInputVisible.value = false
     emojiInput.value = ''
+}
+
+
+
+// 设置弹幕过滤
+const danmakuInputVisible = ref(false)
+const danmakuInput = ref('')
+const danmakuInputRef = ref<InstanceType<typeof ElInput>>()
+
+const danmakuRemove = (tag: String) => {
+    USER_FILTER_DANMAKU.value.splice(USER_FILTER_DANMAKU.value.indexOf(tag), 1)
+}
+
+const showDanmakuInput = () => {
+    danmakuInputVisible.value = true
+    nextTick(() => {
+        danmakuInputRef.value!.input!.focus()
+    })
+}
+
+const danmakuInputConfirm = () => {
+    if (danmakuInput.value) {
+        USER_FILTER_DANMAKU.value.push(danmakuInput.value)
+        USER_FILTER_DANMAKU.value = Array.from(new Set(USER_FILTER_DANMAKU.value))
+        console.log(USER_FILTER_DANMAKU.value)
+    }
+
+    danmakuInputVisible.value = false
+    danmakuInput.value = ''
 }
 
 </script>
@@ -255,5 +336,11 @@ const emojiInputConfirm = () => {
     &:hover {
         cursor: pointer;
     }
+}
+
+.video-platform-radio {
+    width: 234px;
+    height: 30px;
+    align-content: center;
 }
 </style>

@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs, onMounted } from 'vue'
+import { ref, Ref, toRefs, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import AddDynamic from './components/AddDynamic.vue';
 import Card from '../../components/Card/Card.vue'
@@ -38,10 +38,11 @@ const {
 
 
 
-const lastId = ref(String)
-const dynamicList: any = ref([])
-const getDynamic = async (offset: any)  => {
-	await fetchData(`/api/dynamic?offset=${offset}`, {}, (data: BiliResType) => {
+const lastId: Ref<''> = ref('')
+const dynamicList: Ref<Array<any>> = ref([])
+const getDynamic = async (offset: string)  => {
+	await fetchData(`/api/dynamic?offset=${offset}`, {
+	}, (data: BiliResType) => {
 		if (data.code === 0) {
 
 			// 记录更新动态基线及最后一条动态的id
@@ -63,9 +64,10 @@ getDynamic('')
 
 
 // 判断是否有新动态
-const hasUpdate = ref(0)
+const hasUpdate: Ref<number> = ref(0)
 const getUpdate = async ()  => {
-	await fetchData(`/api/dynamic/update?baseline=${baseline.value}`, {}, (data: BiliResType) => {
+	await fetchData(`/api/dynamic/update?baseline=${baseline.value}`, {
+	}, (data: BiliResType) => {
 		if (data.code === 0) {
 			hasUpdate.value = data.data.update_num
 		} else {
@@ -79,7 +81,7 @@ setInterval(getUpdate, 60000)
 
 // 加载新动态
 const getNewDynamic = () => {
-	getDynamic('')
+	window.location.reload()
 }
 
 

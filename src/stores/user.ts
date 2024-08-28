@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, Ref } from 'vue'
 import { defineStore } from 'pinia'
 
 
@@ -6,13 +6,13 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('user', () => {
 
     // 是否登录
-    const isLogin = ref(Boolean)
+    const isLogin: Ref<boolean> = ref(false)
 
     // 用户信息
-    const info = ref(Object)
+    const info: Ref<any> = ref({})
 
     // 动态更新基线id
-    const baseline = ref(String)
+    const baseline: Ref<string> = ref('')
 
     // 获取用户状态
     function getInfo() {

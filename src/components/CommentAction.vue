@@ -1,66 +1,75 @@
 <template>
 
-    <!-- 点赞 -->
-    <el-button text size="small" @click="action(1)">
-        <el-text type="info"><i>&#xe644;</i>{{ props.like }}</el-text>
+    <el-button v-if="!liked" text 
+        size="small" 
+        @click="action(1)">
+        <i>&#xe644;</i>{{ likeNum }}
     </el-button>
-
-    <!-- 点踩 -->
-    <el-button text size="small" @click="action(0)">
-        <el-text type="info"><i>&#xe847;</i></el-text>
+    <el-button v-else text 
+        size="small" 
+        style="color: var(--cl-primary);" 
+        @click="action(0)">
+        <i>&#xe6e3;</i>{{ likeNum }}
     </el-button>
 
 </template>
 
 <script setup lang="ts">
-// import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 import { ElMessage } from 'element-plus'
 import type BiliResType from '../type/BiliResType';
+import { fetchData } from '../utils/fetchData';
 
 const props = defineProps({
     type: Number,   // 评论区类型
     oid: String,    // 评论区id
     rpid: Number,   // 当前评论id
-    like: Number    // 点赞数
+    like: Number,   // 点赞数
+    liked: Number   // 是否点赞
 })
 
 
-// const likeNum: any = ref(props.like)
+const likeNum: Ref<number> = ref(props.like!)
+const liked: Ref<number> = ref(props.liked!)    // 1为点赞过，0为未点赞
 
 
-// 点赞 | 点踩评论或动态
+    
+/**
+ * 点赞 | 取消点赞评论
+ * 实测点踩评论没有任何作用纯哄人用的，故舍弃
+ * 
+ * @param action 1为点赞，0为取消点赞
+ */
 const action = async (action: Number) => {
     console.log(props.type, props.oid, props.rpid)
 
-    try {
-        let res = await fetch(`/api/reply/action`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                type: props.type,
-                oid: props.oid,
-                rpid: props.rpid || null,
-                action: action
-            })
+    await fetchData(`/api/reply/action`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            type: props.type,
+            oid: props.oid,
+            rpid: props.rpid || null,
+            action: action
         })
-        let data: BiliResType = await res.json()
-
+    }, (data: BiliResType) => {
         if (data.code === 0 && action === 1) {
             ElMessage({ message: '点赞成功', type: 'success' })
-            // likeNum.value ++
+            likeNum.value++
+            liked.value = 1
         } else if (data.code === 0 && action === 0) {
             ElMessage({ message: '点踩成功', type: 'success' })
-            // likeNum.value --
+            likeNum.value--
+            liked.value = 0
         } else {
             console.log(data.message)
             ElMessage({ message: data.message, type: 'error' })
         }
-    } catch (err) {
-        ElMessage({ message: '网络未连接', type: 'error' })
-    }
+    })
 }
+
 
 </script>
 

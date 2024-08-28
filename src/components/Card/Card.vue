@@ -5,7 +5,7 @@
         <!-- 头像及头像框 -->
         <div class="avater-img">
             <img :src="`https://images.weserv.nl/?url=${props.author!.face}@100w.webp` " class="avater-face"/>
-            <img v-if="props.author!.pendant.image" class="pendant" :src="`https://images.weserv.nl/?url=${props.author!.pendant.image}@100w.webp`" />
+            <img v-if="props.author!.pendant?.image" class="pendant" :src="`https://images.weserv.nl/?url=${props.author!.pendant.image}@100w.webp`" />
         </div>
 
 
@@ -20,7 +20,7 @@
 
             <!-- 用户名和更新时间 -->
             <RouterLink :to="`/space/${props.author!.mid}/home`"><div class="pub-name">
-                <span v-if="props.author!.vip.status" style="color: var(--cl-primary);">{{ props.author!.name }}</span>
+                <span v-if="props.author!.vip?.status" style="color: var(--cl-primary);">{{ props.author!.name }}</span>
                 <span v-else>{{ props.author!.name }}</span>
             </div></RouterLink>
             <el-text type="info">
@@ -52,7 +52,7 @@
 
 
 
-            <!-- 转发动态 -->
+            <!-- 转发动态的内容 -->
             <div v-if="props.orig" class="major-forward">
                 
                 <RouterLink :to="`/space/${props.orig.modules.module_author.mid}`">
@@ -77,7 +77,10 @@
 
             <!-- 操作 -->
             <div class="card-state">
-                <el-button text><i>&#xe6eb;</i>{{ props.stat!.forward.count }}</el-button>
+                <Forward 
+                    :dynId="props.id_str"
+                    :num="props.stat!.forward.count"
+                />
                 
                 <Comments 
                     :type="props.basic!.comment_type"
@@ -89,6 +92,9 @@
                     :like="props.stat!.like"
                 />
             </div>
+
+            <!-- 更多操作 -->
+            <More :more="props.more"/>
             
         </div>
     </div>
@@ -102,6 +108,8 @@ import Video from './components/Video.vue'
 import Image from './components/Image.vue'
 import Like from './components/Like.vue'
 import Live from './components/Live.vue'
+import Forward from './components/Forward.vue'
+import More from './components/More.vue'
 
 const props = defineProps({
     id_str: String,

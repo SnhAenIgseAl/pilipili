@@ -1,5 +1,26 @@
-# Vue 3 + TypeScript + Vite
+# Vue 3 + Vue Router + TypeScript + Vite + Pinia
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# pilipili
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+B站前端项目，所有api请求均来自B站官方服务端。  
+视频分享链接及二维码链接均使用原B站链接。  
+第一次用typescript，有的变量直接any过去了
+
+### 目前已完成的功能：  
+- - -
+登录  
+首页推荐（WEB端推荐及APP端推荐）  
+视频  
+弹幕  
+动态（评论、点赞、转发）  
+发布动态（仅文本）  
+评论区（点赞、回复）  
+点赞、投币、收藏  
+部分表情解析、@信息解析  
+个人空间（主页、投稿、关注列表、粉丝列表）  
+个性化设置（主题色、表情言论过滤、弹幕屏蔽、首页视频推荐数量及推荐相关性）  
+
+### 未来更新的功能：  
+- - -
+发布动态（带图）  
+发布视频

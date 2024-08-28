@@ -9,9 +9,13 @@
         size="600">
 
         <template #default>
-            <el-text style="padding: var(--el-drawer-padding-primary);">
-                {{ props.text }}
-            </el-text>
+            <div class="desc">
+                发布于{{ props.videoInfo?.pubdate }}
+            </div>
+            <div class="desc">
+                {{ props.videoInfo?.desc }}
+            </div>
+
         </template>
         
     </el-drawer>
@@ -22,7 +26,7 @@
 import { ref } from 'vue'
 
 const props = defineProps({
-    text: String
+    videoInfo: Object
 })
 
 
@@ -31,5 +35,11 @@ const descVisible = ref(false)
 </script>
 
 <style scoped>
+
+.desc {
+    padding: var(--el-drawer-padding-primary);
+    color: var(--cl-black-75);
+    font-size: 14px;
+}
 
 </style>

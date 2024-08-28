@@ -1,13 +1,11 @@
 <template>
-
     <el-divider content-position="left">
         <h3>最近点赞的视频</h3>
     </el-divider>
 
     <div v-if="likeVideoList" class="video-list">
-        <div v-for="(item, index) in likeVideoList" :key="index" 
-            class="video-item"
-            :style="{backgroundImage: `url(https://images.weserv.nl/?url=${item.pic}@600w.webp)`}">
+        <div v-for="(item, index) in likeVideoList" :key="index" class="video-item"
+            :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.pic}@600w.webp)` }">
 
             <RouterLink :to="`/video/${item.bvid}`">
                 <div class="video-info">
@@ -23,39 +21,30 @@
     </div>
 
     <el-empty v-else description="该用户隐藏了最近点赞视频" />
-
 </template>
 
 <script setup lang="ts">
-import { ref} from 'vue'
+import { ref, Ref } from 'vue'
 import { ElNotification } from 'element-plus'
 import BiliResType from '../../../type/BiliResType';
 import { useRoute } from 'vue-router';
+import { fetchData } from '../../../utils/fetchData';
 
 const route = useRoute()
 
-const likeVideoList: any = ref(null)
+const likeVideoList: Ref<Array<any>> = ref([])
 const getLikeVideoList = async () => {
-    try {
-        let res = await fetch(`/api/space/video/like?mid=${route.params.mid}`)
-        let data: BiliResType = await res.json()
-
-        console.log(data)
-
+    await fetchData(`/api/space/video/like?mid=${route.params.mid}`, {
+    }, (data: BiliResType) => {
         if (data.code === 0) {
             likeVideoList.value = data.data.list
         } else {
-            ElNotification({message: data.message, type: 'error'})
+            ElNotification({ message: data.message, type: 'error' })
         }
-    } catch (err) {
-        ElNotification({message: '服务器连接失败', type: 'error'})
-    }
+    })
 }
 getLikeVideoList()
 
 </script>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>

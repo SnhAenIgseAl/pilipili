@@ -10,11 +10,8 @@
             v-for="(item, index) in porps.draw.items" :key="index" 
             class="draw-carousel">
 
-            <el-button text size="small" @click="viewImg(item.src)">
-                查看原图
-            </el-button>
-
             <img :src="`https://images.weserv.nl/?url=${item.src}@1000h.webp`" class="draw-item"/>
+        
         </el-carousel-item>
     </el-carousel>
 </template>
@@ -24,13 +21,6 @@
 const porps = defineProps({
     draw: Object
 })
-
-
-
-// 查看原图
-const viewImg = (url: string) => {
-    window.open(url)
-}
 
 </script>
 
@@ -50,8 +40,6 @@ const viewImg = (url: string) => {
 .draw-item {
     margin: 0 auto;
     display: flex;
-    /* align-items: center; */
-    /* justify-content: center; */
     height: 500px;
     border-radius: 5px;
 }

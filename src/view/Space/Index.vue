@@ -1,13 +1,13 @@
 <template>
 
-	<div v-if="spaceInfo" class="space-top">
-		<div class="top-photo" :style="{backgroundImage: `url(https://images.weserv.nl/?url=${spaceInfo.space.l_img})`}"></div>
+	<div v-if="spaceInfo.card" class="space-top">
+		<div class="top-photo" :style="{backgroundImage: `url(https://images.weserv.nl/?url=${spaceInfo.space?.l_img})`}"></div>
 	
 		<div class="space-info">
 			<div class="face" 
-				:style="{backgroundImage: `url(https://images.weserv.nl/?url=${spaceInfo.card.face}@160w.webp)`}">
-				<img v-if="spaceInfo.card.pendant.image" 
-					:src="`https://images.weserv.nl/?url=${spaceInfo.card.pendant.image}@160w.webp`" class="pendant" />
+				:style="{backgroundImage: `url(https://images.weserv.nl/?url=${spaceInfo.card?.face}@160w.webp)`}">
+				<img v-if="spaceInfo.card?.pendant.image" 
+					:src="`https://images.weserv.nl/?url=${spaceInfo.card?.pendant.image}@160w.webp`" class="pendant" />
 			</div>
 			
 
@@ -31,7 +31,7 @@
 		
 	</div>
 
-	<div class="tabs">
+	<div v-if="spaceInfo.card" class="tabs">
 		<RouterLink :to="`/space/${route.params.mid}/home`">
 			<i style="color: var(--cl-green);">&#xe6bb;</i>主页
 		</RouterLink>
@@ -41,7 +41,7 @@
 		<RouterLink :to="`/space/${route.params.mid}/video`">
 			<i style="color: var(--cl-pink);">&#xe6ba;</i>
 			视频 
-			<el-text type="info">{{ spaceInfo?.archive_count }}</el-text>
+			<el-text type="info">{{ spaceInfo.archive_count }}</el-text>
 		</RouterLink>
 		<RouterLink :to="`/space/${route.params.mid}/favlist`">
 			<i style="color: var(--cl-yellow);">&#xe64b;</i>收藏夹
@@ -49,12 +49,12 @@
 		<RouterLink :to="`/space/${route.params.mid}/fans`">
 			<i style="color: var(--cl-blue);">&#xe82c;</i>
 			粉丝列表
-			<el-text type="info">{{ spaceInfo?.card.fans }}</el-text>
+			<el-text type="info">{{ spaceInfo.card.fans }}</el-text>
 		</RouterLink>
 		<RouterLink :to="`/space/${route.params.mid}/follow`">
 			<i style="color: var(--cl-blue);">&#xe830;</i>
 			关注列表
-			<el-text type="info">{{ spaceInfo?.card.friend }}</el-text>
+			<el-text type="info">{{ spaceInfo.card.friend }}</el-text>
 		</RouterLink>
 	</div>
 
@@ -67,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, Ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import type BiliResType from '../../type/BiliResType';
@@ -77,8 +77,8 @@ import { fetchData } from '../../utils/fetchData';
 
 
 // 获取空间信息
-const spaceInfo: any = ref(null)
-const getSpaceInfo = async (mid: any) => {
+const spaceInfo: Ref<any> = ref({})
+const getSpaceInfo = async (mid: string | string[]) => {
 	await fetchData(`/api/space/info?mid=${mid}`, {
 	}, (data: BiliResType) => {
 		console.log(data)
@@ -94,10 +94,8 @@ const getSpaceInfo = async (mid: any) => {
 
 
 const route = useRoute()
-// console.log(route.params.mid, typeof(route.params.mid))
 watch(() => route.params.mid, async (newVal) => {
 	await getSpaceInfo(newVal)
-	// getUserVideoList(newVal)
 }, {
 	immediate: true,
 })

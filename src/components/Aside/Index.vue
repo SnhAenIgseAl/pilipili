@@ -42,11 +42,11 @@
                 </div>
             </RouterLink>
 
-            <RouterLink to="/upload">
+            <!-- <RouterLink to="/upload">
                 <div class="aside-item">
                     <i>&#xe75d;</i>
                 </div>
-            </RouterLink>
+            </RouterLink> -->
         </div>
         
         <div v-else>

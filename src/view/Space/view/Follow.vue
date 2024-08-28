@@ -1,6 +1,6 @@
 <template>
     
-    <FansFollowList :list="followsList" />
+    <FansFollowList v-if="followsList" :list="followsList" />
 
     <div class="page">
         <el-pagination layout="prev, pager, next" 

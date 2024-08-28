@@ -34,12 +34,7 @@
                 </span>
                 <Level :level="item.member.level_info.current_level" />
             </div>
-            <div class="comment-info">
-                <el-text type="info">{{ item.reply_control.time_desc }}</el-text>
-                <el-text v-if="item.reply_control.location" type="info">
-                     · {{ item.reply_control.location }}
-                </el-text>
-            </div>
+            
 
 
 
@@ -48,8 +43,15 @@
 
 
 
-            <!-- 评论操作 -->
+            
             <div class="comment-control">
+                <!-- ip属地 -->
+                <div class="comment-info">
+                    <el-text type="info">
+                        {{ item.reply_control.time_desc }} · {{ item.reply_control.location }}
+                    </el-text>
+                </div>
+                <!-- 评论操作 -->
                 <CommentAction :type="props.type" :oid="props.oid" :rpid="item.rpid" :like="item.like" />
                 <CommentAdd :type="props.type" :oid="props.oid" :rpid="item.rpid" />
             </div>
@@ -81,13 +83,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import type BiliResType from '../type/BiliResType'
 import Level from './Level.vue';
 import CommentAction from './CommentAction.vue';
 import CommentAdd from './CommentAdd.vue';
 import { fetchData } from '../utils/fetchData';
+import { parseCommentTxt } from '../utils/parseCommentTxt';
 
 const props = defineProps({
     subReply: String,
@@ -96,10 +99,13 @@ const props = defineProps({
     oid: String
 })
 
-const pageTotal: any = ref(0)
-const subCommentsVisible: any = ref(false)
-const subComments: any = ref(null)
-const getSubComments = async (page: Number) => {
+
+
+// 获取子评论
+const pageTotal: Ref<number> = ref(0)
+const subCommentsVisible: Ref<boolean> = ref(false)
+const subComments: Ref<any> = ref(null)
+const getSubComments = async (page: number) => {
 
     subCommentsVisible.value = true
 
@@ -110,15 +116,17 @@ const getSubComments = async (page: Number) => {
         if (data.code == 0) {
             let replies = data.data.replies
 
+            for (let i = 0; i < replies.length; i++) {
+                replies.content = parseCommentTxt(replies.content, replies.members)
+            }
+
             subComments.value = replies
             pageTotal.value = data.data.page.count
-
         } else {
             ElMessage.error({ message: data.message })
         }
     })
 }
-
 
 
 
@@ -160,6 +168,7 @@ const changePage = async (page: number) => {
     align-items: center;
     font-weight: 500;
     margin-bottom: 8px;
+    font-size: 14px;
 }
 
 .comment-info {}

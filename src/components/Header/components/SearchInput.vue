@@ -15,7 +15,13 @@
 
 		<template #default>
 			<el-divider v-if="searchHistory" content-position="left">搜索历史</el-divider>
-			<el-tag v-for="tag in searchHistory" :key="tag" closable type="info" size="large" @close="historyRemove(tag)">
+			<el-tag v-for="tag in searchHistory" :key="tag" 
+				class="search-history-tag"
+				closable 
+				type="info" 
+				size="large" 
+				@close="historyRemove(tag)"
+				@click="search(tag)">
 				{{ tag }}
 			</el-tag>
 
@@ -33,8 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, toRefs } from 'vue';
-import type { FormInstance } from 'element-plus'
+import { ref, Ref, reactive, toRefs } from 'vue';
 import { Search } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { useSearchHistoryStore } from '../../../stores/searchHistory'
@@ -48,7 +53,6 @@ const {
 
 
 
-const formRef = ref<FormInstance>()
 const searchForm = reactive({
 	keyword: ''
 })
@@ -57,8 +61,8 @@ const searchForm = reactive({
 
 // 搜索
 const search = async (keyword: String) => {
-	// console.log(searchForm.keyword)
 	searchHistory.value.push(keyword)
+	searchHistory.value = Array.from(new Set(searchHistory.value))
 	window.location.href = `/search?keyword=${keyword}&type=video`
 }
 
@@ -73,7 +77,7 @@ const historyRemove = (tag: string) => {
 
 
 // 获取热搜
-const hotwordList = ref(null)
+const hotwordList: Ref<any[]> = ref([])
 const getHotword = async () => {
 	await fetchData(`/api/hotword`, {
 	}, (data: any) => {
@@ -107,6 +111,12 @@ getHotword()
 
 	.search-input {
 		width: 100%;
+	}
+}
+
+.search-history-tag {
+	&:hover {
+		cursor: pointer;
 	}
 }
 

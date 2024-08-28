@@ -27,31 +27,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, Ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import BiliResType from '../../../type/BiliResType';
+import { fetchData } from '../../../utils/fetchData';
 
 const route = useRoute()
 
-const coinVideoList: any = ref(null)
+const coinVideoList: Ref<Array<any>> = ref([])
 
+// 获取投币视频
 const getCoinVideoList = async (mid: any) => {
-    try {
-        let res = await fetch(`/api/space/video/coin?mid=${mid}`)
-        let data: BiliResType = await res.json()
-
+    await fetchData(`/api/space/video/coin?mid=${mid}`, {
+    }, (data: BiliResType) => {
         if (data.code === 0) {
-            // 真的捏妈的牛皮，返回13个，去掉最后一个
             coinVideoList.value = data.data
-            coinVideoList.value.length = 12
-            console.log('coinVideoList', coinVideoList.value)
+            // console.log('coinVideoList', coinVideoList.value)
         } else {
-            ElNotification({message: data.message, type: 'error'})
+            ElNotification.error({message: data.message})
         }
-    } catch (err) {
-        ElNotification({message: '服务器连接失败', type: 'error'})
-    }
+    })
 }
 
 

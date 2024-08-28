@@ -9,11 +9,11 @@
         <div class="dynamic-control">
             <div>
 
-                <el-button text size="small">
+                <!-- <el-button text size="small">
                     <i>&#xe64a;</i>
-                </el-button>
+                </el-button> -->
 
-                <el-upload
+                <!-- <el-upload
                     v-model:file-list="imgList"
                     list-type="picture-card"
                     action=""
@@ -28,12 +28,7 @@
 
                 <el-dialog v-model="dialogVisible">
                     <img w-full :src="dialogImageUrl" alt="Preview Image" />
-                </el-dialog>
-
-                <!-- 艾特人 -->
-                <el-button text size="small">
-                    <i>&#xe853;</i>
-                </el-button>
+                </el-dialog> -->
             </div>
 
             <div>
@@ -41,7 +36,8 @@
                 <el-button text @click="reset">清空</el-button>
                 <el-button type="primary" 
                     @click="addDynamic" 
-                    :color="`var(--cl-${USER_THEME})`"
+                    :loading="addDynamicLoading"
+                    :color="`var(--cl-primary)`"
                     style="color: #FFF">
                     发布
                 </el-button>
@@ -52,87 +48,87 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Plus } from '@element-plus/icons-vue'
+// import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import { useSettingStore } from '../../../stores/setting'
-import type { UploadProps, UploadUserFile, UploadRequestOptions } from 'element-plus'
+// import type { UploadProps, UploadUserFile, UploadRequestOptions } from 'element-plus'
 import BiliResType from '../../../type/BiliResType';
-import { toRefs } from 'vue'
-// import { fetchData } from '../../../utils/fetchData'
-import axios from 'axios'
-
-
-const {
-    USER_THEME
-} = toRefs(useSettingStore())
+// import axios from 'axios'
+import { fetchData } from '../../../utils/fetchData';
+// import axios from 'axios';
 
 
 
 const dynamicTxt = ref(null)
-const imgList = ref<UploadUserFile[]>([])
-const dialogImageUrl = ref('')
-const dialogVisible = ref(false)
+// const imgList = ref<UploadUserFile[]>([])
+// const dialogImageUrl = ref('')
+// const dialogVisible = ref(false)
+const addDynamicLoading = ref(false)
 
 
 
 // 检查上传的文件类型及大小
-const checkFile: UploadProps['beforeUpload'] = (file) => {
-	if (file.type !== 'image/jpg' &&
-        file.type !== 'image/jpeg' &&
-		file.type !== 'image/png'
-	) {
-		ElMessage({ message: '必须是jpg或png格式的图片', type: 'error' })
-		return false
-	} else if (file.size / 1024 / 1024 > 20) {
-		ElMessage({ message: '图片需小于20MB', type: 'error' })
-		return false
-	}
+// const checkFile: UploadProps['beforeUpload'] = (file) => {
+// 	if (file.type !== 'image/jpg' &&
+//         file.type !== 'image/jpeg' &&
+// 		file.type !== 'image/png'
+// 	) {
+// 		ElMessage({ message: '必须是jpg或png格式的图片', type: 'error' })
+// 		return false
+// 	} else if (file.size / 1024 / 1024 > 20) {
+// 		ElMessage({ message: '图片需小于20MB', type: 'error' })
+// 		return false
+// 	}
 
-    return true
-}
-
-
-// 上传图片
-const uploadImg = async (data: UploadRequestOptions) => {
-    let file = data.file
-
-    let formData = new FormData()
-    formData.append('file_up', file)
-    formData.append('bili_jct', localStorage.getItem('bili_jct') || '')
-    formData.append('sessdata', localStorage.getItem('SESSDATA') || '')
-
-    console.log(formData.get('file_up'))
-    console.log(localStorage.getItem('bili_jct'))
-    console.log(localStorage.getItem('SESSDATA'))
-
-    axios.post('/api/upload', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        }
-    }).then(res => {
-        console.log(res.data)
-        if (res.data.code === 0) {
-            ElMessage.success({message: '图片上传成功'})
-        } else {
-            ElMessage.error({message: res.data.message})
-        }
-    })
-}
+//     return true
+// }
 
 
+// // 上传图片
+// const uploadImgList: any = ref([])
+// const uploadImg = async (data: UploadRequestOptions) => {
+//     let file = data.file
 
-// 移除上传的图片
-const removeImg: UploadProps['onRemove'] = (file, files) => {
-    console.log(file, files)
-}
+//     let fd = new FormData()
+//     fd.append('file_up', file)
+//     fd.append('csrf', localStorage.getItem('bili_jct')?.split(';')[0].split('=')[1] || '')
+//     fd.append('sessdata', localStorage.getItem('SESSDATA') || '')
+//     console.log(fd.get('file_up'))
+
+//     let imgSrc = await new Promise((resolve) => {
+//         axios.post(`/api/upload`, fd, {
+//             headers: {
+//                 'Content-Type': 'multipart/form-data',
+//             }
+//         })
+//         .then(res => res.data)
+//         .then((res: BiliResType) => {
+//             console.log(res)
+//             if (res.code === 0) {
+//                 ElMessage.success({ message: '图片上传成功' })
+//                 resolve(res.data)
+//             } else {
+//                 ElMessage.error({ message: '图片上传失败' })
+//             }
+//         })
+//     })
+
+//     uploadImgList.value.push(imgSrc)
+// }
 
 
 
-// 预览图片
-const previewImg: UploadProps['onPreview'] = async (file) => {
-    dialogImageUrl.value = file.url!
-    dialogVisible.value = true
-}
+// // 移除上传的图片
+// const removeImg: UploadProps['onRemove'] = (file, files) => {
+//     console.log(file, files)
+// }
+
+
+
+// // 预览图片
+// const previewImg: UploadProps['onPreview'] = async (file) => {
+//     dialogImageUrl.value = file.url!
+//     dialogVisible.value = true
+// }
 
 
 
@@ -145,22 +141,25 @@ const reset = () => {
 
 // 发布动态
 const addDynamic = async () => {
-    try {
-        let res = await fetch(`/api/dynamic/add`, {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                dynamicTxt: dynamicTxt.value
-            })
-        })
-        let data: BiliResType = await res.json()
+    addDynamicLoading.value = true
 
-        console.log(data)
-    } catch (err) {
-        ElMessage({message: '网络未连接', type: 'error'})
-    }
+    await fetchData(`/api/dynamic/add`, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            dynamicTxt: dynamicTxt.value,
+            // pics: uploadImgList.value,
+        })
+    }, (data: BiliResType) => {
+        if (data.code === 0) {
+            ElMessage.success({message: '发表成功'})
+        } else {
+            ElMessage.error({ message: data.message })
+        }
+        addDynamicLoading.value = false
+    })
 }
 
 

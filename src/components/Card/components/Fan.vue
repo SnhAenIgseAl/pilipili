@@ -20,7 +20,7 @@ const props = defineProps({
 .decorate {
     position: absolute;
     top: 16px;
-    right: 16px;
+    right: 80px;
     width: auto;
     height: 50px;
 }

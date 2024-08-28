@@ -19,7 +19,7 @@ let {
 
 
 // 设置默认主题色
-document.querySelector('html')!.className = USER_THEME.value
+document.querySelector('html')!.className = USER_THEME.value.toString()
 
 
 

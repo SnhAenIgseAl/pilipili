@@ -33,6 +33,9 @@
 
 
 
+                    <!-- 检查评论状态 -->
+                    <CheckCommentStat :type="props.type" :oid="props.oid" :root="item.rpid_str" />
+
                     <!-- 装扮名称 -->
                     <!-- <Fan v-if="props.author!.decorate" :decorate="props.author!.decorate" /> -->
 
@@ -52,12 +55,7 @@
                             </span>
                             <Level :level="item.member.level_info.current_level" />
                         </div>
-                        <div class="comment-info">
-                            <el-text type="info">{{ item.reply_control.time_desc }}</el-text>
-                            <el-text v-if="item.reply_control.location" type="info">
-                                · {{ item.reply_control.location }}
-                            </el-text>
-                        </div>
+                        
 
 
 
@@ -67,9 +65,16 @@
 
 
 
-                        <!-- 评论操作 -->
+                        
                         <div class="comment-control">
-                            <CommentAction :type="props.type" :oid="props.oid" :rpid="item.rpid" :like="item.like" />
+                            <!-- ip属地 -->
+                            <div class="comment-info">
+                                <el-text type="info">
+                                    {{ item.reply_control.time_desc }} · {{ item.reply_control.location }}
+                                </el-text>
+                            </div>
+                            <!-- 评论操作 -->
+                            <CommentAction :type="props.type" :oid="props.oid" :rpid="item.rpid" :like="item.like" :liked="item.action" />
                             <CommentAdd :type="props.type" :oid="props.oid" :rpid="item.rpid" />
                         </div>
 
@@ -121,13 +126,13 @@ import { ref } from 'vue'
 import { ElMessage } from 'element-plus';
 import type BiliResType from '../type/BiliResType';
 import { getPlaceholderTxt } from '../utils/commentPlaceholderCfg';
-import parseEmoji from '../utils/parseEmoji';
 import ComentChild from './ComentChild.vue';
 import Level from './Level.vue';
 import CommentAction from './CommentAction.vue';
 import CommentAdd from './CommentAdd.vue';
 import { fetchData } from '../utils/fetchData';
 import { parseCommentTxt } from '../utils/parseCommentTxt';
+import CheckCommentStat from './CheckCommentStat.vue';
 
 const props = defineProps({
     type: Number,       // 评论区类型
@@ -249,12 +254,15 @@ const addComment = async () => {
     align-items: center;
     font-weight: 500;
     margin-bottom: 8px;
+    font-size: 14px;
 }
 
-.comment-info {}
+.comment-info {
+    margin-top: -1px;
+}
 
 .comment-text {
-    display: flex;
+    /* display: flex; */
     margin: 8px 0;
     line-height: 1.75;
     font-size: 14px;

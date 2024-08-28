@@ -9,6 +9,7 @@
     }
   ],
   "compilerOptions": {
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "skipLibCheck": true
   },
 }
