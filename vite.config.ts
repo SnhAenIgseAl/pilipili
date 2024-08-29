@@ -16,12 +16,14 @@ export default defineConfig({
         host: '127.0.0.1',
         proxy: {
             '/api': {
-                target: 'https://snhaenigseal.github.io/piliserver',
-                // target: 'https://api.bilibili.com',
+                target: 'https://pilipili-server.icu/',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, '')
             },
         }
     },
-    base: '/pilipili/'
+    base: '/pilipili/',
+    build: {
+        outDir: 'docs',
+    }
 })
