@@ -16,13 +16,13 @@ export default defineConfig({
         host: '127.0.0.1',
         proxy: {
             '/api': {
-                target: 'https://pilipili-server.icu/',
+                target: 'https://pilipili-server.icu',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, '')
             },
         }
     },
-    base: '/pilipili/',
+    base: '/',
     build: {
         outDir: 'docs',
     }

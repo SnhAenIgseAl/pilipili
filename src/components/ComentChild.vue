@@ -39,7 +39,7 @@
 
 
             <!-- 评论内容 -->
-            <div class="comment-text" type="info">{{ item.content.message }}</div>
+            <div v-html="item.content.message" class="comment-text" type="info"></div>
 
 
 
@@ -117,7 +117,7 @@ const getSubComments = async (page: number) => {
             let replies = data.data.replies
 
             for (let i = 0; i < replies.length; i++) {
-                replies.content = parseCommentTxt(replies.content, replies.members)
+                replies[i].content.message = parseCommentTxt(replies[i].content.message, replies[i].content.members)
             }
 
             subComments.value = replies
@@ -193,5 +193,11 @@ const changePage = async (page: number) => {
     display: flex;
     justify-content: center;
     /* margin-top: 16px; */
+}
+</style>
+
+<style>
+.at-name {
+
 }
 </style>

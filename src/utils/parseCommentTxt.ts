@@ -12,10 +12,8 @@ const {
 
 
 export const parseCommentTxt = (text: string, members: Array<any> | []) => {
-
     text = parseEmoji(text)
     text = parseAt(text, members)
-
     return text
 }
 

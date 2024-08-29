@@ -76,6 +76,10 @@ const routes = [
 	{
 		path: '/video/:bvid',
 		component: () => import('@/view/Video/Index.vue')
+	},
+	{
+		path: '/:pathMatch(.*)*',
+		component: () => import('@/view/404/Index.vue')
 	}
 ]
 
