@@ -8,3 +8,4 @@ declare module '*.vue' {
 
 
 declare module 'vue3-video-play';
+declare module 'vue3-danmaku';
