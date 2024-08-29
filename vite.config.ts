@@ -16,8 +16,8 @@ export default defineConfig({
         host: '127.0.0.1',
         proxy: {
             '/api': {
-                // target: 'https://pilipili-server.icu',
-                target: 'http://127.0.0.1:18848',
+                target: 'https://pilipili-server.icu',
+                // target: 'http://127.0.0.1:18848',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, '')
             },
@@ -25,6 +25,6 @@ export default defineConfig({
     },
     base: '/',
     build: {
-        outDir: 'docs',
+        outDir: 'dist',
     }
 })
