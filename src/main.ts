@@ -8,8 +8,8 @@ import './assets/iconfont/iconfont.css'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import router from './router'
-import vue3videoPlay from 'vue3-video-play'
-import 'vue3-video-play/dist/style.css'
+import longzeVideoPlay from "longze-vue3-video-player";
+// import 'vue3-video-play/dist/style.css'
 
 
 
@@ -25,5 +25,5 @@ pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
-app.use(vue3videoPlay)
+app.use(longzeVideoPlay)
 app.mount('#app')

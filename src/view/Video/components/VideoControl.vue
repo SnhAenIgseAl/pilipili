@@ -10,7 +10,7 @@
         </vue-danmaku>
 
         <!-- 视频 -->
-        <vue3VideoPlay v-bind="options" 
+        <longzeVideoPlay v-bind="options" 
             ref="videoRef"
             @play="onPlay"
             @pause="onPause"

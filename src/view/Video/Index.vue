@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { ref, watch } from 'vue'
+import { ref, Ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import type BiliResType from '../../type/BiliResType'
 import Related from './components/Related.vue'
@@ -52,12 +52,12 @@ import AttrButton from '../../components/AttrButton.vue'
 
 const route = useRoute()
 
-const videoInfo: any = ref(null)
-const upInfo: any = ref(null)
-const attr = ref(0)
-const bv = ref(null)
-const cid = ref(null)
-const playerInfo: any = ref(null)
+const videoInfo: Ref<any> = ref({})
+const upInfo: Ref<null> = ref(null)
+const attr: Ref<number> = ref(0)
+const bv: Ref<string> = ref('null')
+const cid: Ref<number> = ref(0)
+const playerInfo: Ref<any> = ref({})
 
 // 获取视频信息及播放地址
 const getVideoInfo = async (bvid: string | string[]) => {
