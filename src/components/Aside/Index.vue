@@ -10,7 +10,7 @@
                 </div>
             </RouterLink>
 
-            <el-Badge :value="msgUnread.at + msgUnread.like + msgUnread.reply" 
+            <el-Badge :value="msgUnread?.at + msgUnread.like + msgUnread.reply" 
                 type="primary" 
                 :show-zero="false">
 
@@ -68,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs } from 'vue'
+import { ref, Ref, toRefs } from 'vue'
 import { useUserStore } from '../../stores/user'
 import { ElMessage } from 'element-plus'
 import { fetchData } from '../../utils/fetchData';
@@ -90,10 +90,11 @@ getInfo()
 
 
 // 检测未读消息
-const msgUnread: any = ref(null)
+const msgUnread: Ref<any> = ref({})
 const getMsgUnread = async () => {
-    await fetchData(`/api/message/unread`, undefined, (data: BiliResType) => {
-        console.log(data)
+    await fetchData(`/api/message/unread`, {
+    }, (data: BiliResType) => {
+        // console.log(data)
         msgUnread.value = data.data
     })
 }
