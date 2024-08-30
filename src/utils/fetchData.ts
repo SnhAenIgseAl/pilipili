@@ -13,6 +13,6 @@ export const fetchData = async (api: string, opition: RequestInit | undefined, c
 
         callback && callback(data)
     } catch (err) {
-        ElMessage.error({ message: '服务器未连接' + err})
+        ElMessage.warning({ message: '服务器未连接' + err})
     }
 }
