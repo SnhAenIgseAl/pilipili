@@ -5,7 +5,7 @@ import BiliResType from "../type/BiliResType"
 export const fetchData = async (api: string, opition: RequestInit | undefined, callback: Function | undefined) => {
     try {
         api = api.replace('/api', 'https://pilipili-server.icu')
-        // opition!.mode = 'cors'
+        opition!.mode = 'cors'
         opition!.credentials = 'include'
 
         let res = await fetch(api, opition)
