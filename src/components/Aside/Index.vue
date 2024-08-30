@@ -106,9 +106,6 @@ getMsgUnread()
 const hasUpdate = ref(0)
 const getUpdate = async ()  => {
     await fetchData(`/api/dynamic/update?baseline=${baseline.value}`, {
-        headers: {
-            'Cookies': localStorage.getItem('SESSDATA')
-        }
     }, (data: BiliResType) => {
 		if (data.code === 0) {
 			hasUpdate.value = data.data.update_num
