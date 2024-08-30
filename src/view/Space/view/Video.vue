@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ElMessage } from 'element-plus';
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import { fetchData } from '../../../utils/fetchData'
 import BiliResType from '../../../type/BiliResType';
 import { useRoute } from 'vue-router';
@@ -40,9 +40,10 @@ import { useRoute } from 'vue-router';
 const route = useRoute()
 
 
-const videoList: any = ref(null)
+const videoList: Ref<any[]> = ref([])
 const getVideoList = async () => {
-    await fetchData(`/api/space/video?mid=${route.params.mid}`, undefined, (data: BiliResType) => {
+    await fetchData(`/api/space/video?mid=${route.params.mid}`, {
+    }, (data: BiliResType) => {
         console.log(data)
         if (data.code === 0) {
             videoList.value = data.data.item

@@ -19,7 +19,7 @@ import BiliResType from '../../../type/BiliResType';
 import { useRoute } from 'vue-router';
 import { fetchData } from '../../../utils/fetchData';
 import { wheelBottom } from '../../../utils/wheelBottom';
-import { debunce } from '../../../utils/debunce';
+import { debounce } from '../../../utils/debounce';
 
 
 
@@ -30,7 +30,8 @@ const route = useRoute()
 const dynamicList: any = ref(null)
 const lastId = ref(String)
 const getDynamic = async (offset: any) => {
-	await fetchData(`/api/space/dynamic?mid=${route.params.mid}&offset=${offset}`, undefined, (data: BiliResType) => {
+	await fetchData(`/api/space/dynamic?mid=${route.params.mid}&offset=${offset}`, {
+	}, (data: BiliResType) => {
 		if (data.code === 0) {
 
 		// 记录最后一条动态的id
@@ -53,7 +54,7 @@ getDynamic('')
 // 触底加载更多动态
 onMounted(() => {
 	window.addEventListener('scroll',
-		debunce(wheelBottom(2000, async () => {
+		debounce(wheelBottom(2000, async () => {
 			await getDynamic(lastId.value)
 		}), 300))
 })

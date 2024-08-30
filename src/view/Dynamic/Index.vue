@@ -29,7 +29,7 @@ import { fetchData } from '../../utils/fetchData';
 import BiliResType from '../../type/BiliResType';
 import { wheelBottom } from '../../utils/wheelBottom'
 import { useUserStore } from '../../stores/user';
-import { debunce } from '../../utils/debunce';
+import { debounce } from '../../utils/debounce';
 
 
 const {
@@ -89,9 +89,9 @@ const getNewDynamic = () => {
 // 滚轮触底了加载更多动态
 onMounted(() => {
 	window.addEventListener('scroll',
-		debunce(wheelBottom(2000, async () => {
+		debounce(wheelBottom(2000, async () => {
 			await getDynamic(lastId.value)
-		}), 300))
+		}), 500))
 })
 
 

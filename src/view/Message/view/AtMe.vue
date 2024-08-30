@@ -36,7 +36,8 @@ import MsgItemList from '../components/MsgItemList.vue';
 
 const atMeList: any = ref(null)
 const getAtMeList = async () => {
-    await fetchData(`/api/message/at`, undefined, (data: BiliResType) => {
+    await fetchData(`/api/message/at`, {
+    }, (data: BiliResType) => {
         console.log(data)
         if (data.code === 0) {
             for (let i = 0; i < data.data.items.length; i++) {

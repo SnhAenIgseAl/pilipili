@@ -35,7 +35,8 @@ import MsgItemList from '../components/MsgItemList.vue';
 
 const replyList: any = ref(null)
 const getReplyList = async () => {
-    await fetchData(`/api/message/reply`, undefined, (data: BiliResType) => {
+    await fetchData(`/api/message/reply`, {
+    }, (data: BiliResType) => {
         console.log(data)
         if (data.code === 0) {
             for (let i = 0; i < data.data.items.length; i++) {
