@@ -36,6 +36,7 @@ import type BiliResType from '../../type/BiliResType'
 import { useRoute } from 'vue-router'
 import VideoList from './components/VideoList.vue'
 import UserList from './components/UserList.vue'
+import { fetchData } from '../../utils/fetchData'
 
 const route = useRoute()
 // const activeName = ref('video')
@@ -51,11 +52,8 @@ const totalPage = ref(null)
 
 // 获取搜索数据
 const getSearchData = async (keyword: any, type: any, page: Number) => {
-
-    try {
-        let res = await fetch(`/api/search?keyword=${keyword}&type=${type}&page=${page}`)
-        let data: BiliResType = await res.json()
-
+    await fetchData(`/api/search?keyword=${keyword}&type=${type}&page=${page}`, {
+    }, (data: BiliResType) => {
         if (data.code === 0) {
             console.log(data.data)
 
@@ -73,9 +71,7 @@ const getSearchData = async (keyword: any, type: any, page: Number) => {
         } else {
             ElMessage({ message: data.message, type: 'error' })
         }
-    } catch (err) {
-        ElMessage({ message: '网络未连接', type: 'error' })
-    }
+    })
 }
 
 

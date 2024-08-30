@@ -36,6 +36,7 @@
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import BiliResType from '../../../type/BiliResType';
+import { fetchData } from '../../../utils/fetchData';
 
 const props = defineProps({
     aid: Number,
@@ -51,10 +52,8 @@ const coinNum = ref('1')
 
 // 投币
 const coin = async () => {
-    try {
-        let res = await fetch(`/api/video/coin?aid=${props.aid}&num=${coinNum.value}`)
-        let data: BiliResType = await res.json()
-
+    await fetchData(`/api/video/coin?aid=${props.aid}&num=${coinNum.value}`, {  
+    }, (data: BiliResType)=> {
         if (data.code === 0) {
             ElMessage({message: '投币成功', type: 'success'})
             coinCount.value += parseInt(coinNum.value)
@@ -63,9 +62,7 @@ const coin = async () => {
         } else {
             ElMessage({message: data.message, type: 'error'})
         }
-    } catch (err) {
-        ElMessage({message: '网络未连接', type: 'error'})
-    }
+    })
 }
 
 
@@ -73,10 +70,8 @@ const coin = async () => {
 // 判断是否被投币
 const hasCoined = ref(true)
 const hasCoin = async () => {
-    try {
-        let res = await fetch(`/api/video/has/coin?aid=${props.aid}`)
-        let data: BiliResType = await res.json()
-
+    await fetchData(`/api/video/has/coin?aid=${props.aid}`, {
+    }, (data: BiliResType) => {
         if (data.code === 0) {
             if (!data.data.multiply) {
                 hasCoined.value = false
@@ -84,9 +79,7 @@ const hasCoin = async () => {
         } else {
             ElMessage({message: data.message, type: 'error'})
         }
-    } catch (err) {
-        ElMessage({message: '服务器连接失败', type: 'error'})
-    }
+    })
 }
 hasCoin()
 

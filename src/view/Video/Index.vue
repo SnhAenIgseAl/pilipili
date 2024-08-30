@@ -49,6 +49,7 @@ import Comments from '../../components/Comments.vue'
 import VideoControl from './components/VideoControl.vue'
 import { parseTime } from '../../utils/parseTime'
 import AttrButton from '../../components/AttrButton.vue'
+import { fetchData } from '../../utils/fetchData'
 
 const route = useRoute()
 
@@ -61,10 +62,8 @@ const playerInfo: Ref<any> = ref({})
 
 // 获取视频信息及播放地址
 const getVideoInfo = async (bvid: string | string[]) => {
-    try {
-        let res = await fetch(`/api/video?bvid=${bvid}`)
-        let data: BiliResType = await res.json()
-
+    await fetchData(`/api/video?bvid=${bvid}`, {
+    }, (data: BiliResType) => {
         if (data.code === 0) {
             // console.log(data.data)
 
@@ -80,14 +79,10 @@ const getVideoInfo = async (bvid: string | string[]) => {
         } else {
             ElMessage({ message: data.message, type: 'error' })
         }
-    } catch (err) {
-        ElMessage({ message: '网络未连接', type: 'error' })
-    }
+    })
 
-    try {
-        let res = await fetch(`/api/player?bvid=${bv.value}&cid=${cid.value}`)
-        let data: BiliResType = await res.json()
-
+    await fetchData(`/api/player?bvid=${bv.value}&cid=${cid.value}`, {
+    }, (data: BiliResType) => {
         if (data.code === 0) {
             // console.log(data)
             playerInfo.value = data.data
@@ -96,9 +91,7 @@ const getVideoInfo = async (bvid: string | string[]) => {
         } else {
             ElMessage.error({ message: data.message })
         }
-    } catch (err) {
-        ElMessage({ message: '视频播放失败', type: 'error' })
-    }
+    })
 }
 
 

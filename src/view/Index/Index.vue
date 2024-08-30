@@ -70,11 +70,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { ElMessage } from 'element-plus';
 import { useSettingStore } from '../../stores/setting';
 import type BiliResType from '../../type/BiliResType';
 import { wheelBottom } from '../../utils/wheelBottom';
 import { debunce } from '../../utils/debunce';
+import { ElMessage } from 'element-plus';
+import { fetchData } from '../../utils/fetchData';
 
 const {
 	USER_RECOMMEND_VIDEO_PLATFORM,
@@ -90,12 +91,8 @@ const getVideo = async () => {
 	let num = USER_RECOMMEND_VIDEO_NUM
 	let fresh = USER_RECOMMEND_VIDEO_FRESH
 
-	try {
-		let res = await fetch(`/api/index/top?num=${num}&fresh=${fresh}&platform=${platform}`)
-		let data: BiliResType = await res.json()
-
-		// console.log(data)
-
+	await fetchData(`/api/index/top?num=${num}&fresh=${fresh}&platform=${platform}`, {
+	}, (data: BiliResType) => {
 		if (data.code === 0) {
 
 			if (platform === 'PC') {
@@ -123,10 +120,10 @@ const getVideo = async () => {
 				let newList = [...videoList.value, ...data.data.items]
 				videoList.value = newList
 			}
+		} else {
+			ElMessage.warning({message: '尚未登录' + data.message})
 		}
-	} catch (err) {
-		ElMessage.error({ message: '网络未连接' + err })
-	}
+	})
 }
 getVideo()
 getVideo()

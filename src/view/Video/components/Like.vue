@@ -20,6 +20,7 @@
 import { ref } from "vue";
 import { ElNotification, ElMessage } from "element-plus";
 import type BiliResType from '../../../type/BiliResType'
+import { fetchData } from "../../../utils/fetchData";
 
 const props = defineProps({
     aid: Number,
@@ -30,19 +31,15 @@ const props = defineProps({
 
 // 点赞视频
 const like = async () => {
-    try {
-        let res = await fetch(`/api/video/like?aid=${props.aid}`)
-        let data: BiliResType = await res.json()
-
+    await fetchData(`/api/video/like?aid=${props.aid}`, {
+    }, (data: BiliResType) => {
         if (data.code === 0) {
             ElNotification({message: '点赞成功', type: 'success'})
             liked.value = true
         } else {
             ElNotification({message: data.message, type: 'error'})
         }
-    } catch (err) {
-        ElNotification({message: '服务器连接失败', type: 'error'})
-    }
+    })
 }
 
 
@@ -50,10 +47,8 @@ const like = async () => {
 // 判断视频是否点赞过
 const liked = ref(true)
 const hasLiked = async () => {
-    try {
-        let res = await fetch(`/api/video/has/like?aid=${props.aid}`)
-        let data: BiliResType = await res.json()
-
+    await fetchData(`/api/video/has/like?aid=${props.aid}`, {
+    }, (data: BiliResType)=> {
         if (data.code === 0) {
             if (!data.data) {
                 liked.value = false
@@ -61,9 +56,7 @@ const hasLiked = async () => {
         } else {
             ElMessage({message: data.message, type: 'error'})
         }
-    } catch (err) {
-        ElMessage({message: '服务器连接失败', type: 'error'})
-    }
+    })
 }
 hasLiked()
 

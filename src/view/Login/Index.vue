@@ -12,6 +12,7 @@
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '../../stores/user';
+import { fetchData } from '../../utils/fetchData';
 import type BiliResType from '../../type/BiliResType';
 
 const user = useUserStore()
@@ -24,21 +25,12 @@ const QrCodeStat: any = ref(null)
 const auth_code = ref(null)
 
 const getQrCode = async () => {
-	try {
-		let res = await fetch('/api/getQrCode', {
-			method: 'POST'
-		})
-		let data: BiliResType = await res.json()
-
-		console.log(data)
-
-		if (data.code === 0) {
-			QrUrl.value = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://passport.bilibili.com/x/passport-tv-login/h5/qrcode/auth?auth_code=${data.data.auth_code}`
-			auth_code.value = data.data.auth_code
-		}
-	} catch (err) {
-		console.log(err)
-	}
+	await fetchData('/api/getQrCode', {
+		method: 'POST'
+	}, (data: BiliResType) => {
+		QrUrl.value = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://passport.bilibili.com/x/passport-tv-login/h5/qrcode/auth?auth_code=${data.data.auth_code}`
+		auth_code.value = data.data.auth_code
+	})
 }
 getQrCode()
 
@@ -46,17 +38,15 @@ getQrCode()
 
 // 每3秒检测二维码状态
 const login = async () => {
-	try {
-		let res = await fetch(`/api/login`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				auth_code: auth_code.value
-			})
+	await fetchData(`/api/login`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			auth_code: auth_code.value
 		})
-		let data: BiliResType = await res.json()
+	}, async (data: BiliResType) => {
 		QrCodeStat.value = data.message
 
 		if (data.code === 0) {
@@ -74,7 +64,7 @@ const login = async () => {
 			localStorage.setItem('bili_jct', bili_jct)
 			localStorage.setItem('DedeUserID', DedeUserID)
 
-			let res = await fetch(`/api/setCookie`, {
+			await fetchData(`/api/setCookie`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -85,19 +75,13 @@ const login = async () => {
 					SESSDATA: SESSDATA,
 					bili_jct: bili_jct
 				})
+			}, () => {
+				getInfo()
+				ElMessage({message: '登录成功', type: 'success'})
+				// window.location.href = '/index'
 			})
-			res = await res.json()
-			console.log(res)
-
-			getInfo()
-
-			ElMessage({message: '登录成功', type: 'success'})
-
-			window.location.href = '/index'
 		}
-	} catch (err) {
-		ElMessage({message: '网络未连接', type: 'error'})
-	}
+	})
 }
 const doLogin = setInterval(login, 3000)
 

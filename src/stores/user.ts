@@ -1,5 +1,7 @@
 import { ref, Ref } from 'vue'
 import { defineStore } from 'pinia'
+import { fetchData } from '../utils/fetchData'
+import BiliResType from '../type/BiliResType'
 
 
 // 用户信息状态
@@ -15,17 +17,12 @@ export const useUserStore = defineStore('user', () => {
     const baseline: Ref<string> = ref('')
 
     // 获取用户状态
-    function getInfo() {
-        try {
-            fetch(`/api/nav`)
-            .then(res => res.json())
-            .then(res => {
-                info.value = res.data
-                isLogin.value = res.data.isLogin
-            }) 
-        } catch (err) {
-            console.error('[Pinia user error]' + err)
-        }
+    async function getInfo() {
+        await fetchData(`/api/nav`, {
+        }, (data: BiliResType) => {
+            info.value = data.data
+            isLogin.value = data.data.isLogin
+        })
     }
 
     return { 

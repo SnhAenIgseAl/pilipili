@@ -2,8 +2,11 @@ import { ElMessage } from "element-plus"
 import BiliResType from "../type/BiliResType"
 
 
-export const fetchData = async (api: any, opition: Object | undefined, callback: Function | undefined) => {
+export const fetchData = async (api: string, opition: RequestInit | undefined, callback: Function | undefined) => {
     try {
+        api = api.replace('/api', 'https://pilipili-server.icu')
+        opition!.mode = 'cors'
+
         let res = await fetch(api, opition)
         let data: BiliResType = await res.json()
 

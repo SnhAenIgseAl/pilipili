@@ -18,6 +18,7 @@ import { useRoute } from 'vue-router';
 import FansFollowList from '../components/FansFollowList.vue';
 import BiliResType from '../../../type/BiliResType';
 import { parseTime } from '../../../utils/parseTime';
+import { fetchData } from '../../../utils/fetchData';
 
 
 
@@ -36,12 +37,8 @@ const changePage = async (page: number) => {
 // 获取关注列表
 const followsList = ref(null)
 const getFollowsList = async (page: number) => {
-    try {
-        let res: any = await fetch(`/api/space/follows?mid=${route.params.mid}&page=${page}`)
-        let data: BiliResType = await res.json()
-
-        console.log(data)
-
+    await fetchData(`/api/space/follows?mid=${route.params.mid}&page=${page}`, {
+    }, (data: BiliResType) => {
         if (data.code === 0) {
             for (let i = 0; i < data.data.list.length; i++) {
                 data.data.list[i].mtime = parseTime(data.data.list[i].mtime)
@@ -51,9 +48,7 @@ const getFollowsList = async (page: number) => {
             console.log(data)
             ElMessage({message: data.message, type: 'error'})
         }
-    } catch (err) {
-        ElMessage({message: '服务器连接失败', type: 'error'})
-    }
+    })
 }
 getFollowsList(pageNum.value)
 

@@ -44,26 +44,22 @@
 import { ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRoute } from 'vue-router'
+import { fetchData } from '../../../utils/fetchData';
+import BiliResType from '../../../type/BiliResType';
 
 // 获取置顶及代表作视频
 const topVideo: any = ref(null)
 const masterVideo: any = ref(null)
 const getTopVideo = async (mid: any) => {
-	try {
-		let res: any = await fetch(`/api/space/top?mid=${mid}`)
-		res = await res.json()
-
-		console.log(res)
-
-		if (res.code == 0) {
-			topVideo.value = res.data.topVideo
-			masterVideo.value = res.data.masterVideo
+    await fetchData(`/api/space/top?mid=${mid}`, {
+    }, (data: BiliResType) => {
+        if (data.code == 0) {
+			topVideo.value = data.data.topVideo
+			masterVideo.value = data.data.masterVideo
 		} else {
-			ElMessage({message: res.message, type: 'error'})
+			ElMessage({message: data.message, type: 'error'})
 		}
-	} catch (err) {
-		ElMessage({message: '网络未连接', type: 'error'})
-	}
+    })
 }
 
 

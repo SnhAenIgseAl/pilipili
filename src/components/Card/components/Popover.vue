@@ -22,9 +22,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
 import type BiliResType from '../../../type/BiliResType'
 import Level from '../../Level.vue';
+import { fetchData } from '../../../utils/fetchData';
 
 const props = defineProps({
     pub: Object
@@ -33,16 +33,12 @@ const props = defineProps({
 
 const info: any = ref(null)
 const getInfo = async () => {
-    try {
-        let res = await fetch(`/api/popover?mid=${props.pub!.mid}`)
-        let data: BiliResType = await res.json()
-
+    await fetchData(`/api/popover?mid=${props.pub!.mid}`, {
+    }, (data: BiliResType)=>{
         if (data.code === 0) {
             info.value = data.data
         }
-    } catch (err) {
-        ElMessage({ message: '网络未连接', type: 'error' })
-    }
+    })
 }
 getInfo()
 
