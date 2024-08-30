@@ -78,7 +78,7 @@ const login = async () => {
 			}, () => {
 				getInfo()
 				ElMessage({message: '登录成功', type: 'success'})
-				// window.location.href = '/index'
+				window.location.href = '/index'
 			})
 		}
 	})
