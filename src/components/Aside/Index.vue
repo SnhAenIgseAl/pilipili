@@ -10,7 +10,7 @@
                 </div>
             </RouterLink>
 
-            <el-Badge :value="msgUnread?.at + msgUnread.like + msgUnread.reply" 
+            <el-Badge :value="msgUnreadNum" 
                 type="primary" 
                 :show-zero="false">
 
@@ -91,11 +91,13 @@ getInfo()
 
 // 检测未读消息
 const msgUnread: Ref<any> = ref({})
+const msgUnreadNum: Ref<number> = ref(0)
 const getMsgUnread = async () => {
     await fetchData(`/api/message/unread`, {
     }, (data: BiliResType) => {
         // console.log(data)
         msgUnread.value = data.data
+        msgUnreadNum.value = data.data.at + data.data.like + data.data.reply
     })
 }
 getMsgUnread()
