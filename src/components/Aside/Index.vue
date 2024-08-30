@@ -10,8 +10,7 @@
                 </div>
             </RouterLink>
 
-            <el-Badge v-if="msgUnread"
-                :value="msgUnread.at + msgUnread.like + msgUnread.reply" 
+            <el-Badge :value="msgUnread.at + msgUnread.like + msgUnread.reply" 
                 type="primary" 
                 :show-zero="false">
 
