@@ -126,7 +126,6 @@ const getVideo = async () => {
 	})
 }
 getVideo()
-getVideo()
 
 
 
