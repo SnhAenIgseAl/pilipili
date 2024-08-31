@@ -58,7 +58,6 @@ const upInfo: Ref<null> = ref(null)
 const attr: Ref<number> = ref(0)
 const bv: Ref<string> = ref('null')
 const cid: Ref<number> = ref(0)
-const playerInfo: Ref<any> = ref({})
 
 // 获取视频信息及播放地址
 const getVideoInfo = async (bvid: string | string[]) => {
@@ -78,18 +77,6 @@ const getVideoInfo = async (bvid: string | string[]) => {
             cid.value = data.data.View.cid
         } else {
             ElMessage({ message: data.message, type: 'error' })
-        }
-    })
-
-    await fetchData(`/api/player?bvid=${bv.value}&cid=${cid.value}`, {
-    }, (data: BiliResType) => {
-        if (data.code === 0) {
-            // console.log(data)
-            playerInfo.value = data.data
-        } else if (data.code === 87007) {
-            ElMessage.warning({ message: 'OnlyFans' })
-        } else {
-            ElMessage.error({ message: data.message })
         }
     })
 }
