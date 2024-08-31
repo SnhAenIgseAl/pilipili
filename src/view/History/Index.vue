@@ -68,7 +68,8 @@ import { parseTime } from '../../utils/parseTime';
 
 const historyList: any = ref(null)
 const getHistory = async () => {
-    await fetchData(`/api/history`, undefined, (data: BiliResType) => {
+    await fetchData(`/api/history`, {
+    }, (data: BiliResType) => {
         if (data.code == 0) {
 
             // 转换时间戳
