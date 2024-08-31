@@ -62,14 +62,16 @@ getRelation(props.videoInfo?.owner.mid)
 
 
 
-// 获取视频播放地址
+// 获取视频播放信息及播放流地址
 const playerInfo: any = ref(null)
+const playerUrl: Ref<string> = ref('')
 const getPlayerInfo = async () => {
     await fetchData(`/api/player?bvid=${props.videoInfo?.bvid}&cid=${props.videoInfo?.cid}`, {
     }, (data: BiliResType) => {
         if (data.code === 0) {
             // console.log(data)
             playerInfo.value = data.data
+            playerUrl.value = data.data.dash.video[0].baseUrl
         } else if (data.code === 87007) {
             ElMessage.warning({ message: 'OnlyFans' })
         } else {
@@ -104,7 +106,7 @@ const options = reactive({
     height: '100%',
     color: "#fff",
     title: `${props.videoInfo?.title}`,
-    src: `${playerInfo?.dash?.video[0].baseUrl}`,
+    src: `${playerUrl}`,
     muted: false,
     webFullScreen: false,
     speedRate: ["2.0", "1.5", "1.25", "1.0", "0.75", "0.5"],
