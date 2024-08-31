@@ -54,7 +54,8 @@ const props = defineProps({
 
 const msgUnread: any = ref(null)
 const getMsgUnread = async () => {
-    await fetchData(`/api/message/unread`, undefined, (data: BiliResType) => {
+    await fetchData(`/api/message/unread`, { 
+    }, (data: BiliResType) => {
         // console.log(data)
         msgUnread.value = data.data
     })
