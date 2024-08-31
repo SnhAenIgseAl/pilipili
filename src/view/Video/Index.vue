@@ -1,7 +1,7 @@
 <template>
     <div v-if="videoInfo" class="video-box">
 
-        <VideoControl v-if="videoInfo" :videoInfo="videoInfo" />
+        <VideoControl :videoInfo="videoInfo" />
 
         <div class="video-action">
             <!-- 视频推荐 -->

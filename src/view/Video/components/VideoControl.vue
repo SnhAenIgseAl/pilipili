@@ -1,5 +1,5 @@
 <template>
-    <div class="video-play" id="video-play">
+    <div v-if="props.videoInfo" class="video-play" id="video-play">
         
         <!-- 弹幕 -->
         <vue-danmaku ref="danmakuRef" 
