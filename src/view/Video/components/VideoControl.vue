@@ -10,7 +10,7 @@
         </vue-danmaku>
 
         <!-- 视频 -->
-        <longzeVideoPlay v-bind="options" 
+        <longzeVideoPlay v-if="playerUrl" v-bind="options" 
             ref="videoRef"
             @play="onPlay"
             @pause="onPause"
