@@ -73,7 +73,7 @@ const getPlayerInfo = async () => {
         } else if (data.code === 87007) {
             ElMessage.warning({ message: 'OnlyFans' })
         } else {
-            ElMessage.error({ message: data.message })
+            ElMessage.warning({ message: data.message })
         }
     })
 }
@@ -104,7 +104,7 @@ const options = reactive({
     height: '100%',
     color: "#fff",
     title: `${props.videoInfo?.title}`,
-    src: `${playerInfo?.dash.video[0].baseUrl}`,
+    src: `${playerInfo.dash?.video[0].baseUrl}`,
     muted: false,
     webFullScreen: false,
     speedRate: ["2.0", "1.5", "1.25", "1.0", "0.75", "0.5"],
