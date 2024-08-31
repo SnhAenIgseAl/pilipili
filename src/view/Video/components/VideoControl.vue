@@ -10,7 +10,8 @@
         </vue-danmaku>
 
         <!-- 视频 -->
-        <longzeVideoPlay v-if="playerUrl" v-bind="options" 
+        <longzeVideoPlay v-if="playerUrl" 
+            v-bind="options" 
             ref="videoRef"
             @play="onPlay"
             @pause="onPause"
@@ -19,7 +20,7 @@
             @volumechange="volumeChange"/>
         
         <!-- 音频 -->
-        <audio crossorigin="anonymous" ref="audioRef">
+        <audio v-if="playerInfo" crossorigin="anonymous" ref="audioRef">
             <source :src="playerInfo.dash.audio[0].baseUrl" />
         </audio>
 
@@ -110,7 +111,7 @@ const options = reactive({
     muted: false,
     webFullScreen: false,
     speedRate: ["2.0", "1.5", "1.25", "1.0", "0.75", "0.5"],
-    autoPlay: true,
+    autoPlay: false,
     loop: false,
     mirror: false,
     ligthOff: false,
