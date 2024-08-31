@@ -53,10 +53,10 @@ import { fetchData } from '../../utils/fetchData'
 
 const route = useRoute()
 
-const videoInfo: Ref<any> = ref({})
-const upInfo: Ref<null> = ref(null)
+const videoInfo: Ref<any> = ref(null)
+const upInfo: Ref<any> = ref(null)
 const attr: Ref<number> = ref(0)
-const bv: Ref<string> = ref('null')
+const bv: Ref<string> = ref('')
 const cid: Ref<number> = ref(0)
 
 // 获取视频信息及播放地址

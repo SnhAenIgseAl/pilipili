@@ -63,7 +63,7 @@ getRelation(props.videoInfo?.owner.mid)
 
 
 // 获取视频播放地址
-const playerInfo: any = ref({})
+const playerInfo: any = ref(null)
 const getPlayerInfo = async () => {
     await fetchData(`/api/player?bvid=${props.videoInfo?.bvid}&cid=${props.videoInfo?.cid}`, {
     }, (data: BiliResType) => {
