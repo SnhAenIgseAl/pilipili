@@ -1,5 +1,5 @@
 <template>
-    <div v-if="props.playerInfo" class="video-play" id="video-play">
+    <div v-if="playerInfo" class="video-play" id="video-play">
         
         <!-- 弹幕 -->
         <vue-danmaku ref="danmakuRef" 
@@ -20,7 +20,7 @@
         
         <!-- 音频 -->
         <audio crossorigin="anonymous" ref="audioRef">
-            <source :src="props.playerInfo?.dash.audio[0].baseUrl" />
+            <source :src="playerInfo.dash.audio[0].baseUrl" />
         </audio>
 
     </div>
@@ -39,7 +39,7 @@ import { filterDanmaku } from '../../../utils/filterDanmaku'
 
 
 const props = defineProps({
-    playerInfo: Object,
+    // playerInfo: Object,
     videoInfo: Object
 })
 
@@ -62,9 +62,27 @@ getRelation(props.videoInfo?.owner.mid)
 
 
 
+// 获取视频播放地址
+const playerInfo: any = ref({})
+const getPlayerInfo = async () => {
+    await fetchData(`/api/player?bvid=${props.videoInfo?.bvid}&cid=${props.videoInfo?.cid}`, {
+    }, (data: BiliResType) => {
+        if (data.code === 0) {
+            // console.log(data)
+            playerInfo.value = data.data
+        } else if (data.code === 87007) {
+            ElMessage.warning({ message: 'OnlyFans' })
+        } else {
+            ElMessage.error({ message: data.message })
+        }
+    })
+}
+getPlayerInfo()
+
+
+
 // 获取视频弹幕
 const danmakuList: Ref<danmakuType[]> = ref([])
-
 const getDanmaku = async () => {
     await fetchData(`/api/video/danmaku?bvid=${props.videoInfo?.bvid}`, {
     }, (data: any) => {
@@ -86,7 +104,7 @@ const options = reactive({
     height: '100%',
     color: "#fff",
     title: `${props.videoInfo?.title}`,
-    src: `${props.playerInfo?.dash.video[0].baseUrl}`,
+    src: `${playerInfo?.dash.video[0].baseUrl}`,
     muted: false,
     webFullScreen: false,
     speedRate: ["2.0", "1.5", "1.25", "1.0", "0.75", "0.5"],
