@@ -67,6 +67,7 @@
             <div class="setting-item_body">
                 <el-slider v-model="USER_RECOMMEND_VIDEO_NUM" 
                     @change="changeVideoNum"
+                    :disabled="USER_RECOMMEND_VIDEO_PLATFORM === 'APP'"
                     :step="1" 
                     :min="5"
                     :max="14"
@@ -85,6 +86,7 @@
             <div class="setting-item_body">
                 <el-slider v-model="USER_RECOMMEND_VIDEO_FRESH" 
                     @change="changeVideoFresh"
+                    :disabled="USER_RECOMMEND_VIDEO_PLATFORM === 'APP'"
                     :step="1" 
                     :min="0"
                     :max="100"/>
