@@ -102,7 +102,7 @@ let options: Reactive<any> = reactive({
     muted: false,
     webFullScreen: false,
     speedRate: ["2.0", "1.5", "1.25", "1.0", "0.75", "0.5"],
-    autoPlay: true,
+    autoPlay: false,
     loop: false,
     mirror: false,
     ligthOff: false,

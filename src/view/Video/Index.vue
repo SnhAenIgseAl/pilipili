@@ -125,6 +125,7 @@ body {
     min-width: 960px;
     height: calc(100%);
     padding-top: 60px;
+    padding-left: 86px;
 }
 
 .video-action_box {
@@ -138,9 +139,9 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
     height: 60px;
-    width: 1280px;
+    width: 100%;
+    max-width: 1280px;
 }
 
 .video-up {

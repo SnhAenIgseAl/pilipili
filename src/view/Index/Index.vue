@@ -126,6 +126,9 @@ const getVideo = async () => {
 	})
 }
 getVideo()
+setTimeout(() => {
+	getVideo()
+}, 500);
 
 
 
@@ -147,7 +150,7 @@ onMounted(() => {
 	min-width: 960px;
 	max-width: 1660px;
 	padding-top: 60px;
-	padding-left: 86px;
+	/* padding-left: 86px; */
 	margin: 16px auto;
 	height: auto;
 	background: unset !important;

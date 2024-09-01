@@ -65,5 +65,6 @@ onMounted(() => {
 <style scoped>
 .main-box {
 	max-width: 1280px;
+	padding-left: 86px;
 }
 </style>
