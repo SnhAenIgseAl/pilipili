@@ -10,7 +10,7 @@
         </vue-danmaku>
 
         <!-- 视频 -->
-        <longzeVideoPlay v-if="playerInfo" 
+        <longzeVideoPlay
             v-bind="options" 
             ref="videoRef"
             @play="onPlay"
@@ -20,8 +20,8 @@
             @volumechange="volumeChange"/>
         
         <!-- 音频 -->
-        <audio v-if="playerInfo" crossorigin="anonymous" ref="audioRef">
-            <source :src="playerInfo.dash.audio[0].baseUrl" />
+        <audio v-if="audioUrl" crossorigin="anonymous" ref="audioRef">
+            <source :src="audioUrl" />
         </audio>
 
     </div>
@@ -37,12 +37,24 @@ import { ElMessage } from 'element-plus';
 import vueDanmaku from 'vue3-danmaku'
 import { filterDanmaku } from '../../../utils/filterDanmaku'
 
-
-
 const props = defineProps({
     playerInfo: Object,
     videoInfo: Object
 })
+
+
+
+/**
+ * 由于服务端部署在香港节点，所以哔哩哔哩服务端会返回香港节点的视频流
+ * 需要把视频流换成大陆本地的
+ */
+const videoUrl = ref(null)
+const audioUrl = ref(null)
+const hk_videoUrl: Ref<string> = ref(props.playerInfo?.dash.video[0].baseUrl.split('/')[2])
+const hk_audioUrl: Ref<string> = ref(props.playerInfo?.dash.audio[0].baseUrl.split('/')[2])
+let cnUrl: string = 'upos-sz-mirrorcos.bilivideo.com'
+videoUrl.value = props.playerInfo?.dash.video[0].baseUrl.replace(hk_videoUrl.value, cnUrl)
+audioUrl.value = props.playerInfo?.dash.audio[0].baseUrl.replace(hk_audioUrl.value, cnUrl)
 
 
 
@@ -86,7 +98,7 @@ let options: Reactive<any> = reactive({
     height: '100%',
     color: "#fff",
     title: `${props.videoInfo?.title}`,
-    src: `${props.playerInfo?.dash.video[0].baseUrl}`,
+    src: `${videoUrl.value}`,
     muted: false,
     webFullScreen: false,
     speedRate: ["2.0", "1.5", "1.25", "1.0", "0.75", "0.5"],

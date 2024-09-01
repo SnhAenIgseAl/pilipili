@@ -1,7 +1,9 @@
 <template>
     <div v-if="videoInfo" class="video-box">
 
-        <VideoControl v-if="playerInfo" :videoInfo="videoInfo" :playerInfo="playerInfo"/>
+        <VideoControl v-if="playerInfo" 
+            :videoInfo="videoInfo" 
+            :playerInfo="playerInfo"/>
 
         <div class="video-action">
             <!-- 视频推荐 -->
@@ -71,7 +73,7 @@ const getVideoInfo = async (bvid: string | string[]) => {
             data.data.View.pubdate = parseTime(data.data.View.pubdate)
 
             videoInfo.value = data.data.View
-            console.log(videoInfo.value)
+            // console.log(videoInfo.value)
             upInfo.value = data.data.Card
             attr.value = data.data.Card.following ? 2 : 0
             bv.value = data.data.View.bvid
@@ -81,11 +83,13 @@ const getVideoInfo = async (bvid: string | string[]) => {
         }
     })
 
+    // 获取视频播放地址
     await fetchData(`/api/player?bvid=${bv.value}&cid=${cid.value}`, {
     }, (data: BiliResType) => {
         if (data.code === 0) {
             // console.log(data)
             playerInfo.value = data.data
+
         } else if (data.code === 87007) {
             ElMessage.warning({ message: 'OnlyFans' })
         } else {

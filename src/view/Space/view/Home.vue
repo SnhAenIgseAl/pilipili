@@ -29,7 +29,8 @@ const route = useRoute()
 
 const videoList: any = ref(null)
 const getVideoList = async () => {
-    await fetchData(`/api/space/video?mid=${route.params.mid}`, undefined, (data: BiliResType) => {
+    await fetchData(`/api/space/video?mid=${route.params.mid}`, {
+    }, (data: BiliResType) => {
         console.log(data)
         if (data.code === 0) {
             videoList.value = data.data.item

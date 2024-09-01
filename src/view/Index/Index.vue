@@ -10,7 +10,7 @@
 
 				<!-- 视频封面 -->
 				<div class="pic"
-					:style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.pic}@600w_288h.webp)` }">
+					:style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.pic}@360w_288h.webp)` }">
 					<div class="stat">
 						<span><i>&#xe81a;</i>{{ item.stat.view }}</span>
 						<span><i>&#xe644;</i>{{ item.stat.like }}</span>
@@ -24,7 +24,7 @@
 					<div class="info-title" v-html="item.title"></div>
 					<RouterLink :to="`/space/${item.owner.mid}/home`">
 						<div class="info-author">
-							<img :src="`https://images.weserv.nl/?url=${item.owner.face}@60w_60h.webp`" class="upic" />
+							<img :src="`https://images.weserv.nl/?url=${item.owner.face}@30w.webp`" class="upic" />
 							<el-text type="info">{{ item.owner.name }} · {{ item.pubdate }}</el-text>
 						</div>
 					</RouterLink>
@@ -45,7 +45,7 @@
 
 				<!-- 视频封面 -->
 				<div class="pic"
-					:style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.cover}@600w_288h.webp)` }">
+					:style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.cover}@360w_288h.webp)` }">
 					<div class="stat">
 						<span><i>&#xe81a;</i>{{ item.cover_left_1_content_description }}</span>
 						<span><i>&#xe6ee;</i>{{ item.cover_left_2_content_description }}</span>
