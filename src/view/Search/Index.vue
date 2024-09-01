@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, Ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import type BiliResType from '../../type/BiliResType'
 import { useRoute } from 'vue-router'
@@ -42,8 +42,8 @@ const route = useRoute()
 // const activeName = ref('video')
 
 
-const videoData = ref(Object)
-const userData = ref(Object)
+const videoData: Ref<null> = ref(null)
+const userData: Ref<null> = ref(null)
 
 // const currentPage = ref(1)
 const pageNum = ref(1)

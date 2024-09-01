@@ -1,7 +1,7 @@
 <template>
     <div v-if="videoInfo" class="video-box">
 
-        <VideoControl :videoInfo="videoInfo" />
+        <VideoControl v-if="playerInfo" :videoInfo="videoInfo" :playerInfo="playerInfo"/>
 
         <div class="video-action">
             <!-- 视频推荐 -->
@@ -54,6 +54,7 @@ import { fetchData } from '../../utils/fetchData'
 const route = useRoute()
 
 const videoInfo: Ref<any> = ref(null)
+const playerInfo: Ref<any> = ref(null)
 const upInfo: Ref<any> = ref(null)
 const attr: Ref<number> = ref(0)
 const bv: Ref<string> = ref('')
@@ -77,6 +78,18 @@ const getVideoInfo = async (bvid: string | string[]) => {
             cid.value = data.data.View.cid
         } else {
             ElMessage({ message: data.message, type: 'error' })
+        }
+    })
+
+    await fetchData(`/api/player?bvid=${bv.value}&cid=${cid.value}`, {
+    }, (data: BiliResType) => {
+        if (data.code === 0) {
+            // console.log(data)
+            playerInfo.value = data.data
+        } else if (data.code === 87007) {
+            ElMessage.warning({ message: 'OnlyFans' })
+        } else {
+            ElMessage.warning({ message: data.message })
         }
     })
 }

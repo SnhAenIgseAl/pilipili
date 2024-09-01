@@ -10,7 +10,7 @@
         </vue-danmaku>
 
         <!-- 视频 -->
-        <longzeVideoPlay v-if="playerUrl" 
+        <longzeVideoPlay v-if="playerInfo" 
             v-bind="options" 
             ref="videoRef"
             @play="onPlay"
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, Reactive } from 'vue';
 import type { Ref } from 'vue';
 import { fetchData } from '../../../utils/fetchData';
 import type BiliResType from '../../../type/BiliResType';
@@ -40,7 +40,7 @@ import { filterDanmaku } from '../../../utils/filterDanmaku'
 
 
 const props = defineProps({
-    // playerInfo: Object,
+    playerInfo: Object,
     videoInfo: Object
 })
 
@@ -63,27 +63,6 @@ getRelation(props.videoInfo?.owner.mid)
 
 
 
-// 获取视频播放信息及播放流地址
-const playerInfo: any = ref(null)
-const playerUrl: Ref<string> = ref('')
-const getPlayerInfo = async () => {
-    await fetchData(`/api/player?bvid=${props.videoInfo?.bvid}&cid=${props.videoInfo?.cid}`, {
-    }, (data: BiliResType) => {
-        if (data.code === 0) {
-            // console.log(data)
-            playerInfo.value = data.data
-            playerUrl.value = data.data.dash.video[0].baseUrl
-        } else if (data.code === 87007) {
-            ElMessage.warning({ message: 'OnlyFans' })
-        } else {
-            ElMessage.warning({ message: data.message })
-        }
-    })
-}
-getPlayerInfo()
-
-
-
 // 获取视频弹幕
 const danmakuList: Ref<danmakuType[]> = ref([])
 const getDanmaku = async () => {
@@ -101,17 +80,17 @@ getDanmaku()
 
 
 
-// 视频播放器配置
-const options = reactive({
+// 播放器配置
+let options: Reactive<any> = reactive({
     width: '100%',
     height: '100%',
     color: "#fff",
     title: `${props.videoInfo?.title}`,
-    src: `${playerUrl.value}`,
+    src: `${props.playerInfo?.dash.video[0].baseUrl}`,
     muted: false,
     webFullScreen: false,
     speedRate: ["2.0", "1.5", "1.25", "1.0", "0.75", "0.5"],
-    autoPlay: false,
+    autoPlay: true,
     loop: false,
     mirror: false,
     ligthOff: false,
@@ -120,6 +99,8 @@ const options = reactive({
     control: true,
     controlBtns:['audioTrack', 'quality', 'speedRate', 'volume', 'setting', 'pip', 'pageFullScreen', 'fullScreen'] //显示所有按钮,
 })
+
+
 
 const audioRef: any = ref(null)
 const videoRef: any = ref(null)
