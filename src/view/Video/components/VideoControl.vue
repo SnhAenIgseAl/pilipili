@@ -35,7 +35,7 @@ import type BiliResType from '../../../type/BiliResType';
 import type danmakuType from '../../../type/danmakuType'
 import { ElMessage } from 'element-plus';
 import vueDanmaku from 'vue3-danmaku'
-import { filterDanmaku } from '../../../utils/filterDanmaku'
+// import { filterDanmaku } from '../../../utils/filterDanmaku'
 
 const props = defineProps({
     playerInfo: Object,
@@ -76,8 +76,8 @@ getRelation(props.videoInfo?.owner.mid)
 
 
 // 获取视频弹幕
-// const danmakuList: Ref<danmakuType[]> = ref([])
-// const getDanmaku = async () => {
+const danmakuList: Ref<danmakuType[]> = ref([])
+const getDanmaku = async () => {
     // await fetchData(`/api/video/danmaku?bvid=${props.videoInfo?.bvid}`, {
     // }, (data: any) => {
 
@@ -87,8 +87,8 @@ getRelation(props.videoInfo?.owner.mid)
 
     //     danmakuList.value = data.data
     // })
-// }
-// getDanmaku()
+}
+getDanmaku()
 
 
 
