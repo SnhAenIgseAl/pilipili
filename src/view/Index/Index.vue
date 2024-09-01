@@ -41,7 +41,7 @@
 			v-for="(item, index) in videoList" :key="index"
 			class="list-item">
 
-			<RouterLink :to="`/video/${item.bvid}`">
+			<RouterLink :to="`/video/${item.player_args.aid}`">
 
 				<!-- 视频封面 -->
 				<div class="pic"
@@ -149,9 +149,9 @@ onMounted(() => {
 	flex-flow: row wrap;
 	min-width: 960px;
 	max-width: 1660px;
-	padding-top: 60px;
+	padding-top: 76px;
 	/* padding-left: 86px; */
-	margin: 16px auto;
+	margin: 0 auto;
 	height: auto;
 	background: unset !important;
 }

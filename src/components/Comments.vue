@@ -45,7 +45,7 @@
 
 
 
-                        <!-- 用户名及发布时间ip属地 -->
+                        <!-- 用户名 -->
                         <div class="comment-user">
                             <span v-if="item.member.vip.vipStatus" style="color: var(--cl-primary)">
                                 {{ item.member.uname }}
@@ -69,7 +69,7 @@
                         <div class="comment-control">
                             <!-- ip属地 -->
                             <div class="comment-info">
-                                <el-text type="info">
+                                <el-text type="info" size="small">
                                     {{ item.reply_control.time_desc }} · {{ item.reply_control.location }}
                                 </el-text>
                             </div>

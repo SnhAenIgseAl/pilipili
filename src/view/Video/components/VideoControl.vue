@@ -76,19 +76,19 @@ getRelation(props.videoInfo?.owner.mid)
 
 
 // 获取视频弹幕
-const danmakuList: Ref<danmakuType[]> = ref([])
-const getDanmaku = async () => {
-    await fetchData(`/api/video/danmaku?bvid=${props.videoInfo?.bvid}`, {
-    }, (data: any) => {
+// const danmakuList: Ref<danmakuType[]> = ref([])
+// const getDanmaku = async () => {
+    // await fetchData(`/api/video/danmaku?bvid=${props.videoInfo?.bvid}`, {
+    // }, (data: any) => {
 
-        // 弹幕过滤
-        data.data = filterDanmaku(data.data)
-        // console.log(data.data)
+    //     // 弹幕过滤
+    //     data.data = filterDanmaku(data.data)
+    //     // console.log(data.data)
 
-        danmakuList.value = data.data
-    })
-}
-getDanmaku()
+    //     danmakuList.value = data.data
+    // })
+// }
+// getDanmaku()
 
 
 
