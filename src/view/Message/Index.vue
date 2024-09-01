@@ -1,22 +1,22 @@
 <template>
 
     <div class="msg">
-        <div class="msg-list">
-            <el-Badge :value="props.atUnread" type="primary" :show-zero="false">
+        <div v-if="msgUnread" class="msg-list" >
+            <el-Badge :value="msgUnread.at" type="primary" :show-zero="false">
                 <RouterLink to='/message/at'>
                     <div class="msg-item">
                         <i>&#xe853;</i>
                     </div>
                 </RouterLink>
             </el-Badge>
-            <el-Badge :value="props.likeUnread" type="primary" :show-zero="false">
+            <el-Badge :value="msgUnread.like" type="primary" :show-zero="false">
                 <RouterLink to='/message/like'>
                     <div class="msg-item">
                         <i>&#xe669;</i>
                     </div>
                 </RouterLink>
             </el-Badge>
-            <el-Badge :value="props.replyUnread" type="primary" :show-zero="false">
+            <el-Badge :value="msgUnread.reply" type="primary" :show-zero="false">
                 <RouterLink to='/message/reply'>
                     <div class="msg-item">
                         <i>&#xe667;</i>
@@ -41,18 +41,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import { fetchData } from '../../utils/fetchData'
 import type BiliResType from '../../type/BiliResType'
 
-const props = defineProps({
-    atUnread: Number,
-    likeUnread: Number,
-    replyUnread: Number
-})
-
-
-const msgUnread: any = ref(null)
+const msgUnread: Ref<any> = ref(null)
 const getMsgUnread = async () => {
     await fetchData(`/api/message/unread`, { 
     }, (data: BiliResType) => {
@@ -84,7 +77,6 @@ getMsgUnread()
     padding: 10px;
     width: 70px;
     height: 100%;
-    border-right: 1px solid #eee;
 }
 
 .msg-item {
