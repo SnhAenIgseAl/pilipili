@@ -9,11 +9,11 @@
         <div class="dynamic-control">
             <div>
 
-                <!-- <el-button text size="small">
+                <el-button text size="small">
                     <i>&#xe64a;</i>
-                </el-button> -->
+                </el-button>
 
-                <!-- <el-upload
+                <el-upload
                     v-model:file-list="imgList"
                     list-type="picture-card"
                     action=""
@@ -28,7 +28,7 @@
 
                 <el-dialog v-model="dialogVisible">
                     <img w-full :src="dialogImageUrl" alt="Preview Image" />
-                </el-dialog> -->
+                </el-dialog>
             </div>
 
             <div>
@@ -47,88 +47,89 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-// import { Plus } from '@element-plus/icons-vue'
+import { ref, Ref } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-// import type { UploadProps, UploadUserFile, UploadRequestOptions } from 'element-plus'
+import type { UploadProps, UploadUserFile, UploadRequestOptions } from 'element-plus'
 import BiliResType from '../../../type/BiliResType';
-// import axios from 'axios'
+import UploadImgType from '../../../type/UploadImgType';
 import { fetchData } from '../../../utils/fetchData';
-// import axios from 'axios';
+import axios from 'axios';
 
 
 
 const dynamicTxt = ref(null)
-// const imgList = ref<UploadUserFile[]>([])
-// const dialogImageUrl = ref('')
-// const dialogVisible = ref(false)
 const addDynamicLoading = ref(false)
 
 
 
 // 检查上传的文件类型及大小
-// const checkFile: UploadProps['beforeUpload'] = (file) => {
-// 	if (file.type !== 'image/jpg' &&
-//         file.type !== 'image/jpeg' &&
-// 		file.type !== 'image/png'
-// 	) {
-// 		ElMessage({ message: '必须是jpg或png格式的图片', type: 'error' })
-// 		return false
-// 	} else if (file.size / 1024 / 1024 > 20) {
-// 		ElMessage({ message: '图片需小于20MB', type: 'error' })
-// 		return false
-// 	}
+const imgList = ref<UploadUserFile[]>([])
+const dialogImageUrl = ref('')
+const dialogVisible = ref(false)
+const checkFile: UploadProps['beforeUpload'] = (file) => {
+	if (file.type !== 'image/jpg' &&
+        file.type !== 'image/jpeg' &&
+		file.type !== 'image/png'
+	) {
+		ElMessage({ message: '必须是jpg或png格式的图片', type: 'error' })
+		return false
+	} else if (file.size / 1024 / 1024 > 20) {
+		ElMessage({ message: '图片需小于20MB', type: 'error' })
+		return false
+	}
 
-//     return true
-// }
-
-
-// // 上传图片
-// const uploadImgList: any = ref([])
-// const uploadImg = async (data: UploadRequestOptions) => {
-//     let file = data.file
-
-//     let fd = new FormData()
-//     fd.append('file_up', file)
-//     fd.append('csrf', localStorage.getItem('bili_jct')?.split(';')[0].split('=')[1] || '')
-//     fd.append('sessdata', localStorage.getItem('SESSDATA') || '')
-//     console.log(fd.get('file_up'))
-
-//     let imgSrc = await new Promise((resolve) => {
-//         axios.post(`/api/upload`, fd, {
-//             headers: {
-//                 'Content-Type': 'multipart/form-data',
-//             }
-//         })
-//         .then(res => res.data)
-//         .then((res: BiliResType) => {
-//             console.log(res)
-//             if (res.code === 0) {
-//                 ElMessage.success({ message: '图片上传成功' })
-//                 resolve(res.data)
-//             } else {
-//                 ElMessage.error({ message: '图片上传失败' })
-//             }
-//         })
-//     })
-
-//     uploadImgList.value.push(imgSrc)
-// }
+    return true
+}
 
 
+// 上传图片
+const uploadImgList: Ref<UploadImgType[]> = ref([])
+const uploadImg = async (data: UploadRequestOptions) => {
+    let file = data.file
 
-// // 移除上传的图片
-// const removeImg: UploadProps['onRemove'] = (file, files) => {
-//     console.log(file, files)
-// }
+    let fd = new FormData()
+    fd.append('file_up', file)
+    fd.append('csrf', localStorage.getItem('bili_jct') || '')
+    fd.append('sessdata', localStorage.getItem('SESSDATA') || '')
+    console.log(fd.get('file_up'))
+
+    let imgSrc: UploadImgType = await new Promise<UploadImgType>((resolve) => {
+        axios.post(`/api/upload`, fd, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        })
+        .then(res => res.data)
+        .then((res: BiliResType) => {
+            console.log(res)
+            if (res.code === 0) {
+                ElMessage.success({ message: '图片上传成功' })
+                resolve(res.data)
+            } else {
+                ElMessage.error({ message: '图片上传失败' })
+            }
+        })
+    })
+
+    uploadImgList.value.push(imgSrc)
+    console.log(uploadImgList.value)
+}
 
 
 
-// // 预览图片
-// const previewImg: UploadProps['onPreview'] = async (file) => {
-//     dialogImageUrl.value = file.url!
-//     dialogVisible.value = true
-// }
+// 移除上传的图片
+const removeImg: UploadProps['onRemove'] = (file, files) => {
+    console.log(file, files)
+}
+
+
+
+// 预览图片
+const previewImg: UploadProps['onPreview'] = async (file) => {
+    dialogImageUrl.value = file.url!
+    dialogVisible.value = true
+}
 
 
 
@@ -150,7 +151,7 @@ const addDynamic = async () => {
         },
         body: JSON.stringify({
             dynamicTxt: dynamicTxt.value,
-            // pics: uploadImgList.value,
+            pics: uploadImgList.value,
         })
     }, (data: BiliResType) => {
         if (data.code === 0) {
