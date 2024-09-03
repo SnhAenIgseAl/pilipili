@@ -107,7 +107,7 @@ const uploadImg = async (data: UploadRequestOptions) => {
                 ElMessage.success('图片上传成功')
                 resolve(res.data)
             } else {
-                ElMessage.error('图片上传失败')
+                ElMessage.error(res.message)
             }
         })
     })
