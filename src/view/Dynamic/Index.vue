@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, toRefs, onMounted } from 'vue'
+import { ref, Ref, toRefs, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import AddDynamic from './components/AddDynamic.vue';
 import Card from '../../components/Card/Card.vue'
@@ -86,12 +86,19 @@ const getNewDynamic = () => {
 
 
 
+const getMore = debounce(wheelBottom(2000, async () => {
+	await getDynamic(lastId.value)
+}), 400)
+
+
+
 // 滚轮触底了加载更多动态
 onMounted(() => {
-	window.addEventListener('scroll',
-		debounce(wheelBottom(2000, async () => {
-			await getDynamic(lastId.value)
-		}), 500))
+	window.addEventListener('scroll', getMore)
+})
+
+onUnmounted(() => {
+	window.removeEventListener('scroll', getMore)
 })
 
 

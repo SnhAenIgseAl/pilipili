@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useSettingStore } from '../../stores/setting';
 import type BiliResType from '../../type/BiliResType';
 import { wheelBottom } from '../../utils/wheelBottom';
@@ -132,12 +132,20 @@ setTimeout(() => {
 
 
 
+const getMore = debounce(wheelBottom(1000, async () => {
+	await getVideo()
+}), 400)
+
+
+
+
 // 滚轮触底了加载更多视频
 onMounted(() => {
-	window.addEventListener('scroll',
-		debounce(wheelBottom(2000, async () => {
-			await getVideo()
-		}), 300))
+	window.addEventListener('scroll', getMore)
+})
+
+onUnmounted(() => {
+	window.removeEventListener('scroll', getMore)
 })
 
 

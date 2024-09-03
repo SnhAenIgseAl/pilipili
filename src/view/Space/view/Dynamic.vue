@@ -54,11 +54,9 @@ getDynamic('')
 
 
 // 加载更多动态
-const getMore = async () => {
-	debounce(wheelBottom(2000, async () => {
-		await getDynamic(lastId.value)
-	}), 400)
-}
+const getMore = debounce(wheelBottom(2000, async () => {
+	await getDynamic(lastId.value)
+}), 400)
 
 
 
