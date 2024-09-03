@@ -95,7 +95,7 @@ const uploadImg = async (data: UploadRequestOptions) => {
     console.log(fd.get('file_up'))
 
     let imgSrc: UploadImgType = await new Promise<UploadImgType>((resolve) => {
-        axios.post(`/api/upload`, fd, {
+        axios.post(`https://pilipili-server.icu/upload`, fd, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
@@ -104,10 +104,10 @@ const uploadImg = async (data: UploadRequestOptions) => {
         .then((res: BiliResType) => {
             console.log(res)
             if (res.code === 0) {
-                ElMessage.success({ message: '图片上传成功' })
+                ElMessage.success('图片上传成功')
                 resolve(res.data)
             } else {
-                ElMessage.error({ message: '图片上传失败' })
+                ElMessage.error('图片上传失败')
             }
         })
     })
