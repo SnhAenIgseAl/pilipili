@@ -13,7 +13,7 @@
             </template>
 
             <template #default>
-                <el-button class="forward-item" text>
+                <el-button class="forward-item" text @click="copyLink">
                     <i>&#xe6bf;</i>复制视频链接
                 </el-button>
                 <Forward :dynId="dynId" txt="分享到动态" />
@@ -27,7 +27,7 @@
 
 	<el-dialog v-model="drawer" 
         title="视频海报" 
-        width="752"
+        width="632"
 		@opened="shareVideoImg">
 
         <canvas ref="shareRef" class="share-video"></canvas>
@@ -38,6 +38,7 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
+import { ElNotification } from 'element-plus'
 import Forward from '../../../components/Card/components/Forward.vue';
 
 const props = defineProps({
@@ -49,6 +50,19 @@ const shareCount = ref(props.num)
 const dynId: Ref<string> = ref(props.videoInfo?.aid.toString())
 
 
+
+// 复制视频链接
+const copyLink = () => {
+    const url = `https://www.bilibili.com/video/${props.videoInfo?.bvid}`
+    try {
+        navigator.clipboard.writeText(url)
+        ElNotification.success('复制成功')
+    } catch (err) {
+        ElNotification.warning('复制成功')
+    }
+}
+
+
 // 分享歌单海报
 var drawer = ref(false)
 const shareRef = ref(null)
@@ -58,7 +72,7 @@ const shareVideoImg = () => {
 
     async function _drawShareImg(videoInfo: any, shareRef: any) {
         var context = shareRef.getContext("2d")
-		shareRef.width = 1440;
+		shareRef.width = 1200;
         shareRef.height = 900;
 
 		context.rect(0, 0, shareRef.width, shareRef.height)
@@ -68,7 +82,7 @@ const shareVideoImg = () => {
 
             // 视频封面，等比放大高度至900像素，居中
             var videoImg = new Image()
-            videoImg.src = `https://images.weserv.nl/?url=${videoInfo.pic}@720w.webp`
+            videoImg.src = `https://images.weserv.nl/?url=${videoInfo.pic}@600w.webp`
             videoImg.onload = () => {
 
                 let scale = 900 / videoImg.naturalHeight
@@ -118,7 +132,7 @@ const shareVideoImg = () => {
 <style scoped>
 
 .share-video {
-	width: 720px;
+	width: 600px;
 	height: 450px;
 	background: #333 !important;
 }
