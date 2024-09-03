@@ -35,7 +35,7 @@ import { fetchData } from '../../../utils/fetchData';
 
 const route = useRoute()
 
-const coinVideoList: Ref<Array<any>> = ref([])
+const coinVideoList: Ref<any> = ref(null)
 
 // 获取投币视频
 const getCoinVideoList = async (mid: any) => {
@@ -45,7 +45,7 @@ const getCoinVideoList = async (mid: any) => {
             coinVideoList.value = data.data
             // console.log('coinVideoList', coinVideoList.value)
         } else {
-            ElNotification.error({message: data.message})
+            ElNotification.warning(data.message)
         }
     })
 }

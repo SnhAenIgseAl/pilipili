@@ -4,9 +4,39 @@
         <!-- 弹幕 -->
         <vue-danmaku ref="danmakuRef" 
             v-model:danmus="danmus" 
+            :isSuspend="true"
+            useSlot
             loop
             class="danmaku-box"
             @click="videoClick">
+
+            <template v-slot:dm="{ danmu }" class="danmaku">
+                <el-popover
+                    placement="bottom"
+                    :offset="4"
+                    :width="60"
+                    trigger="hover"
+                    effect="dark">
+
+                    <template #reference>
+                        <span class="danmaku-item" 
+                            @mouseover="showUserId(danmu)">
+                            {{ danmu.content }}
+                        </span>
+                    </template>
+
+                    <template #default>
+                        <span v-if="danmu.showId" @click="goToSpace(danmu.mid)">
+                            {{ danmu.mid }}
+                        </span>    
+                        <span v-else>
+                            {{ danmu.hash }}
+                        </span>
+                    </template>
+
+                </el-popover>
+            </template>
+
         </vue-danmaku>
 
         <!-- 视频 -->
@@ -36,6 +66,7 @@ import type danmakuType from '../../../type/danmakuType'
 import { ElMessage } from 'element-plus';
 import vueDanmaku from 'vue3-danmaku'
 import { filterDanmaku } from '../../../utils/filterDanmaku'
+import BiliMidCrc from '../../../utils/BiliMidCrc'
 
 const props = defineProps({
     playerInfo: Object,
@@ -67,7 +98,7 @@ const getRelation = async (mid: Number) => {
             attr.value = data.data.relation.attribute
             console.log(attr.value)
         } else {
-            ElMessage.error({ message: data.message })
+            ElMessage.error(data.message)
         }
     })
 }
@@ -144,7 +175,7 @@ const videoClick = () => {
 
 const danmakuIndex: Ref<number> = ref(0)
 const danmakuRef = ref()
-const danmus: Ref<[]> = ref([])
+const danmus: Ref<danmakuType[]> = ref([])
 
 // 时间轴
 const onTimeupdate = (e: any) => {
@@ -152,13 +183,13 @@ const onTimeupdate = (e: any) => {
     // 音画时间误差大于0.5秒时同步
     if (Math.abs(e.target.currentTime - audioRef.value.currentTime) > 0.5) {
         audioRef.value.currentTime = e.target.currentTime
-        danmakuIndex.value = getDanmakuIndex(e.target.currentTime)!
+        danmakuIndex.value = getDanmakuIndex(e.target.currentTime)!     // 获取弹幕列表下标
     }
 
     // 绘制弹幕，轮子，爽
     if (danmakuRef.value) {
         while (e.target.currentTime > danmakuList.value[danmakuIndex.value]?.time) {
-            danmakuRef.value.insert(danmakuList.value[danmakuIndex.value]?.content)
+            danmakuRef.value.add(danmakuList.value[danmakuIndex.value])
             danmakuIndex.value += 1
         }
     }
@@ -183,6 +214,20 @@ const rateChange = (e: any) => {
 const volumeChange = (e: any) => {
     audioRef.value.volume = e.target.volume
 }
+
+// 弹幕悬浮进入弹幕时，显示弹幕发送者id
+const showUserId = (danmu: danmakuType) => {
+    danmu.showId = true
+    const biliMidCrc = BiliMidCrc()
+    danmu.mid = biliMidCrc(danmu.hash)
+}
+
+
+// 家访
+const goToSpace = (mid: string) => {
+    window.open(`/space/${mid}/home`)
+}
+
 
 </script>
 
@@ -220,14 +265,21 @@ const volumeChange = (e: any) => {
     overflow: hidden;
 }
 
+.danmaku-item {
+    &:hover {
+        cursor: pointer;
+        border: 1px solid var(--cl-white);
+    }
+}
+
 
 </style>
 
 <style>
 .dm {
+    height: 24px !important;
     font-size: 24px !important;
     line-height: 24px !important;
-    color: #eee !important;
     text-shadow: 0px 0px 3px #000 !important;
 }
 

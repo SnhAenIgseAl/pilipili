@@ -32,14 +32,14 @@ import { fetchData } from '../../../utils/fetchData';
 
 const route = useRoute()
 
-const likeVideoList: Ref<Array<any>> = ref([])
+const likeVideoList: Ref<any> = ref(null)
 const getLikeVideoList = async () => {
     await fetchData(`/api/space/video/like?mid=${route.params.mid}`, {
     }, (data: BiliResType) => {
         if (data.code === 0) {
             likeVideoList.value = data.data.list
         } else {
-            ElNotification({ message: data.message, type: 'error' })
+            ElNotification.warning(data.message)
         }
     })
 }

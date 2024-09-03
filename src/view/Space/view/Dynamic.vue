@@ -1,6 +1,6 @@
 <template>
 	
-	<Card v-for="(item, index) in dynamicList" :key="index"
+	<Card v-if="dynamicList" v-for="(item, index) in dynamicList" :key="index"
 		:basic="item.basic"
 		:author="item.modules.module_author"
 		:dynamic="item.modules.module_dynamic"
@@ -9,10 +9,12 @@
 		:orig="item.orig"
 	/>
 
+	<el-empty v-else description="该用户暂无动态" />
+
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, Ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import Card from '../../../components/Card/Card.vue'
 import BiliResType from '../../../type/BiliResType';
@@ -27,7 +29,7 @@ const route = useRoute()
 
 
 
-const dynamicList: any = ref(null)
+const dynamicList: Ref<any> = ref(null)
 const lastId = ref(String)
 const getDynamic = async (offset: any) => {
 	await fetchData(`/api/space/dynamic?mid=${route.params.mid}&offset=${offset}`, {
@@ -51,12 +53,22 @@ getDynamic('')
 
 
 
+// 加载更多动态
+const getMore = async () => {
+	debounce(wheelBottom(2000, async () => {
+		await getDynamic(lastId.value)
+	}), 400)
+}
+
+
+
 // 触底加载更多动态
 onMounted(() => {
-	window.addEventListener('scroll',
-		debounce(wheelBottom(2000, async () => {
-			await getDynamic(lastId.value)
-		}), 300))
+	window.addEventListener('scroll', getMore)
+})
+
+onUnmounted(() => {
+	window.removeEventListener('scroll', getMore)
 })
 
 

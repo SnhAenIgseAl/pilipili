@@ -18,6 +18,8 @@
             </RouterLink>
         </div>
     </div>
+
+    <el-empty v-else description="暂无投稿视频" />
 </template>
 
 <script setup lang="ts">
