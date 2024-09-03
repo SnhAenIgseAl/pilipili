@@ -25,3 +25,26 @@ B站前端项目，所有api请求均来自B站官方服务端。
 - - -
 发布动态（带图）  
 发布视频  
+
+### 本地部署  
+- - -
+克隆
+```
+git clone https://github.com/SnhAenIgseAl/pilipili
+```
+切换至噼哩噼哩目录
+```
+cd pilipili
+```
+安装依赖
+```
+npm i --save
+```
+启动服务（本地）
+```
+npm run dev
+```
+打包
+```
+npm run build
+```
