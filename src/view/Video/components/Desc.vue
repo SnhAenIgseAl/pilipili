@@ -1,7 +1,7 @@
 <template>
 
     <el-button text size="large" @click="descVisible = true">
-        <i>&#xe791;</i>视频简介
+        <i>&#xe791;</i>视频信息
     </el-button>
 
     <el-drawer v-model="descVisible" 
@@ -9,6 +9,9 @@
         size="600">
 
         <template #default>
+            <h3 class="desc">
+                {{ props.videoInfo?.title }}
+            </h3>
             <div class="desc">
                 发布于{{ props.videoInfo?.pubdate }}
             </div>

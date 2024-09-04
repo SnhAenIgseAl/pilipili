@@ -67,7 +67,7 @@ html.black {
 
 body {
 	font-family: PingFang SC, HarmonyOS_Medium, Helvetica Neue, Microsoft YaHei, sans-serif;
-	overflow-y: scroll;
+	overflow-y: scroll !important;
 }
 
 a {

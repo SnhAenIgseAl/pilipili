@@ -6,23 +6,23 @@
             :playerInfo="playerInfo"/>
 
         <div class="video-action">
-            <!-- 视频推荐 -->
-            <Related :bvid="videoInfo.bvid" />
 
-            <!-- 视频简介 -->
-            <Desc :videoInfo="videoInfo" />
+            <div class="action-item">
+                <!-- 视频推荐 -->
+                <Related :bvid="videoInfo.bvid" />
 
-            <!-- 视频操作 -->
-            <Like :aid="videoInfo.aid" :num="videoInfo.stat.like" />
-            <TouBi :aid="videoInfo.aid" :num="videoInfo.stat.coin" />
-            <Collect :rid="videoInfo.aid" :num="videoInfo.stat.favorite"/>
-            <Forward :videoInfo="videoInfo" :playerInfo="playerInfo" :num="videoInfo.stat.share" />
+                <!-- 视频信息 -->
+                <Desc :videoInfo="videoInfo" />
 
-            <!-- 视频评论 -->
-            <Comments :type="1" :oid="`${videoInfo.aid}`" :comments="videoInfo.stat.reply" />
+                <!-- 视频操作 -->
+                <Like :aid="videoInfo.aid" :num="videoInfo.stat.like" />
+                <TouBi :aid="videoInfo.aid" :num="videoInfo.stat.coin" />
+                <Collect :rid="videoInfo.aid" :num="videoInfo.stat.favorite"/>
+                <Forward :videoInfo="videoInfo" :playerInfo="playerInfo" :num="videoInfo.stat.share" />
 
-            <!-- 发送弹幕 -->
-            <!-- <Bullet :bvid="videoInfo.bvid" :cid="videoInfo.cid" /> -->
+                <!-- 视频评论 -->
+                <Comments :type="1" :oid="`${videoInfo.aid}`" :comments="videoInfo.stat.reply" />
+            </div>
 
             <!-- up信息 -->
             <div class="video-up">
@@ -131,15 +131,9 @@ body {
     padding-left: 86px;
 }
 
-.video-action_box {
-    display: flex;
-    width: 1280px;
-    align-items: center;
-    justify-content: space-between;
-}
-
 .video-action {
     position: relative;
+    left: 0;
     display: flex;
     align-items: center;
     height: 60px;
@@ -147,9 +141,17 @@ body {
     max-width: 1280px;
 }
 
+.action-item {
+    display: flex;
+    align-items: center;
+    width: auto;
+    min-width: 1060px;
+    height: 60px;
+}
+
 .video-up {
-    position: absolute;
-    right: 0;
+    float: right;
+    margin-right: 0;
     display: flex;
     flex-flow: row;
     align-items: center;
@@ -167,6 +169,7 @@ body {
 
 .up-name {
     width: auto;
+    min-width: 60px;
     margin: 0 16px;
     font-size: 16px;
     font-weight: bold;

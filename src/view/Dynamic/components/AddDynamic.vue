@@ -90,6 +90,7 @@ const uploadImg = async (data: UploadRequestOptions) => {
 
     let fd = new FormData()
     fd.append('file_up', file)
+    fd.append('category', 'daily')
     fd.append('csrf', localStorage.getItem('bili_jct') || '')
     fd.append('sessdata', localStorage.getItem('SESSDATA') || '')
     console.log(fd.get('file_up'))

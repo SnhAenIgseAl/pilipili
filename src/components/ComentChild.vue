@@ -14,9 +14,9 @@
 
         <!-- 头像及头像框 -->
         <div class="avatar-img">
-            <img class="avatar-face" :src="`https://images.weserv.nl/?url=${item.member.avatar}@40w.webp`" />
+            <img class="avatar-face" :src="`https://images.weserv.nl/?url=${item.member.avatar}@80w.webp`" />
             <img v-if="item.member.pendant.image" class="avatar-pendant"
-                :src="`https://images.weserv.nl/?url=${item.member.avatar}@40w.webp`" />
+                :src="`https://images.weserv.nl/?url=${item.member.avatar}@80w.webp`" />
         </div>
 
 

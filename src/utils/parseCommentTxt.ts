@@ -39,7 +39,7 @@ function parseAt(text: string, members: Array<any> | []) {
         return text
     } else {
         for (let i = 0; i < members.length; i++) {
-            text = text.split(`@${members[i].uname}`).join(`<span class="at-uname">@${members[i].uname}</span> `)
+            text = text.split(`@${members[i].uname}`).join(`<a href="/space/${members[i].mid}/home" target="_blank" class="at-uname">@${members[i].uname}</a> `)
         }
         return text
     }
