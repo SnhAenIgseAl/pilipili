@@ -1,6 +1,6 @@
 <template>
 
-    <div style="width: 120px;">
+    <div style="width: 90px;">
         <el-button v-if="collected" text size="large" 
             @click="dialogVisible = true"
             style="color: var(--cl-primary)">

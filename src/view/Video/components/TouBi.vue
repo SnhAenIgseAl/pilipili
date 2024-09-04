@@ -1,7 +1,7 @@
 <template>
 
     <!-- 透透你的 -->
-    <div style="width: 120px;">
+    <div style="width: 90px;">
         <el-button v-if="hasCoined" text size="large" 
             @click="coinDialogVisible = true"
             style="color: var(--cl-primary);">

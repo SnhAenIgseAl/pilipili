@@ -1,6 +1,6 @@
 <template>
 
-    <div style="width: 120px;">
+    <div style="width: 90px;">
         <el-button v-if="liked" text size="large" 
             @click="like"
             style="color: var(--cl-primary)">

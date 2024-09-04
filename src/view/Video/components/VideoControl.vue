@@ -47,8 +47,57 @@
             @pause="onPause"
             @timeupdate="onTimeupdate"
             @ratechange="rateChange"
-            @volumechange="volumeChange"/>
-        
+            @volumechange="volumeChange">
+        </longzeVideoPlay>
+
+        <!-- 发送弹幕 -->
+        <!-- <Bullet v-if="videoRef" :bvid="props.videoInfo?.bvid" :cid="props.videoInfo?.cid" :videoRef="videoRef"/> -->
+        <el-input v-model="bulletInput" 
+            size="small"
+            class="bullet-input"
+            @focus="videoPause"
+            @blur="videoPlay">
+
+            <!-- 弹幕样式设置 -->
+            <template #prepend>
+                <el-popover trigger="click" :width="200">
+
+                    <template #reference>
+                        <el-button>A</el-button>
+                    </template>
+
+                    <template #default>
+                        <el-text>弹幕颜色</el-text>
+                        <el-color-picker v-model="bulletColor"></el-color-picker><br />
+                        <el-text>弹幕字号</el-text>
+                        <el-select v-model="bulletFontSize"
+                            placeholder="">
+                            <el-option
+                                v-for="item in bulletFontSizeOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"/>
+                        </el-select>
+                        <el-text>弹幕位置</el-text>
+                        <el-select v-model="bulletMode"
+                            placeholder="">
+                            <el-option
+                                v-for="item in bulletModeOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"/>
+                        </el-select>
+                    </template>
+
+                </el-popover>
+            </template>
+
+            <template #append>
+                <el-button @click="sendBullet" type="primary">发送</el-button>
+            </template>
+
+        </el-input>
+
         <!-- 音频 -->
         <audio v-if="audioUrl" crossorigin="anonymous" ref="audioRef">
             <source :src="audioUrl" />
@@ -63,10 +112,11 @@ import type { Ref } from 'vue';
 import { fetchData } from '../../../utils/fetchData';
 import type BiliResType from '../../../type/BiliResType';
 import type danmakuType from '../../../type/danmakuType'
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElNotification } from 'element-plus';
 import vueDanmaku from 'vue3-danmaku'
 import { filterDanmaku } from '../../../utils/filterDanmaku'
 import BiliMidCrc from '../../../utils/BiliMidCrc'
+// import Bullet from './Bullet.vue';
 
 const props = defineProps({
     playerInfo: Object,
@@ -222,10 +272,94 @@ const showUserId = (danmu: danmakuType) => {
     danmu.mid = biliMidCrc(danmu.hash)
 }
 
-
 // 家访
 const goToSpace = (mid: string) => {
     window.open(`/space/${mid}/home`)
+}
+
+
+
+// 鼠标点击弹幕输入框时暂停视频
+const bulletProgress: Ref<number> = ref(0)
+const videoPause = () => {
+    if (videoRef.value) {
+        if (!videoRef.value.paused) {
+            onPause()
+            // 记录要发送弹幕的出现时间（毫秒）
+            bulletProgress.value = audioRef.value.currentTime * 1000    
+        }
+        console.log(videoRef.value)
+    }
+}
+
+const videoPlay = () => {
+    if (videoRef.value) {
+        if (videoRef.value.paused) {
+            onPlay()
+        }
+    }
+}
+
+
+const bulletInput: Ref<string> = ref('')
+const bulletColor: Ref<string> = ref('#ffffff')
+const bulletFontSize: Ref<number> = ref(18)
+const bulletFontSizeOptions = [{
+    value: 18,
+    label: '小'
+}, {
+    value: 25,
+    label: '标准'
+}, {
+    value: 36,
+    label: '大'
+}]
+const bulletMode: Ref<number> = ref(1)
+const bulletModeOptions = [{
+    value: 1,
+    label: '普通弹幕'
+}, {
+    value: 4,
+    label: '底部弹幕'
+}, {
+    value: 5,
+    label: '顶部弹幕'
+}]
+
+
+// 发送弹幕
+const sendBullet = async () => {
+    // console.log({
+    //     bvid: props.videoInfo?.bvid,
+    //         cid: props.videoInfo?.cid,
+    //         fontSize: bulletFontSize.value,
+    //         color: bulletColor.value,
+    //         mode: bulletMode.value,
+    //         msg: bulletInput.value,
+    //         progress: bulletProgress.value
+    // })
+    await fetchData(`/api/bullet`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bvid: props.videoInfo?.bvid,
+            cid: props.videoInfo?.cid,
+            fontSize: bulletFontSize.value,
+            color: bulletColor.value,
+            mode: bulletMode.value,
+            msg: bulletInput.value,
+            progress: bulletProgress.value
+        })
+    }, (data: BiliResType) => {
+        if (data.code === 0) {
+            bulletInput.value = ''
+            ElNotification.success('发送成功')
+        } else {
+            ElNotification.error('发送失败' + data.message)
+        }
+    })
 }
 
 
@@ -270,6 +404,17 @@ const goToSpace = (mid: string) => {
         cursor: pointer;
         border: 1px solid var(--cl-white);
     }
+}
+
+.bullet-input {
+    position: absolute;
+    z-index: 2;
+    /* left: 180px; */
+    /* bottom: 4px; */
+    width: 300px;
+    margin-left: 32px;
+    bottom: -46px;
+    left: 660px;
 }
 
 

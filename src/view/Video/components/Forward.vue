@@ -1,6 +1,6 @@
 <template>
 
-    <div style="width: 120px;">
+    <div style="width: 90px;">
 
         <el-popover placement="top"
             :width="90"

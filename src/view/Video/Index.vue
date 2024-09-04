@@ -21,6 +21,9 @@
             <!-- 视频评论 -->
             <Comments :type="1" :oid="`${videoInfo.aid}`" :comments="videoInfo.stat.reply" />
 
+            <!-- 发送弹幕 -->
+            <!-- <Bullet :bvid="videoInfo.bvid" :cid="videoInfo.cid" /> -->
+
             <!-- up信息 -->
             <div class="video-up">
                 <RouterLink :to="`/space/${videoInfo.owner.mid}/home`" class="up-link">
