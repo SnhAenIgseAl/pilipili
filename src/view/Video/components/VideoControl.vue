@@ -200,6 +200,7 @@ const videoRef: any = ref(null)
 
 // 播放
 const onPlay = () => {
+    audioRef.value.volume = 0.5
     videoRef.value.play()
     audioRef.value.play()
     danmakuRef.value.play()
@@ -239,7 +240,7 @@ const onTimeupdate = (e: any) => {
     // 绘制弹幕，轮子，爽
     if (danmakuRef.value) {
         while (e.target.currentTime > danmakuList.value[danmakuIndex.value]?.time) {
-            danmakuRef.value.add(danmakuList.value[danmakuIndex.value])
+            danmakuRef.value.insert(danmakuList.value[danmakuIndex.value])
             danmakuIndex.value += 1
         }
     }

@@ -16,7 +16,7 @@
             <Like :aid="videoInfo.aid" :num="videoInfo.stat.like" />
             <TouBi :aid="videoInfo.aid" :num="videoInfo.stat.coin" />
             <Collect :rid="videoInfo.aid" :num="videoInfo.stat.favorite"/>
-            <Forward :videoInfo="videoInfo" :num="videoInfo.stat.share" />
+            <Forward :videoInfo="videoInfo" :playerInfo="playerInfo" :num="videoInfo.stat.share" />
 
             <!-- 视频评论 -->
             <Comments :type="1" :oid="`${videoInfo.aid}`" :comments="videoInfo.stat.reply" />

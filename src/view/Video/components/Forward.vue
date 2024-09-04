@@ -13,6 +13,12 @@
             </template>
 
             <template #default>
+                <el-button class="forward-item" text @click="downloadVideo">
+                    <i>&#xe703;</i>下载视频
+                </el-button>
+                <el-button class="forward-item" text @click="downloadAudio">
+                    <i>&#xe703;</i>下载音频
+                </el-button>
                 <el-button class="forward-item" text @click="copyLink">
                     <i>&#xe6bf;</i>复制视频链接
                 </el-button>
@@ -43,12 +49,24 @@ import Forward from '../../../components/Card/components/Forward.vue';
 
 const props = defineProps({
     videoInfo: Object,
+    playerInfo: Object,
     num: Number
 })
 
 const shareCount = ref(props.num)
 const dynId: Ref<string> = ref(props.videoInfo?.aid.toString())
 
+
+
+// 下载视频
+const downloadVideo = () => {
+    window.open(`${props.playerInfo?.dash.video[0].baseUrl}`)
+}
+
+// 下载音频
+const downloadAudio = () => {
+    window.open(`${props.playerInfo?.dash.audio[0].baseUrl}`)
+}
 
 
 // 复制视频链接
@@ -139,6 +157,7 @@ const shareVideoImg = () => {
 
 .forward-item {
     width: 100%;
+    margin-left: 0;
     /* text-align: left; */
 }
 </style>
