@@ -79,7 +79,7 @@ const BiliMidCrc: any = function () {
             snum = crctable[index[3 - i]];
             ht ^= snum >>> ((3 - i) * 8);
         }
-        for (i = 0; i < 100000; i++) {
+        for (i = 0; i < 100000000; i++) {
             lastindex = crc32lastindex(i);
             if (lastindex == index[3]) {
                 deepCheckData = deepCheck(i, index)
@@ -87,7 +87,7 @@ const BiliMidCrc: any = function () {
                     break;
             }
         }
-        if (i == 100000)
+        if (i == 100000000)
             return -1;
         return i + '' + deepCheckData![1];
     }

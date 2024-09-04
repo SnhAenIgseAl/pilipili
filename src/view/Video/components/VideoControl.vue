@@ -26,12 +26,9 @@
                     </template>
 
                     <template #default>
-                        <span v-if="danmu.showId" @click="goToSpace(danmu.mid)">
+                        <span @click="goToSpace(danmu.mid)">
                             {{ danmu.mid }}
                         </span>    
-                        <span v-else>
-                            {{ danmu.hash }}
-                        </span>
                     </template>
 
                 </el-popover>
@@ -267,8 +264,8 @@ const volumeChange = (e: any) => {
 
 // 弹幕悬浮进入弹幕时，显示弹幕发送者id
 const showUserId = (danmu: danmakuType) => {
-    danmu.showId = true
     const biliMidCrc = BiliMidCrc()
+    console.log(danmu.hash)
     danmu.mid = biliMidCrc(danmu.hash)
 }
 
