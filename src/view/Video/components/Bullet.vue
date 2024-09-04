@@ -83,7 +83,7 @@ const videoPlay = () => {
 
 const bulletInput: Ref<string> = ref('')
 const bulletColor: Ref<string> = ref('#ffffff')
-const bulletFontSize: Ref<number> = ref(18)
+const bulletFontSize: Ref<number> = ref(25)
 const bulletFontSizeOptions = [{
     value: 18,
     label: '小'

@@ -60,15 +60,15 @@
 
             <!-- 弹幕样式设置 -->
             <template #prepend>
-                <el-popover trigger="click" :width="200">
+                <el-popover :visible="bulletStyleVisible" :width="200">
 
                     <template #reference>
-                        <el-button>A</el-button>
+                        <el-button @click="bulletStyleVisible = !bulletStyleVisible">A</el-button>
                     </template>
 
                     <template #default>
                         <el-text>弹幕颜色</el-text>
-                        <el-color-picker v-model="bulletColor"></el-color-picker><br />
+                        <el-color-picker v-model="bulletColor" :predefine="predefineColors" /><br />
                         <el-text>弹幕字号</el-text>
                         <el-select v-model="bulletFontSize"
                             placeholder="">
@@ -301,9 +301,20 @@ const videoPlay = () => {
 }
 
 
+const bulletStyleVisible: Ref<boolean> = ref(false)
 const bulletInput: Ref<string> = ref('')
 const bulletColor: Ref<string> = ref('#ffffff')
-const bulletFontSize: Ref<number> = ref(18)
+const predefineColors: Ref<string[]> = ref([
+    '#ffffff',
+    '#fb7299',
+    '#f00000',
+    '#FEC107',
+    '#8BC24B',
+    '#2095F4',
+    '#9B27B0',
+    '#141414'
+])
+const bulletFontSize: Ref<number> = ref(25)
 const bulletFontSizeOptions = [{
     value: 18,
     label: '小'
