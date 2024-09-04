@@ -51,7 +51,6 @@
         </longzeVideoPlay>
 
         <!-- 发送弹幕 -->
-        <!-- <Bullet v-if="videoRef" :bvid="props.videoInfo?.bvid" :cid="props.videoInfo?.cid" :videoRef="videoRef"/> -->
         <el-input v-model="bulletInput" 
             size="small"
             class="bullet-input"
@@ -341,15 +340,6 @@ const bulletModeOptions = [{
 
 // 发送弹幕
 const sendBullet = async () => {
-    // console.log({
-    //     bvid: props.videoInfo?.bvid,
-    //         cid: props.videoInfo?.cid,
-    //         fontSize: bulletFontSize.value,
-    //         color: bulletColor.value,
-    //         mode: bulletMode.value,
-    //         msg: bulletInput.value,
-    //         progress: bulletProgress.value
-    // })
     await fetchData(`/api/bullet`, {
         method: 'POST',
         headers: {
