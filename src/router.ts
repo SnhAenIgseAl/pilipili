@@ -75,6 +75,7 @@ const routes = [
 	},
 	{
 		path: '/video/:bvid',
+		query: 'p',
 		component: () => import('@/view/Video/Index.vue')
 	},
 	{

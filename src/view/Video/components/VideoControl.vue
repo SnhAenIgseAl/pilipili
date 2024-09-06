@@ -265,7 +265,6 @@ const volumeChange = (e: any) => {
 // 弹幕悬浮进入弹幕时，显示弹幕发送者id
 const showUserId = (danmu: danmakuType) => {
     const biliMidCrc = BiliMidCrc()
-    console.log(danmu.hash)
     danmu.mid = biliMidCrc(danmu.hash)
 }
 

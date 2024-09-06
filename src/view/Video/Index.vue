@@ -12,7 +12,7 @@
                 <Related :bvid="videoInfo.bvid" />
 
                 <!-- 视频信息 -->
-                <Desc :videoInfo="videoInfo" />
+                <Desc :videoInfo="videoInfo" :pageList="pageList" />
 
                 <!-- 视频操作 -->
                 <Like :aid="videoInfo.aid" :num="videoInfo.stat.like" />
@@ -61,12 +61,13 @@ const route = useRoute()
 const videoInfo: Ref<any> = ref(null)
 const playerInfo: Ref<any> = ref(null)
 const upInfo: Ref<any> = ref(null)
+const pageList: Ref<any> = ref(null)
 const attr: Ref<number> = ref(0)
 const bv: Ref<string> = ref('')
 const cid: Ref<number> = ref(0)
 
 // 获取视频信息及播放地址
-const getVideoInfo = async (bvid: string | string[]) => {
+const getVideoInfo = async (bvid: string) => {
     await fetchData(`/api/video?bvid=${bvid}`, {
     }, (data: BiliResType) => {
         if (data.code === 0) {
@@ -80,31 +81,49 @@ const getVideoInfo = async (bvid: string | string[]) => {
             upInfo.value = data.data.Card
             attr.value = data.data.Card.following ? 2 : 0
             bv.value = data.data.View.bvid
-            cid.value = data.data.View.cid
-        } else {
-            ElMessage({ message: data.message, type: 'error' })
-        }
-    })
+            cid.value = data.data.View.cid          // 第一p的cid
+            pageList.value = data.data.View.pages   // 视频分p列表
 
-    // 获取视频播放地址
-    await fetchData(`/api/player?bvid=${bv.value}&cid=${cid.value}`, {
-    }, (data: BiliResType) => {
-        if (data.code === 0) {
-            // console.log(data)
-            playerInfo.value = data.data
+            if (!pageList.value || !route.query.p) {
+                getPlayerInfo(bv.value, cid.value)
+            } else {
+                let pNumber: number = parseInt(route.query.p as string)    
 
-        } else if (data.code === 87007) {
-            ElMessage.warning({ message: 'OnlyFans' })
+                // 防止刁民p值不合法
+                pNumber = pNumber - 1 <= 0 ? 1 : pNumber     
+                pNumber = pNumber - 1 >= pageList.value.length ? pageList.value.length : pNumber
+
+                console.log('pNumber: ' + pNumber)
+
+                // 用户习惯，1p对应分配列表下标0
+                getPlayerInfo(bv.value, pageList.value[pNumber- 1].cid) 
+            }
         } else {
-            ElMessage.warning({ message: data.message })
+            ElMessage.error(data.message)
         }
     })
 }
 
 
 
-watch(() => route.params.bvid, async (newValue: string | string[]) => {
-    console.log(route.params.bvid)
+// 获取视频播放地址
+const getPlayerInfo = async (bv: string, cid: number) => {
+    await fetchData(`/api/player?bvid=${bv}&cid=${cid}`, {
+    }, (data: BiliResType) => {
+        if (data.code === 0) {
+            // console.log(data)
+            playerInfo.value = data.data
+
+        } else if (data.code === 87007) {
+            ElMessage.warning('OnlyFans')
+        } else {
+            ElMessage.warning(data.message)
+        }
+    })
+}
+
+
+watch(() => route.params.bvid, async (newValue: any) => {
     await getVideoInfo(newValue)
 }, {
     immediate: true

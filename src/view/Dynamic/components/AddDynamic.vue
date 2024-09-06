@@ -97,9 +97,10 @@ const uploadImg = async (data: UploadRequestOptions) => {
 
     let imgSrc: UploadImgType = await new Promise<UploadImgType>((resolve) => {
         axios.post(`https://pilipili-server.icu/upload`, fd, {
+        // axios.post(`https://api.bilibili.com/x/dynamic/feed/draw/upload_bfs`, fd, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-            }
+            },
         })
         .then(res => res.data)
         .then((res: BiliResType) => {
