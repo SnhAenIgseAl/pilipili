@@ -1,6 +1,6 @@
 <template>
     <div class="dynamic-box">
-        <el-input v-model="dynamicTxt" 
+        <el-input v-model="USER_DYNAMIC_TXT" 
             :placeholder="dftTxt" 
             resize="none" 
             rows="3"
@@ -12,6 +12,8 @@
                 <el-button text size="small">
                     <i>&#xe64a;</i>
                 </el-button>
+
+                <Mention type="dynamic"/>
 
                 <el-upload
                     v-model:file-list="imgList"
@@ -47,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
+import { ref, Ref, toRefs } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import type { UploadProps, UploadUserFile, UploadRequestOptions } from 'element-plus'
@@ -55,10 +57,15 @@ import BiliResType from '../../../type/BiliResType';
 import UploadImgType from '../../../type/UploadImgType';
 import { fetchData } from '../../../utils/fetchData';
 import axios from 'axios';
+import { useUserStore } from '../../../stores/user';
+import Mention from '../../../components/Mention.vue';
+
+const {
+    USER_DYNAMIC_TXT
+} = toRefs(useUserStore())
 
 
 
-const dynamicTxt = ref(null)
 const addDynamicLoading = ref(false)
 
 
@@ -137,7 +144,7 @@ const previewImg: UploadProps['onPreview'] = async (file) => {
 
 // 清空输入的内容
 const reset = () => {
-    dynamicTxt.value = null
+    USER_DYNAMIC_TXT.value = ''
 }
 
 
@@ -152,7 +159,7 @@ const addDynamic = async () => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            dynamicTxt: dynamicTxt.value,
+            dynamicTxt: USER_DYNAMIC_TXT.value,
             pics: uploadImgList.value,
         })
     }, (data: BiliResType) => {

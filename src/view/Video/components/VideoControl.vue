@@ -227,7 +227,7 @@ const danmus: Ref<danmakuType[]> = ref([])
 // 时间轴
 const onTimeupdate = (e: any) => {
 
-    // 音画时间误差大于0.5秒时同步
+    // 音画时间误差大于0.5秒时同
     if (Math.abs(e.target.currentTime - audioRef.value.currentTime) > 0.5) {
         audioRef.value.currentTime = e.target.currentTime
         danmakuIndex.value = getDanmakuIndex(e.target.currentTime)!     // 获取弹幕列表下标
@@ -355,7 +355,7 @@ const sendBullet = async () => {
             bulletInput.value = ''
             ElNotification.success('发送成功')
         } else {
-            ElNotification.error('发送失败' + data.message)
+            ElNotification.error(data.message)
         }
     })
 }

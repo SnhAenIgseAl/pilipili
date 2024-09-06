@@ -101,12 +101,12 @@
         <!-- 发表评论 -->
         <template #footer>
             <div class="reply-box">
-                <el-input v-model="repltTxt" :placeholder="dftTxt" resize="none" type="textarea" />
+                <el-input v-model="USER_COMMENT_TXT" :placeholder="dftTxt" resize="none" type="textarea" />
 
                 <div class="reply-control">
                     <div>
                         <el-button text size="small"><i>&#xe64a;</i></el-button>
-                        <el-button text size="small">@</el-button>
+                        <Mention type="comment"/>
                     </div>
 
                     <div>
@@ -133,12 +133,20 @@ import CommentAdd from './CommentAdd.vue';
 import { fetchData } from '../utils/fetchData';
 import { parseCommentTxt } from '../utils/parseCommentTxt';
 import CheckCommentStat from './CheckCommentStat.vue';
+import Mention from './Mention.vue';
+import { toRefs } from 'vue';
+import { useUserStore } from '../stores/user';
 
 const props = defineProps({
     type: Number,       // 评论区类型
     oid: String,        // 评论区id
     comments: Number    // 评论数
 })
+
+
+const {
+    USER_COMMENT_TXT
+} = toRefs(useUserStore())
 
 
 const commentNum = ref(props.comments)  // 评论数
@@ -182,14 +190,13 @@ const getCommentsList = async (page: Number, mode: Number) => {
 
 
 
-const repltTxt = ref(null)
 const dftTxt = getPlaceholderTxt()
 
 
 
 // 清空评论内容
 const resetReply = () => {
-    repltTxt.value = null
+    USER_COMMENT_TXT.value = ''
 }
 
 
@@ -202,16 +209,16 @@ const addComment = async () => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            message: repltTxt.value,
+            message: USER_COMMENT_TXT.value,
             type: props.type,
             oid: props.oid
         })
     }, (data: BiliResType) => {
         if (data.code === 0) {
             resetReply()
-            ElMessage({ message: '发表评论成功', type: 'success' })
+            ElMessage.success('发表评论成功')
         } else {
-            ElMessage({ message: data.message, type: 'error' })
+            ElMessage.error(data.message)
         }
     })
 }

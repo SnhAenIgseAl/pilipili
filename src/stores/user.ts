@@ -16,6 +16,12 @@ export const useUserStore = defineStore('user', () => {
     // 动态更新基线id
     const baseline: Ref<string> = ref('')
 
+    // 评论内容
+    const USER_COMMENT_TXT: Ref<string> = ref('')
+
+    // 动态内容
+    const USER_DYNAMIC_TXT: Ref<string> = ref('')
+
     // 获取用户状态
     async function getInfo() {
         await fetchData(`/api/nav`, {
@@ -29,7 +35,9 @@ export const useUserStore = defineStore('user', () => {
         isLogin,
         info,
         baseline,
-        getInfo
+        getInfo,
+        USER_COMMENT_TXT,
+        USER_DYNAMIC_TXT
     }
 }, {
     persist: true

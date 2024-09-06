@@ -9,7 +9,7 @@
         <div class="reply-control">
             <div>
                 <el-button text size="small"><i>&#xe64a;</i></el-button>
-                <el-button text size="small">@</el-button>
+                <Mention type="comment" />
             </div>
             <div>
                 <el-button text @click="resetReply">清空</el-button>
@@ -29,6 +29,7 @@ import { ref, Ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { fetchData } from '../utils/fetchData';
 import type BiliResType from '../type/BiliResType';
+import Mention from './Mention.vue';
 
 const props = defineProps({
     type: Number,   // 评论区类型
