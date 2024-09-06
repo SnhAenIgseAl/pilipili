@@ -55,7 +55,8 @@ const descVisible: Ref<boolean> = ref(false)
 
 
 // 当前视频分p
-const pNumber: Ref<number> = ref(parseInt(route.query.p as string))
+let p: number = parseInt(route.query.p as string) ? parseInt(route.query.p as string) : 1
+const pNumber: Ref<number> = ref(p)
 
 
 
