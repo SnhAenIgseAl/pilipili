@@ -8,6 +8,9 @@
 		:stat="item.modules.module_stat"
 		:orig="item.orig"
 	/>
+	<el-divider v-if="!hasMore">
+		<el-text type="info">已经到底啦</el-text>
+	</el-divider>
 
 	<el-empty v-else description="该用户暂无动态" />
 
@@ -30,6 +33,7 @@ const route = useRoute()
 
 
 const dynamicList: Ref<any> = ref(null)
+const hasMore: Ref<boolean> = ref(true)
 const lastId = ref(String)
 const getDynamic = async (offset: any) => {
 	await fetchData(`/api/space/dynamic?mid=${route.params.mid}&offset=${offset}`, {
@@ -39,13 +43,16 @@ const getDynamic = async (offset: any) => {
 		// 记录最后一条动态的id
 		lastId.value = data.data.items[data.data.items.length - 1].id_str
 
+		// 判断是否还有更多动态
+		hasMore.value = data.data.hasMore
+
 		if (offset === '') {
 			dynamicList.value = data.data.items
 		} else {
 			dynamicList.value = dynamicList.value.concat(data.data.items)
 		}
 		} else {
-		ElMessage({message: data.message, type: 'error'})
+			ElMessage.error(data.message)
 		}
 	})
 }
@@ -54,8 +61,8 @@ getDynamic('')
 
 
 // 加载更多动态
-const getMore = debounce(wheelBottom(2000, async () => {
-	await getDynamic(lastId.value)
+const getMore = debounce(wheelBottom(1000, async () => {
+	if (hasMore.value)	await getDynamic(lastId.value)
 }), 400)
 
 

@@ -17,6 +17,10 @@
 			:stat="item.modules.module_stat"
 			:orig="item.orig"
 		/>
+		<el-divider v-if="!hasMore">
+			<el-text type="info">已经到底啦</el-text>
+		</el-divider>
+		
 	</div>
 </template>
 
@@ -39,7 +43,8 @@ const {
 
 
 const lastId: Ref<''> = ref('')
-const dynamicList: Ref<Array<any>> = ref([])
+const dynamicList: Ref<any> = ref(null)
+const hasMore: Ref<boolean> = ref(true)
 const getDynamic = async (offset: string)  => {
 	await fetchData(`/api/dynamic?offset=${offset}`, {
 	}, (data: BiliResType) => {
@@ -48,6 +53,8 @@ const getDynamic = async (offset: string)  => {
 			// 记录更新动态基线及最后一条动态的id
 			baseline.value = data.data.items[0].id_str
 			lastId.value = data.data.items[data.data.items.length - 1].id_str
+
+			hasMore.value = data.data.has_more
 
 			if (offset === '') {
 				dynamicList.value = data.data.items
@@ -87,7 +94,7 @@ const getNewDynamic = () => {
 
 
 const getMore = debounce(wheelBottom(2000, async () => {
-	await getDynamic(lastId.value)
+	if (hasMore.value)	await getDynamic(lastId.value)
 }), 400)
 
 
