@@ -47,6 +47,7 @@ const props = defineProps({
 
 const {
     USER_COMMENT_TXT,
+    USER_COMMENT_CHILD_TXT,
     USER_DYNAMIC_TXT
 } = toRefs(useUserStore())
 
@@ -97,9 +98,13 @@ const handleAt = (name: string) => {
     if (props.type === 'comment') {
         USER_COMMENT_TXT.value += `@${name} `
     }
+    if (props.type === 'child') {
+        USER_COMMENT_CHILD_TXT.value += `@${name} `
+    }
     if (props.type === 'dynamic') {
         USER_DYNAMIC_TXT.value += `@${name} `
     }
+    
     atListVisible.value = false
 }
 

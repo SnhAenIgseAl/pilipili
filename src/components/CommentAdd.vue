@@ -4,12 +4,15 @@
     </el-button>
 
     <div v-if="inputVisible" class="reply-box">
-        <el-input v-model="replyTxt" :placeholder="dftTxt" resize="none" type="textarea" />
+        <el-input v-model="USER_COMMENT_CHILD_TXT" 
+            placeholder="少点道理，多点攻击" 
+            resize="none" 
+            type="textarea" />
         
         <div class="reply-control">
             <div>
                 <el-button text size="small"><i>&#xe64a;</i></el-button>
-                <Mention type="comment" />
+                <Mention type="child" />
             </div>
             <div>
                 <el-button text @click="resetReply">清空</el-button>
@@ -30,6 +33,8 @@ import { ElMessage } from 'element-plus';
 import { fetchData } from '../utils/fetchData';
 import type BiliResType from '../type/BiliResType';
 import Mention from './Mention.vue';
+import { toRefs } from 'vue';
+import { useUserStore } from '../stores/user';
 
 const props = defineProps({
     type: Number,   // 评论区类型
@@ -37,6 +42,10 @@ const props = defineProps({
     rpid: Number,   // 当前评论id
     num: Number     // 评论数
 })
+
+const {
+    USER_COMMENT_CHILD_TXT
+} = toRefs(useUserStore())
 
 
 
@@ -49,13 +58,11 @@ const showInput = () => {
 
 
 
-const replyTxt: Ref<null> = ref(null)
-const dftTxt: Ref<string> = ref('少点道理，多点攻击')
 const addCommentLoading: Ref<boolean> = ref(false)
 
 // 清空评论内容
 const resetReply = () => {
-    replyTxt.value = null
+    USER_COMMENT_CHILD_TXT.value = ''
 }
 
 
@@ -71,6 +78,7 @@ const addComment = async () => {
         },
         body: JSON.stringify({
             type: props.type,
+            message: USER_COMMENT_CHILD_TXT.value,
             oid: props.oid,
             rpid: props.rpid
         })

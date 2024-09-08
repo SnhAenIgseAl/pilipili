@@ -19,6 +19,9 @@ export const useUserStore = defineStore('user', () => {
     // 评论内容
     const USER_COMMENT_TXT: Ref<string> = ref('')
 
+    // 子评论内容
+    const USER_COMMENT_CHILD_TXT: Ref<string> = ref('')
+
     // 动态内容
     const USER_DYNAMIC_TXT: Ref<string> = ref('')
 
@@ -37,6 +40,7 @@ export const useUserStore = defineStore('user', () => {
         baseline,
         getInfo,
         USER_COMMENT_TXT,
+        USER_COMMENT_CHILD_TXT,
         USER_DYNAMIC_TXT
     }
 }, {

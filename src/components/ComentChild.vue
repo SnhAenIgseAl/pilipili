@@ -1,4 +1,5 @@
 <template>
+    
     <!-- 显示子评论按钮 -->
     <el-divider v-if="props.subReply">
         <el-button v-if="subCommentsVisible === false" 
@@ -34,13 +35,11 @@
                 </span>
                 <Level :level="item.member.level_info.current_level" />
             </div>
-            
 
 
 
             <!-- 评论内容 -->
             <div v-html="item.content.message" class="comment-text" type="info"></div>
-
 
 
             
