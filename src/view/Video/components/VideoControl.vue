@@ -40,6 +40,7 @@
         <longzeVideoPlay
             v-bind="options" 
             ref="videoRef"
+            id="videoPlayer"
             @play="onPlay"
             @pause="onPause"
             @timeupdate="onTimeupdate"
@@ -103,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, Reactive } from 'vue';
+import { ref, toRefs, reactive, Reactive } from 'vue';
 import type { Ref } from 'vue';
 import { fetchData } from '../../../utils/fetchData';
 import type BiliResType from '../../../type/BiliResType';
@@ -112,6 +113,7 @@ import { ElMessage, ElNotification } from 'element-plus';
 import vueDanmaku from 'vue3-danmaku'
 import { filterDanmaku } from '../../../utils/filterDanmaku'
 import BiliMidCrc from '../../../utils/BiliMidCrc'
+import { useUserStore } from '../../../stores/user';
 // import Bullet from './Bullet.vue';
 
 const props = defineProps({
@@ -119,6 +121,9 @@ const props = defineProps({
     videoInfo: Object
 })
 
+const {
+    JUMP_VIDEO_TIME
+} = toRefs(useUserStore())
 
 
 /**
@@ -227,10 +232,20 @@ const danmus: Ref<danmakuType[]> = ref([])
 // 时间轴
 const onTimeupdate = (e: any) => {
 
-    // 音画时间误差大于0.5秒时同
-    if (Math.abs(e.target.currentTime - audioRef.value.currentTime) > 0.5) {
-        audioRef.value.currentTime = e.target.currentTime
-        danmakuIndex.value = getDanmakuIndex(e.target.currentTime)!     // 获取弹幕列表下标
+    // 时间点跳转
+    if (JUMP_VIDEO_TIME.value) {
+        e.target.currentTime = JUMP_VIDEO_TIME.value
+        audioRef.value.currentTime = JUMP_VIDEO_TIME.value
+        danmakuIndex.value = getDanmakuIndex(JUMP_VIDEO_TIME.value)!
+        JUMP_VIDEO_TIME.value = 0
+    }
+
+    let currentTime = e.target.currentTime
+
+    // 音画时间误差大于0.5秒时同步
+    if (Math.abs(currentTime - audioRef.value.currentTime) > 0.5) {
+        audioRef.value.currentTime = currentTime
+        danmakuIndex.value = getDanmakuIndex(currentTime)!     // 获取弹幕列表下标
     }
 
     // 绘制弹幕，轮子，爽

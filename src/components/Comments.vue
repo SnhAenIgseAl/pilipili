@@ -62,6 +62,7 @@
 
                         <!-- 评论内容 -->
                         <div v-html="item.content.message" class="comment-text" type="info"></div>
+                        <CommentTimer v-if="item.content.message.includes('：')" :text="item.content.message"/>
 
 
 
@@ -141,6 +142,7 @@ import Mention from './Mention.vue';
 import { toRefs } from 'vue';
 import { useUserStore } from '../stores/user';
 import CommentImgs from './CommentImgs.vue';
+import CommentTimer from './CommentTimer.vue';
 
 const props = defineProps({
     type: Number,       // 评论区类型
@@ -227,6 +229,13 @@ const addComment = async () => {
         }
     })
 }
+
+
+
+// 跳转时间点
+// const jumpToTime = (time: number) => {
+//     console.log(time)
+// }
 
 
 </script>

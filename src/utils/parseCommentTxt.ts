@@ -37,10 +37,9 @@ function parseEmoji(text: string) {
 function parseAt(text: string, members: Array<any> | []) {
     if (members.length === 0) {
         return text
-    } else {
-        for (let i = 0; i < members.length; i++) {
-            text = text.split(`@${members[i].uname}`).join(`<a href="/space/${members[i].mid}/home" target="_blank" class="at-uname">@${members[i].uname}</a> `)
-        }
-        return text
     }
+    for (let i = 0; i < members.length; i++) {
+        text = text.split(`@${members[i].uname}`).join(`<a href="/space/${members[i].mid}/home" target="_blank" class="at-uname">@${members[i].uname}</a> `)
+    }
+    return text
 }

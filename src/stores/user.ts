@@ -25,6 +25,9 @@ export const useUserStore = defineStore('user', () => {
     // 动态内容
     const USER_DYNAMIC_TXT: Ref<string> = ref('')
 
+    // 视频跳转时间点
+    const JUMP_VIDEO_TIME: Ref<number> = ref(0)
+
     // 获取用户状态
     async function getInfo() {
         await fetchData(`/api/nav`, {
@@ -41,7 +44,8 @@ export const useUserStore = defineStore('user', () => {
         getInfo,
         USER_COMMENT_TXT,
         USER_COMMENT_CHILD_TXT,
-        USER_DYNAMIC_TXT
+        USER_DYNAMIC_TXT,
+        JUMP_VIDEO_TIME
     }
 }, {
     persist: true

@@ -1,6 +1,5 @@
 export const debounce = function (callback: Function, wait: number) {
     let timeout: NodeJS.Timeout | null = null
-    console.log(timeout)
 
     return function (this: unknown, ...args: any[]) {
         if (timeout) {
