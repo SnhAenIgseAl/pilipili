@@ -65,6 +65,10 @@
 
 
 
+
+                        <!-- 评论图片 -->
+                        <CommentImgs v-if="item.content.pictures" :imgList="item.content.pictures"/>
+
                         
                         <div class="comment-control">
                             <!-- ip属地 -->
@@ -136,6 +140,7 @@ import CheckCommentStat from './CheckCommentStat.vue';
 import Mention from './Mention.vue';
 import { toRefs } from 'vue';
 import { useUserStore } from '../stores/user';
+import CommentImgs from './CommentImgs.vue';
 
 const props = defineProps({
     type: Number,       // 评论区类型
