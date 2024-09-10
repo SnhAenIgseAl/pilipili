@@ -40,7 +40,7 @@
 
             <!-- 评论内容 -->
             <div v-html="item.content.message" class="comment-text" type="info"></div>
-
+            <CommentTimer v-if="item.content.message.includes(':')" :text="item.content.message"/>
 
             
             <div class="comment-control">
@@ -90,6 +90,7 @@ import CommentAction from './CommentAction.vue';
 import CommentAdd from './CommentAdd.vue';
 import { fetchData } from '../utils/fetchData';
 import { parseCommentTxt } from '../utils/parseCommentTxt';
+import CommentTimer from './CommentTimer.vue';
 
 const props = defineProps({
     subReply: String,

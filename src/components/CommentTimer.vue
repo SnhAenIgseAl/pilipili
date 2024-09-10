@@ -1,9 +1,10 @@
 <template>
 
-    <div>
-        <el-text>检测到时间点 </el-text>
-        <el-button link @click="jumpToTime(time)">
-            {{ match.input }}
+    <div class="jump-timer_button">
+        <span class="timer-text">检测到时间点 </span>
+        <el-button link v-for="(item, index) in match" :key="index"
+            @click="jumpToTime(item)">
+            {{ item }}
         </el-button>
     </div>
     
@@ -24,20 +25,32 @@ const {
 } = toRefs(useUserStore())
 
 
-let reg: RegExp = /^\d+：\d+$/
-let match: RegExpExecArray = reg.exec(props.text!)!
-// console.log(match)
-let min = parseInt(match.input.split('：')[0])
-let sec = parseInt(match.input.split('：')[1])
-let time = min * 60 + sec
+let reg: RegExp = /\d+:\d+/g
+let match: RegExpMatchArray = props.text?.match(reg)!
 
-const jumpToTime = (time: number) => {
-    JUMP_VIDEO_TIME.value = time
-    console.log(JUMP_VIDEO_TIME.value)
+
+
+// 跳转时间点
+const jumpToTime = (time: string) => {
+    let min = parseInt(time.split(':')[0])
+    let sec = parseInt(time.split(':')[1])
+    let _time = min * 60 + sec
+    JUMP_VIDEO_TIME.value = _time
 }
 
 </script>
 
 <style scoped>
+
+.jump-timer_button {
+    margin-bottom: 4px;
+}
+
+.timer-text {
+    color: #666;
+    font-size: 12px;
+    border-left: 2px solid #ddd;
+    padding-left: 8px;
+}
 
 </style>

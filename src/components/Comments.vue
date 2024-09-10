@@ -62,7 +62,7 @@
 
                         <!-- 评论内容 -->
                         <div v-html="item.content.message" class="comment-text" type="info"></div>
-                        <CommentTimer v-if="item.content.message.includes('：')" :text="item.content.message"/>
+                        <CommentTimer v-if="item.content.message.includes(':')" :text="item.content.message"/>
 
 
 
@@ -283,10 +283,10 @@ const addComment = async () => {
 }
 
 .comment-text {
-    /* display: flex; */
     margin: 8px 0;
     line-height: 1.75;
     font-size: 14px;
+    align-content: center;
 }
 
 
