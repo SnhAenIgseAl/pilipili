@@ -25,15 +25,15 @@ const {
 } = toRefs(useUserStore())
 
 
-let reg: RegExp = /\d+:\d+/g
+let reg: RegExp = /\d+[:：]\d+/g
 let match: RegExpMatchArray = props.text?.match(reg)!
 
 
 
 // 跳转时间点
 const jumpToTime = (time: string) => {
-    let min = parseInt(time.split(':')[0])
-    let sec = parseInt(time.split(':')[1])
+    let min = parseInt(time.split(':')[0] || time.split('：')[0])
+    let sec = parseInt(time.split(':')[1] || time.split('：')[1])
     let _time = min * 60 + sec
     JUMP_VIDEO_TIME.value = _time
 }

@@ -40,7 +40,9 @@
 
             <!-- 评论内容 -->
             <div v-html="item.content.message" class="comment-text" type="info"></div>
-            <CommentTimer v-if="item.content.message.includes(':')" :text="item.content.message"/>
+            <CommentTimer 
+                v-if="item.content.message.includes(':') || item.content.message.includes('：')" 
+                :text="item.content.message"/>
 
             
             <div class="comment-control">

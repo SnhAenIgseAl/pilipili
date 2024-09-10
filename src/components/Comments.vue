@@ -62,7 +62,9 @@
 
                         <!-- 评论内容 -->
                         <div v-html="item.content.message" class="comment-text" type="info"></div>
-                        <CommentTimer v-if="item.content.message.includes(':')" :text="item.content.message"/>
+                        <CommentTimer 
+                            v-if="item.content.message.includes(':') || item.content.message.includes('：')" 
+                            :text="item.content.message"/>
 
 
 
@@ -86,7 +88,7 @@
 
 
                         <!-- 显示子评论 -->
-                        <ComentChild :subReply="item.reply_control.sub_reply_entry_text" :type="item.type"
+                        <CommentChild :subReply="item.reply_control.sub_reply_entry_text" :type="item.type"
                             :root="item.rpid_str" :oid="item.oid_str" />
 
                     </div>
@@ -131,7 +133,7 @@ import { ref } from 'vue'
 import { ElMessage } from 'element-plus';
 import type BiliResType from '../type/BiliResType';
 import { getPlaceholderTxt } from '../utils/commentPlaceholderCfg';
-import ComentChild from './ComentChild.vue';
+import CommentChild from './CommentChild.vue';
 import Level from './Level.vue';
 import CommentAction from './CommentAction.vue';
 import CommentAdd from './CommentAdd.vue';
