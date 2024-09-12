@@ -40,9 +40,7 @@
 
             <!-- 评论内容 -->
             <div v-html="item.content.message" class="comment-text" type="info"></div>
-            <CommentTimer 
-                v-if="item.content.message.includes(':') || item.content.message.includes('：')" 
-                :text="item.content.message"/>
+            <CommentTimer v-if="_hasJumpTime" :text="item.content.message"/>
 
             
             <div class="comment-control">
@@ -93,6 +91,7 @@ import CommentAdd from './CommentAdd.vue';
 import { fetchData } from '../utils/fetchData';
 import { parseCommentTxt } from '../utils/parseCommentTxt';
 import CommentTimer from './CommentTimer.vue';
+import { hasJumpTime } from '../utils/hasJumpTime';
 
 const props = defineProps({
     subReply: String,
@@ -107,6 +106,8 @@ const props = defineProps({
 const pageTotal: Ref<number> = ref(0)
 const subCommentsVisible: Ref<boolean> = ref(false)
 const subComments: Ref<any> = ref(null)
+const _hasJumpTime: Ref<boolean> = ref(false)
+
 const getSubComments = async (page: number) => {
 
     subCommentsVisible.value = true
@@ -119,13 +120,17 @@ const getSubComments = async (page: number) => {
             let replies = data.data.replies
 
             for (let i = 0; i < replies.length; i++) {
-                replies[i].content.message = parseCommentTxt(replies[i].content.message, replies[i].content.members)
+                let message = replies[i].content.message
+                let members = replies[i].content.members
+
+                _hasJumpTime.value = hasJumpTime(message)
+                replies[i].content.message = parseCommentTxt(message, members)
             }
 
             subComments.value = replies
             pageTotal.value = data.data.page.count
         } else {
-            ElMessage.error({ message: data.message })
+            ElMessage.error(data.message)
         }
     })
 }

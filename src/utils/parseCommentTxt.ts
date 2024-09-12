@@ -12,9 +12,19 @@ const {
 
 
 export const parseCommentTxt = (text: string, members: Array<any> | []) => {
+    text = parseHtml(text)
     text = parseEmoji(text)
     text = parseAt(text, members)
     return text
+}
+
+
+
+// 转义HTML
+function parseHtml(text: string) {
+    return text
+        .split('<').join('&lt;')
+        .split('>').join('&gt;')
 }
 
 
