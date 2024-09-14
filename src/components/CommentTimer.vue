@@ -1,6 +1,6 @@
 <template>
 
-    <div class="jump-timer_button">
+    <div v-if="hasJumpTime" class="jump-timer_button">
         <span class="timer-text">检测到时间点 </span>
         <el-button link v-for="(item, index) in match" :key="index"
             @click="jumpToTime(item)">
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs } from 'vue';
+import { ref, Ref, toRefs, onMounted } from 'vue';
 import { useUserStore } from '../stores/user';
 
 
@@ -25,8 +25,9 @@ const {
 } = toRefs(useUserStore())
 
 
-let reg: RegExp = /\d+[:：]\d+/g
-let match: RegExpMatchArray = props.text?.match(reg)!
+const reg: RegExp = /\d+[:：]\d+/g
+const match: RegExpMatchArray = props.text?.match(reg)!
+const hasJumpTime: Ref<boolean> = ref(match && match.length > 0)
 
 
 
@@ -37,6 +38,10 @@ const jumpToTime = (time: string) => {
     let _time = min * 60 + sec
     JUMP_VIDEO_TIME.value = _time
 }
+
+onMounted(() => {
+    console.log(match, hasJumpTime.value)
+})
 
 </script>
 

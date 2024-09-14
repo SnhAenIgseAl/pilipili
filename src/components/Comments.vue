@@ -62,8 +62,11 @@
 
                         <!-- 评论内容 -->
                         <div v-html="item.content.message" class="comment-text" type="info"></div>
-                        <CommentTimer v-if="_hasJumpTime" :text="item.content.message"/>
-
+                        
+                        
+                        
+                        <!-- 时间点 -->
+                        <CommentTimer :text="item.content.message"/>
 
 
 
@@ -127,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
+import { ref } from 'vue'
 import { ElMessage } from 'element-plus';
 import type BiliResType from '../type/BiliResType';
 import { getPlaceholderTxt } from '../utils/commentPlaceholderCfg';
@@ -143,7 +146,6 @@ import { toRefs } from 'vue';
 import { useUserStore } from '../stores/user';
 import CommentImgs from './CommentImgs.vue';
 import CommentTimer from './CommentTimer.vue';
-import { hasJumpTime } from '../utils/hasJumpTime'
 
 const props = defineProps({
     type: Number,       // 评论区类型
@@ -164,7 +166,6 @@ const isEnd = ref(false)                // 是否为最后一页
 const commentMode = ref(3)              // 评论模式（0，3为最热，2为最新）
 const commentVisible = ref(false)       // 是否显示子评论
 const commentsList: any = ref([])
-const _hasJumpTime: Ref<boolean> = ref(false)   // 是否有跳转时间点
 
 
 // 获取评论列表
@@ -179,7 +180,6 @@ const getCommentsList = async (page: Number, mode: Number) => {
                 let message = data.data.replies[i].content.message
                 let members = data.data.replies[i].content.members
 
-                _hasJumpTime.value = hasJumpTime(message)
                 data.data.replies[i].content.message = parseCommentTxt(message, members)
             }
 
