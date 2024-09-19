@@ -22,7 +22,7 @@
                 <el-button class="forward-item" text @click="copyLink">
                     <i>&#xe6bf;</i>复制视频链接
                 </el-button>
-                <Forward :dynId="dynId" txt="分享到动态" />
+                <Forward :dynId="dynId" :scene="5" txt="分享到动态" />
                 <el-button class="forward-item" text @click="drawer = true">
                     <i>&#xe69b;</i>生成海报
                 </el-button>

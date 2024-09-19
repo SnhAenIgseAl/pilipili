@@ -84,10 +84,10 @@ const addComment = async () => {
         })
     }, (data: BiliResType) => {
         if (data.code === 0) {
-            ElMessage.success({ message: '发表评论成功' })
+            ElMessage.success('发表评论成功')
             addCommentLoading.value = false
         } else {
-            ElMessage.error({ message: data.message })
+            ElMessage.error(data.message)
             addCommentLoading.value = false
         }
     })

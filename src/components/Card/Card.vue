@@ -80,6 +80,7 @@
                 <Forward 
                     :dynId="props.id_str"
                     :num="props.stat!.forward.count"
+                    :scene="4"
                 />
                 
                 <Comments 

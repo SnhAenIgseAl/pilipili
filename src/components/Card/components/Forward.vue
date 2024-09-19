@@ -33,6 +33,7 @@ const props = defineProps({
     dynId: String,  // 动态id
     txt: String,    // 按钮自定义文字
     num: Number,    // 转发数
+    scene: Number   // 4为动态转发，5为视频动态转发
 })
 
 
@@ -52,15 +53,16 @@ const forward = async () => {
         },
         body: JSON.stringify({
             dynamicTxt: dynamicTxt.value || '转发动态',
-            dyn_id_str: props.dynId
+            dyn_id_str: props.dynId,
+            scene: props.scene
         })
     }, (data: BiliResType) => {
         if (data.code === 0) {
-            ElMessage.success({ message: '转发成功' })
+            ElMessage.success('转发成功')
             forwardVisible.value = false
             loading.value = false
         } else {
-            ElMessage.error({ message: data.message })
+            ElMessage.error(data)
             loading.value = false
         }
     })
