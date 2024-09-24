@@ -109,7 +109,7 @@ watch(() => route.params.mid, async (newVal) => {
 	width: 1280px;
 	height: 600px;
 	margin: 60px auto 0;
-	padding-left: 86px;
+	/* padding-left: 86px; */
 }
 
 .top-photo {
@@ -170,7 +170,7 @@ watch(() => route.params.mid, async (newVal) => {
 	width: 1280px;
 	margin: 0 auto 32px;
 	padding: 0 32px;
-	padding-left: 86px;
+	/* padding-left: 86px; */
 	border-bottom: 1px solid var(--cl-black-25);
 
 	a {
@@ -192,7 +192,7 @@ watch(() => route.params.mid, async (newVal) => {
 	width: 1280px;
 	margin: 0 auto 30px;
 	height: auto;
-	padding-left: 86px;
+	/* padding-left: 86px; */
 }
 
 </style>
