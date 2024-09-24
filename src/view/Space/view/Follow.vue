@@ -4,7 +4,8 @@
 
     <div class="page">
         <el-pagination layout="prev, pager, next" 
-            :total="50"
+            :total="total"
+            :default-page-size="50"
             background
             @current-change="changePage"/>
     </div>
@@ -12,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useRoute } from 'vue-router';
 import FansFollowList from '../components/FansFollowList.vue';
@@ -36,6 +37,7 @@ const changePage = async (page: number) => {
 
 // 获取关注列表
 const followsList = ref(null)
+const total: Ref<number> = ref(0)
 const getFollowsList = async (page: number) => {
     await fetchData(`/api/space/follows?mid=${route.params.mid}&page=${page}`, {
     }, (data: BiliResType) => {
@@ -44,9 +46,9 @@ const getFollowsList = async (page: number) => {
                 data.data.list[i].mtime = parseTime(data.data.list[i].mtime)
             }
             followsList.value = data.data.list
+            total.value = data.data.total
         } else {
-            console.log(data)
-            ElMessage({message: data.message, type: 'error'})
+            ElMessage.error(data.message)
         }
     })
 }

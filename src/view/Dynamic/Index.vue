@@ -78,7 +78,7 @@ const getUpdate = async ()  => {
 		if (data.code === 0) {
 			hasUpdate.value = data.data.update_num
 		} else {
-			ElMessage({message: data.message, type: 'error'})
+			ElMessage.error(data.message)
 		}
 	})
 }
