@@ -383,7 +383,7 @@ const sendBullet = async () => {
 .video-play {
     position: relative;
     flex: 1;
-    /* width: calc(100%); */
+    width: calc(100%);
     min-width: 1280px;
     height: calc(100% - 60px);
     margin: 0 auto;

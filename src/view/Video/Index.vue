@@ -148,6 +148,7 @@ body {
     height: calc(100%);
     padding-top: 60px;
     padding-left: 86px;
+    padding-right: 16px;
 }
 
 .video-action {
@@ -155,9 +156,9 @@ body {
     left: 0;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 60px;
     width: 100%;
-    max-width: 1280px;
 }
 
 .action-item {
