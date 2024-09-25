@@ -1,5 +1,5 @@
 <template>
-	<div ref="wrapperRef" v-if="videoList" class="main-box">
+	<div ref="wrapperRef" v-if="videoList" class="main-box" style="padding-left: 86px;">
 
 		<!-- PC端首页推荐 -->
 		<div v-if="USER_RECOMMEND_VIDEO_PLATFORM === 'PC'" 

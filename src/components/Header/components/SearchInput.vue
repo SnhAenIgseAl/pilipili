@@ -15,7 +15,8 @@
 
 		<template #default>
 			<el-divider v-if="searchHistory" content-position="left">搜索历史</el-divider>
-			<el-tag v-for="tag in searchHistory" :key="tag" 
+			<el-tag v-for="tag in searchHistory.slice().reverse()" 
+				:key="tag" 
 				class="search-history-tag"
 				closable 
 				type="info" 
@@ -60,9 +61,14 @@ const searchForm = reactive({
 
 
 // 搜索
-const search = async (keyword: String) => {
+const search = async (keyword: string) => {
 	searchHistory.value.push(keyword)
+	// 去重
 	searchHistory.value = Array.from(new Set(searchHistory.value))
+
+	if (searchHistory.value.length > 10) {
+		searchHistory.value.shift()
+	}
 	window.location.href = `/search?keyword=${keyword}&type=video`
 }
 
