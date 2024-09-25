@@ -1,6 +1,6 @@
 <template>
 
-    <el-button text @click="forwardVisible = true">
+    <el-button text @click="forwardVisible = true" style="margin-left: 0px;">
         <i>&#xe6eb;</i>{{ props.num }}{{ props.txt }}
     </el-button>
 

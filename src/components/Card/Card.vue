@@ -48,6 +48,9 @@
 
                 <!-- 直播 -->
                 <Live v-if="props.dynamic!.major.live_rcmd" :live="props.dynamic!.major.live_rcmd!"/>
+            
+                <!-- 文章 -->
+                <Read v-if="props.dynamic!.major.article" :article="props.dynamic!.major.article"/>
             </div>
 
 
@@ -69,7 +72,10 @@
                     <Video :archive="props.orig.modules.module_dynamic.major.archive" />
 
                     <!-- 分享图片 -->
-                    <Image :draw="props.orig.modules.module_dynamic.major.draw"></Image>
+                    <Image :draw="props.orig.modules.module_dynamic.major.draw" />
+                
+                    <!-- 投稿文章 -->
+                    <Read :draw="props.orig.modules.module_dynamic.major.article" :article="props.orig.modules.module_dynamic.major.article"/>
                 </div>
             </div>
 
@@ -107,6 +113,7 @@ import Fan from './components/Fan.vue'
 import Comments from '../../components/Comments.vue'
 import Video from './components/Video.vue'
 import Image from './components/Image.vue'
+import Read from './components/Read.vue'
 import Like from './components/Like.vue'
 import Live from './components/Live.vue'
 import Forward from './components/Forward.vue'
@@ -228,7 +235,7 @@ const props = defineProps({
 .major-forward {
     width: 100%;
     padding: 16px;
-    background: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 5px;
     margin-bottom: 10px;
 
