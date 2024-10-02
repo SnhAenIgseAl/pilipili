@@ -22,6 +22,10 @@ const routes = [
 		component: () => import('@/view/Dynamic/Index.vue')
 	},
 	{
+		path: '/opus/:id',
+		component: () => import('@/view/Opus/Index.vue')
+	},
+	{
 		path: '/message',
 		component: () => import('@/view/Message/Index.vue'),
 		children: [

@@ -87,7 +87,6 @@ const hotwordList: Ref<any[]> = ref([])
 const getHotword = async () => {
 	await fetchData(`/api/hotword`, {
 	}, (data: any) => {
-		console.log(data.list)
 		if (data.code === 0) {
 			hotwordList.value = data.list
 		} else {

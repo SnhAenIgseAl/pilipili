@@ -1,11 +1,12 @@
 <template>
 
-    <div class="card-item">
+    <div class="card-item" @click="jumpTo(props.id_str!)">
 
         <!-- 头像及头像框 -->
         <div class="avater-img">
-            <img :src="`https://images.weserv.nl/?url=${props.author!.face}@100w.webp` " class="avater-face"/>
-            <img v-if="props.author!.pendant?.image" class="pendant" :src="`https://images.weserv.nl/?url=${props.author!.pendant.image}@100w.webp`" />
+            <img :src="`https://images.weserv.nl/?url=${props.author!.face}@100w.webp`" class="avater-face" />
+            <img v-if="props.author!.pendant?.image" class="pendant"
+                :src="`https://images.weserv.nl/?url=${props.author!.pendant.image}@100w.webp`" />
         </div>
 
 
@@ -19,10 +20,13 @@
         <div class="card-body">
 
             <!-- 用户名和更新时间 -->
-            <RouterLink :to="`/space/${props.author!.mid}/home`"><div class="pub-name">
-                <span v-if="props.author!.vip?.status" style="color: var(--cl-primary);">{{ props.author!.name }}</span>
-                <span v-else>{{ props.author!.name }}</span>
-            </div></RouterLink>
+            <RouterLink :to="`/space/${props.author!.mid}/home`">
+                <div class="pub-name">
+                    <span v-if="props.author!.vip?.status" style="color: var(--cl-primary);">{{ props.author!.name
+                    }}</span>
+                    <span v-else>{{ props.author!.name }}</span>
+                </div>
+            </RouterLink>
             <el-text type="info">
                 {{ props.author!.pub_time }}
                 <span v-if="props.author!.pub_action"> · {{ props.author!.pub_action }}</span>
@@ -47,25 +51,27 @@
                 <Image v-if="props.dynamic!.major.draw" :draw="props.dynamic!.major.draw!"></Image>
 
                 <!-- 直播 -->
-                <Live v-if="props.dynamic!.major.live_rcmd" :live="props.dynamic!.major.live_rcmd!"/>
-            
+                <Live v-if="props.dynamic!.major.live_rcmd" :live="props.dynamic!.major.live_rcmd!" />
+
                 <!-- 文章 -->
-                <Read v-if="props.dynamic!.major.article" :article="props.dynamic!.major.article"/>
+                <Read v-if="props.dynamic!.major.article" :article="props.dynamic!.major.article" />
             </div>
 
 
 
             <!-- 转发动态的内容 -->
-            <div v-if="props.orig" class="major-forward">
-                
+            <div v-if="props.orig" class="major-forward" @click="jumpTo(props.orig?.id_str)">
+
                 <RouterLink :to="`/space/${props.orig.modules.module_author.mid}`">
                     <el-text info>{{ props.orig.modules.module_author.name }}</el-text>
-                    <el-text info v-if="props.orig.modules.module_author.pub_action"> · {{ props.orig.modules.module_author.pub_action }}</el-text>
+                    <el-text info v-if="props.orig.modules.module_author.pub_action"> · {{
+                        props.orig.modules.module_author.pub_action }}</el-text>
                 </RouterLink>
                 <br />
 
                 <!-- 文字 -->
-                <div v-if="props.orig.modules.module_dynamic.desc" class="forward-text">{{ props.orig.modules.module_dynamic.desc.text }}</div>
+                <div v-if="props.orig.modules.module_dynamic.desc" class="forward-text">{{
+                    props.orig.modules.module_dynamic.desc.text }}</div>
 
                 <div v-if="props.orig.modules.module_dynamic.major">
                     <!-- 投稿视频 -->
@@ -73,9 +79,10 @@
 
                     <!-- 分享图片 -->
                     <Image :draw="props.orig.modules.module_dynamic.major.draw" />
-                
+
                     <!-- 投稿文章 -->
-                    <Read :draw="props.orig.modules.module_dynamic.major.article" :article="props.orig.modules.module_dynamic.major.article"/>
+                    <Read :draw="props.orig.modules.module_dynamic.major.article"
+                        :article="props.orig.modules.module_dynamic.major.article" />
                 </div>
             </div>
 
@@ -83,26 +90,16 @@
 
             <!-- 操作 -->
             <div class="card-state">
-                <Forward 
-                    :dynId="props.id_str"
-                    :num="props.stat!.forward.count"
-                    :scene="4"
-                />
-                
-                <Comments 
-                    :type="props.basic!.comment_type"
-                    :oid="props.basic!.comment_id_str"
-                    :comments="props.stat!.comment.count"
-                />
-                <Like 
-                    :dyId="props.id_str"
-                    :like="props.stat!.like"
-                />
+                <Forward :dynId="props.id_str" :num="props.stat!.forward.count" :scene="4" />
+
+                <Comments :type="props.basic!.comment_type" :oid="props.basic!.comment_id_str"
+                    :comments="props.stat!.comment.count" />
+                <Like :dyId="props.id_str" :like="props.stat!.like" />
             </div>
 
             <!-- 更多操作 -->
-            <More :more="props.more"/>
-            
+            <More :more="props.more" />
+
         </div>
     </div>
 
@@ -129,13 +126,16 @@ const props = defineProps({
     orig: Object
 })
 
+const jumpTo = (id: string) => {
+    window.location.href = `/opus/${id}`
+}
+
 </script>
 
 <style scoped>
-
 .card-item {
     position: relative;
-	display: flex;
+    display: flex;
     width: 100%;
     height: auto;
     margin-bottom: 10px;
@@ -143,7 +143,7 @@ const props = defineProps({
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 16px;
-    
+
 }
 
 .avater-img {
@@ -178,7 +178,7 @@ const props = defineProps({
 }
 
 .card-body {
-	flex: 1;
+    flex: 1;
 }
 
 .card {
@@ -255,5 +255,4 @@ const props = defineProps({
     font-size: 14px;
     margin-top: 16px;
 }
-
 </style>

@@ -1,6 +1,7 @@
 <template>
 	
 	<Card v-if="dynamicList" v-for="(item, index) in dynamicList" :key="index"
+		:id_str="item.id_str"
 		:basic="item.basic"
 		:author="item.modules.module_author"
 		:dynamic="item.modules.module_dynamic"
