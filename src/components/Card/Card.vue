@@ -1,6 +1,6 @@
 <template>
 
-    <div class="card-item" @click="jumpTo(props.id_str!)">
+    <div class="card-item">
 
         <!-- 头像及头像框 -->
         <div class="avater-img">
@@ -35,7 +35,7 @@
 
 
             <!-- 文字描述 -->
-            <div v-if="props.dynamic!.desc" class="card">
+            <div v-if="props.dynamic!.desc" class="card" @click="jumpTo(props.id_str!)">
                 <el-text class="card_text">{{ props.dynamic!.desc.text }}</el-text>
             </div>
 
@@ -72,18 +72,16 @@
                 <!-- 文字 -->
                 <div v-if="props.orig.modules.module_dynamic.desc" class="forward-text">{{
                     props.orig.modules.module_dynamic.desc.text }}</div>
-
-                <div v-if="props.orig.modules.module_dynamic.major">
-                    <!-- 投稿视频 -->
-                    <Video :archive="props.orig.modules.module_dynamic.major.archive" />
-
-                    <!-- 分享图片 -->
-                    <Image :draw="props.orig.modules.module_dynamic.major.draw" />
-
-                    <!-- 投稿文章 -->
-                    <Read :draw="props.orig.modules.module_dynamic.major.article"
-                        :article="props.orig.modules.module_dynamic.major.article" />
-                </div>
+                    
+                <!-- 投稿视频 -->
+                <Video v-if="props.orig.modules.module_dynamic.major.archive"
+                    :archive="props.orig.modules.module_dynamic.major.archive" />
+                <!-- 分享图片 -->
+                <Image v-if="props.orig.modules.module_dynamic.major.draw"
+                    :draw="props.orig.modules.module_dynamic.major.draw" />
+                <!-- 投稿文章 -->
+                <Read v-if="props.orig.modules.module_dynamic.major.article"
+                    :article="props.orig.modules.module_dynamic.major.article" />
             </div>
 
 
