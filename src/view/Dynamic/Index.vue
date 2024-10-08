@@ -45,6 +45,10 @@ const {
 const lastId: Ref<''> = ref('')
 const dynamicList: Ref<any> = ref(null)
 const hasMore: Ref<boolean> = ref(true)
+
+
+
+// 获取动态
 const getDynamic = async (offset: string)  => {
 	await fetchData(`/api/dynamic?offset=${offset}`, {
 	}, (data: BiliResType) => {
@@ -53,7 +57,6 @@ const getDynamic = async (offset: string)  => {
 			// 记录更新动态基线及最后一条动态的id
 			baseline.value = data.data.items[0].id_str
 			lastId.value = data.data.items[data.data.items.length - 1].id_str
-
 			hasMore.value = data.data.has_more
 
 			if (offset === '') {
@@ -62,7 +65,7 @@ const getDynamic = async (offset: string)  => {
 				dynamicList.value = dynamicList.value.concat(data.data.items)
 			}
 		} else {
-			ElMessage({message: data.message, type: 'error'})
+			ElMessage.error(data.message)
 		}
 	})
 }
@@ -88,7 +91,7 @@ setInterval(getUpdate, 60000)
 
 // 加载新动态
 const getNewDynamic = () => {
-	window.location.reload()
+	getDynamic('')
 }
 
 

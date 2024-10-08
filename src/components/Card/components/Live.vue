@@ -26,8 +26,6 @@ const liveObj: any = reactive({
     content: reactive({})
 })
 liveObj.content = JSON.parse(props.live?.content)
-
-console.log(liveObj.content)
 </script>
 
 <style scoped>

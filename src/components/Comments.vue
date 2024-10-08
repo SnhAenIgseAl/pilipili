@@ -34,7 +34,7 @@
 
 
                     <!-- 检查评论状态 -->
-                    <CheckCommentStat :type="props.type" :oid="props.oid" :root="item.rpid_str" />
+                    <CheckCommentStat :type="props.type" :oid="props.oid" :root="item.rpid_str" :checked="false"/>
 
                     <!-- 装扮名称 -->
                     <!-- <Fan v-if="props.author!.decorate" :decorate="props.author!.decorate" /> -->

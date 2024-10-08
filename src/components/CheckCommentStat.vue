@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
+import { ref, Ref, computed, ComputedRef } from 'vue';
 import BiliResType from '../type/BiliResType';
 import { fetchData } from '../utils/fetchData';
 
@@ -20,13 +20,14 @@ import { fetchData } from '../utils/fetchData';
 const props = defineProps({
     type: Number,       // 评论区类型
     oid: String,        // 评论区id
-    root: String        // 目标评论id
+    root: String,       // 目标评论id
+    checked: Boolean    // 是否检查过
 })
 
 
 const commentStatTxt: Ref<string> = ref('')
 const commentStat: Ref<number> = ref(0)
-const checked: Ref<boolean> = ref(false)
+let checked: ComputedRef<boolean> = computed(() => props.checked)
 
 
 
@@ -37,11 +38,10 @@ const check = async() => {
         if (data.code === 0) {
             commentStatTxt.value = '正常'
             commentStat.value = 1
-            checked.value = true
         } else {
             commentStatTxt.value = data.message
-            checked.value = true
         }
+        checked = computed(() => true)
     })
 }
 

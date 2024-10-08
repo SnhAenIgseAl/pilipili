@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, toRefs, onMounted } from 'vue';
+import { ref, Ref, toRefs } from 'vue';
 import { useUserStore } from '../stores/user';
 
 
@@ -38,10 +38,6 @@ const jumpToTime = (time: string) => {
     let _time = min * 60 + sec
     JUMP_VIDEO_TIME.value = _time
 }
-
-onMounted(() => {
-    console.log(match, hasJumpTime.value)
-})
 
 </script>
 

@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
+import { ref, Ref, computed } from 'vue';
 import { ElMessage } from 'element-plus'
 import type BiliResType from '../type/BiliResType';
 import { fetchData } from '../utils/fetchData';
@@ -29,7 +29,7 @@ const props = defineProps({
 })
 
 
-const likeNum: Ref<number> = ref(props.like!)
+let likeNum: Ref<number> = computed(() => props.like!)
 const liked: Ref<number> = ref(props.liked!)    // 1为点赞过，0为未点赞
 
 
@@ -56,16 +56,15 @@ const action = async (action: Number) => {
         })
     }, (data: BiliResType) => {
         if (data.code === 0 && action === 1) {
-            ElMessage({ message: '点赞成功', type: 'success' })
-            likeNum.value++
+            ElMessage.success('点赞成功')
+            likeNum = computed(() => props.like! + 1)
             liked.value = 1
         } else if (data.code === 0 && action === 0) {
-            ElMessage({ message: '点踩成功', type: 'success' })
-            likeNum.value--
+            ElMessage.success('点踩成功')
+            likeNum = computed(() => props.like!)
             liked.value = 0
         } else {
-            console.log(data.message)
-            ElMessage({ message: data.message, type: 'error' })
+            ElMessage.error(data.message)
         }
     })
 }
