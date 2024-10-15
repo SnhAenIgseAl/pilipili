@@ -41,17 +41,17 @@ const getDynamic = async (offset: any) => {
 	}, (data: BiliResType) => {
 		if (data.code === 0) {
 
-		// 记录最后一条动态的id
-		lastId.value = data.data.items[data.data.items.length - 1].id_str
+			// 记录最后一条动态的id
+			lastId.value = data.data.items[data.data.items.length - 1].id_str
 
-		// 判断是否还有更多动态
-		hasMore.value = data.data.hasMore
+			// 判断是否还有更多动态
+			hasMore.value = data.data.hasMore
 
-		if (offset === '') {
-			dynamicList.value = data.data.items
-		} else {
-			dynamicList.value = dynamicList.value.concat(data.data.items)
-		}
+			if (offset === '') {
+				dynamicList.value = data.data.items
+			} else {
+				dynamicList.value = dynamicList.value.concat(data.data.items)
+			}
 		} else {
 			ElMessage.error(data.message)
 		}
