@@ -55,35 +55,6 @@ const login = async () => {
 			getInfo()
 			ElMessage.success('登录成功')
 			window.location.href = '/index'
-
-			// console.log(data.data)
-
-			// const access_token = 'access_token=' + data.data.access_token
-			// const SESSDATA = 'SESSDATA=' +  data.data.cookie_info.cookies[0].value
-			// const bili_jct = 'bili_jct=' +  data.data.cookie_info.cookies[1].value
-			// const DedeUserID = 'DedeUserID=' +  data.data.cookie_info.cookies[2].value
-
-			// localStorage.setItem('access_token', access_token)
-			// localStorage.setItem('SESSDATA', SESSDATA)
-			// localStorage.setItem('bili_jct', bili_jct)
-			// localStorage.setItem('DedeUserID', DedeUserID)
-
-			// await fetchData(`/api/setCookie`, {
-			// 	method: 'POST',
-			// 	headers: {
-			// 		'Content-Type': 'application/json'
-			// 	},
-			// 	body: JSON.stringify({
-			// 		access_token: access_token,
-			// 		DedeUserID: DedeUserID,
-			// 		SESSDATA: SESSDATA,
-			// 		bili_jct: bili_jct
-			// 	})
-			// }, () => {
-			// 	getInfo()
-			// 	ElMessage({message: '登录成功', type: 'success'})
-			// 	window.location.href = '/index'
-			// })
 		}
 	})
 }
