@@ -66,6 +66,8 @@
 
 		</div>
 	</div>
+
+	<el-empty v-else description="左上角先登录后即可查看推荐视频" />
 </template>
 
 <script setup lang="ts">
