@@ -107,7 +107,7 @@
                     color="#FFF"
                     size="large"
                     type="info"
-                    @close="emojiRemove(tag)"
+                    @close="tagRemove(tag, 'emoji')"
                 >
                     {{ tag }}
                 </el-tag>
@@ -116,10 +116,10 @@
                     ref="emojiInputRef"
                     v-model="emojiInput"
                     size="large"
-                    @keyup.enter="emojiInputConfirm"
-                    @blur="emojiInputConfirm"
+                    @keyup.enter="tagInputConfirm('emoji')"
+                    @blur="tagInputConfirm('emoji')"
                 />
-                <el-button v-else text @click="showEmojiInput">
+                <el-button v-else text @click="showTagInput('emoji')">
                     + 表情标签
                 </el-button>
             </div>
@@ -139,7 +139,7 @@
                     color="#FFF"
                     size="large"
                     type="info"
-                    @close="danmakuRemove(tag)"
+                    @close="tagRemove(tag, 'danmaku')"
                 >
                     {{ tag }}
                 </el-tag>
@@ -148,11 +148,42 @@
                     ref="danmakuInputRef"
                     v-model="danmakuInput"
                     size="large"
-                    @keyup.enter="danmakuInputConfirm"
-                    @blur="danmakuInputConfirm"
+                    @keyup.enter="tagInputConfirm('danmaku')"
+                    @blur="tagInputConfirm('danmaku')"
                 />
-                <el-button v-else text @click="showDanmakuInput">
+                <el-button v-else text @click="showTagInput('danmaku')">
                     + 弹幕关键词
+                </el-button>
+            </div>
+        </div>
+
+
+
+        <div class="setting-item">
+            <div class="setting-item_title">
+                查成分关键词
+            </div>
+
+            <div class="setting-item_body">
+                <el-tag v-for="tag in USER_LABELLED_LIST" :key="tag" 
+                    closable 
+                    color="#FFF"
+                    size="large"
+                    type="info"
+                    @close="tagRemove(tag, 'labelled')"
+                >
+                    {{ tag }}
+                </el-tag>
+                <el-input
+                    v-if="labelledInputVisible"
+                    ref="labelledInputRef"
+                    v-model="labelledInput"
+                    size="large"
+                    @keyup.enter="tagInputConfirm('labelled')"
+                    @blur="tagInputConfirm('labelled')"
+                />
+                <el-button v-else text @click="showTagInput('labelled')">
+                    + 成分关键词
                 </el-button>
             </div>
         </div>
@@ -191,7 +222,8 @@ const {
     USER_RECOMMEND_VIDEO_PLATFORM,
     USER_RECOMMEND_VIDEO_FRESH,
     USER_FILTER_EMOJI,
-    USER_FILTER_DANMAKU
+    USER_FILTER_DANMAKU,
+    USER_LABELLED_LIST
 } = toRefs(useSettingStore())
 
 
@@ -231,60 +263,81 @@ const changeVideoFresh = (num: any) => {
 
 
 
-// 设置表情过滤
+// 标签（表情过滤、弹幕屏蔽、查成分关键词
 const emojiInputVisible = ref(false)
 const emojiInput = ref('')
 const emojiInputRef = ref<InstanceType<typeof ElInput>>()
 
-const emojiRemove = (tag: String) => {
-    USER_FILTER_EMOJI.value.splice(USER_FILTER_EMOJI.value.indexOf(tag), 1)
-}
-
-const showEmojiInput = () => {
-    emojiInputVisible.value = true
-    nextTick(() => {
-        emojiInputRef.value!.input!.focus()
-    })
-}
-
-const emojiInputConfirm = () => {
-    if (emojiInput.value) {
-        USER_FILTER_EMOJI.value.push(emojiInput.value)
-        USER_FILTER_EMOJI.value = Array.from(new Set(USER_FILTER_EMOJI.value))
-        console.log(USER_FILTER_EMOJI.value)
-    }
-
-    emojiInputVisible.value = false
-    emojiInput.value = ''
-}
-
-
-
-// 设置弹幕过滤
 const danmakuInputVisible = ref(false)
 const danmakuInput = ref('')
 const danmakuInputRef = ref<InstanceType<typeof ElInput>>()
 
-const danmakuRemove = (tag: String) => {
-    USER_FILTER_DANMAKU.value.splice(USER_FILTER_DANMAKU.value.indexOf(tag), 1)
-}
+const labelledInputVisible = ref(false)
+const labelledInput = ref('')
+const labelledInputRef = ref<InstanceType<typeof ElInput>>()
 
-const showDanmakuInput = () => {
-    danmakuInputVisible.value = true
-    nextTick(() => {
-        danmakuInputRef.value!.input!.focus()
-    })
-}
 
-const danmakuInputConfirm = () => {
-    if (danmakuInput.value) {
-        USER_FILTER_DANMAKU.value.push(danmakuInput.value)
-        USER_FILTER_DANMAKU.value = Array.from(new Set(USER_FILTER_DANMAKU.value))
-        console.log(USER_FILTER_DANMAKU.value)
+const tagRemove = (tag: string, type: string) => {
+    if (type === 'emoji') {
+        USER_FILTER_EMOJI.value.splice(USER_FILTER_EMOJI.value.indexOf(tag), 1)
     }
+    if (type === 'danmaku') {
+        USER_FILTER_DANMAKU.value.splice(USER_FILTER_DANMAKU.value.indexOf(tag), 1)
+    }
+    if (type === 'labelled') {
+        USER_LABELLED_LIST.value.splice(USER_LABELLED_LIST.value.indexOf(tag), 1)
+    }
+}
 
-    danmakuInputVisible.value = false
-    danmakuInput.value = ''
+const showTagInput = (type: string) => {
+    if (type === 'emoji') {
+        emojiInputVisible.value = true
+        nextTick(() => {
+            emojiInputRef.value!.input!.focus()
+        })
+    }
+    if (type === 'danmaku') {
+        danmakuInputVisible.value = true
+        nextTick(() => {
+            danmakuInputRef.value!.input!.focus()
+        })
+    }
+    if (type === 'labelled') {
+        labelledInputVisible.value = true
+        nextTick(() => {
+            labelledInputRef.value!.input!.focus()
+        })
+    }
+}
+
+const tagInputConfirm = (type: string) => {
+    if (type === 'emoji') {
+        if (emojiInput.value) {
+            USER_FILTER_EMOJI.value.push(emojiInput.value)
+            USER_FILTER_EMOJI.value = Array.from(new Set(USER_FILTER_EMOJI.value))
+        }
+
+        emojiInputVisible.value = false
+        emojiInput.value = ''
+    }
+    if (type === 'danmaku') {
+        if (danmakuInput.value) {
+            USER_FILTER_DANMAKU.value.push(danmakuInput.value)
+            USER_FILTER_DANMAKU.value = Array.from(new Set(USER_FILTER_DANMAKU.value))
+        }
+
+        danmakuInputVisible.value = false
+        danmakuInput.value = ''
+    }
+    if (type === 'labelled') {
+        if (labelledInput.value) {
+            USER_LABELLED_LIST.value.push(labelledInput.value)
+            USER_LABELLED_LIST.value = Array.from(new Set(USER_LABELLED_LIST.value))
+        }
+
+        labelledInputVisible.value = false
+        labelledInput.value = ''
+    }
 }
 
 </script>

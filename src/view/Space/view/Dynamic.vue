@@ -35,8 +35,11 @@ const route = useRoute()
 
 const dynamicList: Ref<any> = ref(null)
 const hasMore: Ref<boolean> = ref(true)
-const lastId = ref(String)
-const getDynamic = async (offset: any) => {
+const lastId = ref('')
+
+
+// 获取动态
+const getDynamic = async (offset: string) => {
 	await fetchData(`/api/space/dynamic?mid=${route.params.mid}&offset=${offset}`, {
 	}, (data: BiliResType) => {
 		if (data.code === 0) {

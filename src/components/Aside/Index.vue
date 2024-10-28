@@ -44,6 +44,12 @@
                 </div>
             </RouterLink>
 
+            <RouterLink to="/labelled">
+                <div class="aside-item">
+                    <i>&#xe7c5;</i>
+                </div>
+            </RouterLink>
+
             <!-- <RouterLink to="/upload">
                 <div class="aside-item">
                     <i>&#xe75d;</i>

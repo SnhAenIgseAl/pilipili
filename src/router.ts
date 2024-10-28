@@ -78,6 +78,10 @@ const routes = [
 		component: () => import('@/view/History/Index.vue')
 	},
 	{
+		path: '/labelled',
+		component: () => import('@/view/Labelled/Index.vue')
+	},
+	{
 		path: '/video/:bvid',
 		query: 'p',
 		component: () => import('@/view/Video/Index.vue')
