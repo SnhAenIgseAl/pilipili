@@ -73,15 +73,18 @@
                 <div v-if="props.orig.modules.module_dynamic.desc" class="forward-text">{{
                     props.orig.modules.module_dynamic.desc.text }}</div>
                     
-                <!-- 投稿视频 -->
-                <Video v-if="props.orig.modules.module_dynamic.major.archive"
-                    :archive="props.orig.modules.module_dynamic.major.archive" />
-                <!-- 分享图片 -->
-                <Image v-if="props.orig.modules.module_dynamic.major.draw"
-                    :draw="props.orig.modules.module_dynamic.major.draw" />
-                <!-- 投稿文章 -->
-                <Read v-if="props.orig.modules.module_dynamic.major.article"
-                    :article="props.orig.modules.module_dynamic.major.article" />
+                <div v-if="props.orig.modules.module_dynamic.major">
+                    <!-- 投稿视频 -->
+                    <Video v-if="props.orig.modules.module_dynamic.major.archive"
+                        :archive="props.orig.modules.module_dynamic.major.archive" />
+                    <!-- 分享图片 -->
+                    <Image v-if="props.orig.modules.module_dynamic.major.draw"
+                        :draw="props.orig.modules.module_dynamic.major.draw" />
+                    <!-- 投稿文章 -->
+                    <Read v-if="props.orig.modules.module_dynamic.major.article"
+                        :article="props.orig.modules.module_dynamic.major.article" />
+                </div>
+                
             </div>
 
 

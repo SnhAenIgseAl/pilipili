@@ -6,14 +6,13 @@
             <el-input 
                 v-model="mid" 
                 size="large" 
-                maxlength="12"
+                maxlength="16"
                 placeholder="用户mid"
                 clearable>
             </el-input>
 
             <el-button 
                 type="primary" 
-                :color="`var(--cl-primary)`"
                 size="large"
                 @click="search(mid)">
                 搜索
@@ -110,6 +109,12 @@ const getDynamic = async (mid: string, offset: string) => {
             if (!hasMore.value) {
                 loading.value = false
                 return 
+            }
+
+            if (!data.data.items.length) {
+                loading.value = false
+                ElMessage.warning('该用户没有动态')
+                return
             }
 
             // 记录最后一条动态的id
