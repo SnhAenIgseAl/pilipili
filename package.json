@@ -19,7 +19,6 @@
     "path": "^0.12.7",
     "pinia": "^2.2.0",
     "pinia-plugin-persistedstate": "^3.2.1",
-    "terser": "^5.36.0",
     "vue": "^3.4.31",
     "vue-dompurify-html": "^5.1.0",
     "vue-router": "^4.4.0",
@@ -30,7 +29,6 @@
   "devDependencies": {
     "@types/node": "^22.5.1",
     "@vitejs/plugin-vue": "^5.0.5",
-    "rollup-plugin-terser": "^7.0.2",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
     "vue-tsc": "^2.0.24"
