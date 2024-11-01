@@ -14,6 +14,8 @@
             <el-button 
                 type="primary" 
                 size="large"
+                color="var(--cl-primary)"
+                :style="{color: '#fff'}"
                 @click="search(mid)">
                 搜索
             </el-button>

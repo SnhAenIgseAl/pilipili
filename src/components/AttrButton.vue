@@ -4,10 +4,18 @@
     <el-button v-if="attr === 0" @click="follow">
         未关注
     </el-button>
-    <el-button v-if="attr === 2" type="primary" @click="unfollow">
+    <el-button v-if="attr === 2" 
+        type="primary" 
+        color="var(--cl-primary)"
+        :style="{color: '#fff'}"
+        @click="unfollow">
         已关注
     </el-button>
-    <el-button v-if="attr === 6" type="primary" @click="unfollow">
+    <el-button v-if="attr === 6" 
+        type="primary" 
+        color="var(--cl-primary)"
+        :style="{color: '#fff'}"
+        @click="unfollow">
         已互粉
     </el-button>
 

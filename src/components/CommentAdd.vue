@@ -85,11 +85,12 @@ const addComment = async () => {
     }, (data: BiliResType) => {
         if (data.code === 0) {
             ElMessage.success('发表评论成功')
-            addCommentLoading.value = false
         } else {
             ElMessage.error(data.message)
-            addCommentLoading.value = false
         }
+
+        addCommentLoading.value = false
+        USER_COMMENT_CHILD_TXT.value = ''
     })
 }
 
