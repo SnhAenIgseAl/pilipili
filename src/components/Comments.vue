@@ -34,7 +34,7 @@
 
 
                     <!-- 检查评论状态 -->
-                    <CheckCommentStat :type="props.type" :oid="props.oid" :root="item.rpid_str" :checked="false"/>
+                    <CheckCommentStat v-model="item.stat" :type="props.type" :oid="props.oid" :root="item.rpid_str" />
 
                     <!-- 装扮名称 -->
                     <!-- <Fan v-if="props.author!.decorate" :decorate="props.author!.decorate" /> -->
@@ -152,6 +152,7 @@ const props = defineProps({
     oid: String,        // 评论区id
     comments: Number    // 评论数
 })
+
 
 
 const {
