@@ -67,12 +67,13 @@
 		</div>
 	</div>
 
-	<el-empty v-else description="左上角先登录后即可查看推荐视频" />
+	<el-empty v-if="isLogin" description="左上角先登录后即可浏览推荐视频" />
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useSettingStore } from '../../stores/setting';
+import { useUserStore } from '../../stores/user';
 import type BiliResType from '../../type/BiliResType';
 import { wheelBottom } from '../../utils/wheelBottom';
 import { debounce } from '../../utils/debounce';
@@ -84,6 +85,10 @@ const {
 	USER_RECOMMEND_VIDEO_NUM,
 	USER_RECOMMEND_VIDEO_FRESH
 } = useSettingStore()
+
+const {
+	isLogin
+} = useUserStore()
 
 const videoList: any = ref([])
 
