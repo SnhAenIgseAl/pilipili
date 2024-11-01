@@ -1,4 +1,5 @@
 <template>
+		
 	<div ref="wrapperRef" v-if="videoList" class="main-box" style="padding-left: 86px;">
 
 		<!-- PC端首页推荐 -->
@@ -67,7 +68,10 @@
 		</div>
 	</div>
 
-	<el-empty v-if="isLogin" description="左上角先登录后即可浏览推荐视频" />
+	<div class="empty">
+		<el-empty v-if="!isLogin" description="左上角先登录后即可浏览推荐视频" />
+	</div>
+
 </template>
 
 <script setup lang="ts">
@@ -233,5 +237,13 @@ onUnmounted(() => {
 			margin-right: 10px;
 		}
 	}
+}
+
+.empty {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	padding-top: 60px;
+	padding-left: 70px;
 }
 </style>
