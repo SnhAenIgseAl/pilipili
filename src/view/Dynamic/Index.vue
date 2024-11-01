@@ -91,6 +91,7 @@ setInterval(getUpdate, 60000)
 
 // 加载新动态
 const getNewDynamic = () => {
+	hasUpdate.value = 0
 	getDynamic('')
 }
 

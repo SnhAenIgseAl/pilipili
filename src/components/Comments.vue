@@ -130,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { ElMessage } from 'element-plus';
 import type BiliResType from '../type/BiliResType';
 import { getPlaceholderTxt } from '../utils/commentPlaceholderCfg';
@@ -160,7 +160,7 @@ const {
 } = toRefs(useUserStore())
 
 
-const commentNum = ref(props.comments)  // 评论数
+let commentNum = computed(() => props.comments)  // 评论数
 const commentPageTotal = ref(0)         // 评论总页码
 const currentPage = ref(1)              // 评论当前页码
 const isEnd = ref(false)                // 是否为最后一页
@@ -185,7 +185,7 @@ const getCommentsList = async (page: Number, mode: Number) => {
             }
 
             if (page === 0) {
-                commentNum.value = data.data.cursor.all_count
+                commentNum = computed(() => data.data.cursor.all_count)
                 commentsList.value = data.data.replies
             } else {
                 let newList = [...commentsList.value, ...data.data.replies]

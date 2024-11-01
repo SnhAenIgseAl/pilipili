@@ -1,7 +1,7 @@
 <template>
 
     <el-button text @click="forwardVisible = true" style="margin-left: 0px;">
-        <i>&#xe6eb;</i>{{ props.num }}{{ props.txt }}
+        <i>&#xe6eb;</i>{{ forwardNum }}{{ props.txt }}
     </el-button>
 
     <el-dialog v-model="forwardVisible" title="转发动态" :width="600">
@@ -28,6 +28,7 @@ import { ref, Ref } from 'vue'
 import { fetchData } from '../../../utils/fetchData';
 import BiliResType from '../../../type/BiliResType';
 import { ElMessage } from 'element-plus'
+import { computed } from 'vue';
 
 const props = defineProps({
     dynId: String,  // 动态id
@@ -37,6 +38,7 @@ const props = defineProps({
 })
 
 
+const forwardNum = computed(() => props.num)
 const forwardVisible: Ref<boolean> = ref(false)
 const dynamicTxt: Ref<''> = ref('')
 const dftTxt: Ref<'转发动态'> = ref('转发动态')
@@ -60,11 +62,11 @@ const forward = async () => {
         if (data.code === 0) {
             ElMessage.success('转发成功')
             forwardVisible.value = false
-            loading.value = false
         } else {
-            ElMessage.error(data)
-            loading.value = false
+            ElMessage.error(data.message)
+            
         }
+        loading.value = false
     })
 }
 
