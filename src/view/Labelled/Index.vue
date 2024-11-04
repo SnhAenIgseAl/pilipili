@@ -19,7 +19,6 @@
                 @click="search(mid)">
                 搜索
             </el-button>
-
             
         </div>
 
@@ -35,7 +34,14 @@
                         <h3>成分清单</h3>
                     </el-divider>
 
-                    <el-scrollbar height="300px">
+                    <div style="width: 100%; height: 300px;">
+                        <ECTreeMap v-if="result.length" 
+                            name="成分清单"
+                            :dataList="result">
+                        </ECTreeMap>
+                    </div>
+
+                    <!-- <el-scrollbar height="300px">
                         <el-space 
                             direction="vertical" 
                             alignment="start">
@@ -45,7 +51,7 @@
                                 {{ result[index] }}条{{ item }}相关动态 
                             </el-text><br />
                         </el-space>
-                    </el-scrollbar>
+                    </el-scrollbar> -->
                     
                 </template>
 
@@ -64,6 +70,7 @@ import BiliResType from '../../type/BiliResType'
 import labelled from '../../utils/labelled'
 import { useSettingStore } from "../../stores/setting"
 import { storeToRefs } from 'pinia'
+import ECTreeMap from '../../components/Echarts/ECTreeMap.vue'
 
 
 const {
@@ -99,6 +106,7 @@ const search = async (mid: string) => {
     await getDynamic(mid, lastId.value)
 
     result.value = labelled(dynamicList.value)
+    console.log(result.value)
 }
 
 

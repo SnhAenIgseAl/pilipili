@@ -21,8 +21,15 @@ const labelled = (data: Object[]) => {
 			}
 		}
 	}
+
+	let res = list.map((item, index) => {
+		return {
+			name: USER_LABELLED_LIST.value[index],
+			value: item
+		}
+	})
 	
-	return list
+	return res
 }
 
 
