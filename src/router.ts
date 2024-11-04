@@ -82,6 +82,10 @@ const routes = [
 		component: () => import('@/view/Labelled/Index.vue')
 	},
 	{
+		path: '/data-up',
+		component: () => import('@/view/DataUp/Index.vue')
+	},
+	{
 		path: '/video/:bvid',
 		query: 'p',
 		component: () => import('@/view/Video/Index.vue')

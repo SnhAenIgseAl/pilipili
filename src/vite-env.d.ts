@@ -7,6 +7,7 @@ declare module '*.vue' {
 }
 
 
+declare module 'echarts';
 declare module 'vue3-video-play';
 declare module 'vue3-danmaku';
 declare module 'longze-vue3-video-player';

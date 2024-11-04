@@ -50,6 +50,12 @@
                 </div>
             </RouterLink>
 
+            <RouterLink to="/data-up">
+                <div class="aside-item">
+                    <i>&#xe682;</i>
+                </div>
+            </RouterLink>
+
             <!-- <RouterLink to="/upload">
                 <div class="aside-item">
                     <i>&#xe75d;</i>
