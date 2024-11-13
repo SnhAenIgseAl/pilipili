@@ -136,10 +136,12 @@ const getVideo = async () => {
 		}
 	})
 }
-getVideo()
-setTimeout(() => {
-	getVideo()
-}, 500);
+
+for (let i = 0; i < 5; i++) {
+	setTimeout(() => {
+		getVideo()
+	}, 200)
+}
 
 
 
