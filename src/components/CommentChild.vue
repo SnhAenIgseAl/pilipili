@@ -46,7 +46,7 @@
             <div class="comment-control">
                 <!-- ip属地 -->
                 <div class="comment-info">
-                    <el-text type="info">
+                    <el-text size="small" type="info">
                         {{ item.reply_control.time_desc }} · {{ item.reply_control.location }}
                     </el-text>
                 </div>
@@ -120,8 +120,9 @@ const getSubComments = async (page: number) => {
             for (let i = 0; i < replies.length; i++) {
                 let message = replies[i].content.message
                 let members = replies[i].content.members
+                let emote = replies[i].content.emote
 
-                replies[i].content.message = parseCommentTxt(message, members)
+                replies[i].content.message = parseCommentTxt(message, emote, members)
             }
 
             subComments.value = replies
@@ -178,9 +179,11 @@ const changePage = async (page: number) => {
 .comment-info {}
 
 .comment-text {
+    display: flex;
     margin: 8px 0 8px;
     line-height: 24px;
     font-size: 14px;
+    align-items: start;
 }
 
 .comment-control {

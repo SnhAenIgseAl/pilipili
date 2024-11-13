@@ -180,8 +180,9 @@ const getCommentsList = async (page: Number, mode: Number) => {
             for (let i = 0; i < data.data.replies.length; i++) {
                 let message = data.data.replies[i].content.message
                 let members = data.data.replies[i].content.members
+                let emote = data.data.replies[i].content.emote
 
-                data.data.replies[i].content.message = parseCommentTxt(message, members)
+                data.data.replies[i].content.message = parseCommentTxt(message, emote, members)
             }
 
             if (page === 0) {
@@ -282,10 +283,11 @@ const addComment = async () => {
 }
 
 .comment-text {
+    display: flex;
     margin: 8px 0;
     line-height: 1.75;
     font-size: 14px;
-    align-content: center;
+    align-content: baseline;
 }
 
 

@@ -45,7 +45,10 @@ onMounted(() => {
             trigger: 'axis'
         },
         xAxis: {
-            data: xAxis as Array<string>
+            data: xAxis as Array<string>,
+            axisTick: {
+                alignWithLabel: true
+            }
         },
         yAxis: {},
         dataZoom: [

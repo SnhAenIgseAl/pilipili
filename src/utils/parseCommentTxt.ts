@@ -1,5 +1,5 @@
 import { toRefs } from 'vue'
-import emoji from './emoji'
+// import emoji from './emoji'
 import { useSettingStore } from '../stores/setting'
 
 
@@ -11,9 +11,17 @@ const {
 
 
 
-export const parseCommentTxt = (text: string, members: Array<any> | []) => {
+interface EmoteType {
+    [key: string]: {
+        url: string
+    }
+}
+
+
+
+export const parseCommentTxt = (text: string, emote: EmoteType, members: Array<any> | []) => {
     text = parseHtml(text)
-    text = parseEmoji(text)
+    text = parseEmoji(text, emote)
     text = parseAt(text, members)
     return text
 }
@@ -30,14 +38,22 @@ function parseHtml(text: string) {
 
 
 // 解析表情
-function parseEmoji(text: string) {
-    for (let i = 0; i < emoji.length; i++) {
-        // 过滤表情
-        for (let j = 0; j < USER_FILTER_EMOJI.value.length; j++) {
-            text = text.split(USER_FILTER_EMOJI.value[j].toString()).join('')
-        }
-        text = text.split(emoji[i].name).join(`<img class='comment-text_img' src='https://images.weserv.nl/?url=${emoji[i].src}@48w.webp' />`)
+function parseEmoji(text: string, emote: EmoteType) {
+
+    // 过滤表情
+    for (let i = 0; i < USER_FILTER_EMOJI.value.length; i++) {
+        text = text.split(USER_FILTER_EMOJI.value[i].toString()).join('')
     }
+    
+    if (emote) {
+        const emoteList = Object.keys(emote)
+        console.log(emoteList)
+        for (let i = 0; i < emoteList.length; i++) {
+            let url = emote[emoteList[i]].url
+            text = text.split(emoteList[i]).join(`<img class='comment-text_img' src='https://images.weserv.nl/?url=${url}@48w.webp' />`)
+        }
+    }
+
     return text
 }
 
