@@ -54,7 +54,7 @@ const login = async () => {
 			clearInterval(doLogin)
 			await getInfo()
 			ElMessage.success('登录成功')
-			window.location.href = '/index'
+			// window.location.href = '/index'
 		}
 	})
 }
