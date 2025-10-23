@@ -100,7 +100,7 @@ const shareVideoImg = () => {
 
             // 视频封面，等比放大高度至900像素，居中
             var videoImg = new Image()
-            videoImg.src = `https://images.weserv.nl/?url=${videoInfo.pic}@600w.webp`
+            videoImg.src = `${videoInfo.pic}@600w.webp`
             videoImg.onload = () => {
 
                 let scale = 900 / videoImg.naturalHeight

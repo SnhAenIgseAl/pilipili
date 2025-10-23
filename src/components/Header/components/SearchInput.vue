@@ -31,7 +31,7 @@
 				<div v-for="(item, index) in hotwordList" :key="index" @click="search(item.keyword)" class="hot-item">
 					<i>{{ index + 1 }}</i>
 					{{ item.keyword }}
-					<img v-if="item.icon" :src="`https://images.weserv.nl/?url=${item.icon}`" class="hot-icon" />
+					<img v-if="item.icon" :src="`${item.icon}`" class="hot-icon" />
 				</div>
 			</div>
 		</template>

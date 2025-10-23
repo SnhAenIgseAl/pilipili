@@ -16,8 +16,8 @@ import { fetchData } from '../../utils/fetchData';
 import type BiliResType from '../../type/BiliResType';
 import { ElMessage } from 'element-plus';
 
-const user = useUserStore()
-const { getInfo } = user
+const userStore = useUserStore()
+const { getInfo } = userStore
 
 
 // 获取二维码
@@ -52,13 +52,13 @@ const login = async () => {
 
 		if (data.code === 0) {
 			clearInterval(doLogin)
-			getInfo()
+			await getInfo()
 			ElMessage.success('登录成功')
 			window.location.href = '/index'
 		}
 	})
 }
-const doLogin = setInterval(login, 3000)
+const doLogin = setInterval(login, 2000)
 
 </script>
 

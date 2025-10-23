@@ -1,13 +1,13 @@
 <template>
 
 	<div v-if="spaceInfo.card" class="space-top">
-		<div class="top-photo" :style="{backgroundImage: `url(https://images.weserv.nl/?url=${spaceInfo.space?.l_img})`}"></div>
+		<div class="top-photo" :style="{backgroundImage: `url(${spaceInfo.space?.l_img})`}"></div>
 	
 		<div class="space-info">
 			<div class="face" 
-				:style="{backgroundImage: `url(https://images.weserv.nl/?url=${spaceInfo.card?.face}@160w.webp)`}">
+				:style="{backgroundImage: `url(${spaceInfo.card?.face}@160w.webp)`}">
 				<img v-if="spaceInfo.card?.pendant.image" 
-					:src="`https://images.weserv.nl/?url=${spaceInfo.card?.pendant.image}@160w.webp`" class="pendant" />
+					:src="`${spaceInfo.card?.pendant.image}@160w.webp`" class="pendant" />
 			</div>
 			
 
@@ -17,7 +17,7 @@
 
 					<Level :level="spaceInfo.card.level_info.current_level" />
 
-					<img :src="`https://images.weserv.nl/?url=${spaceInfo.card.nameplate.image}@60w.webp`" class="nameplate-image"/>
+					<img :src="`${spaceInfo.card.nameplate.image}@60w.webp`" class="nameplate-image"/>
 				</div>
 
 				<div class="sign">

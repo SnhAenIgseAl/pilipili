@@ -3,7 +3,7 @@
     <div v-for="(item, index) in props.data" :key="index" class="list-item">
         
         <!-- 头像 -->
-        <img :src="`https://images.weserv.nl/?url=https:${item.upic}@160w.webp`" class="upic" />
+        <img :src="`https:${item.upic}@160w.webp`" class="upic" />
         
         <!-- 信息 -->
         <div class="list-info">

@@ -5,7 +5,7 @@
             {{ props.pub!.name }}
             <Level :level="5" />
             <img v-if="info.card.vip.status"
-                :src="`https://images.weserv.nl/?url=${info.card.vip.label.img_label_uri_hans_static}`" class="vip-img" />
+                :src="`${info.card.vip.label.img_label_uri_hans_static}`" class="vip-img" />
         </div>
 
         <div class="popover-stat">

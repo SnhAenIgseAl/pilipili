@@ -15,7 +15,7 @@
             <div class="video-list" style="margin-left: 32px;">
                 <div v-for="(j, idx) in favList.favVideoInfo[index]?.medias" :key="idx" 
                     class="video-item"
-                    :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${j.cover}@600w.webp)` }">
+                    :style="{ backgroundImage: `url(${j.cover}@600w.webp)` }">
                     <RouterLink :to="`/video/${j.bvid}`">
                         <div class="video-info">
                             <div class="video-title">

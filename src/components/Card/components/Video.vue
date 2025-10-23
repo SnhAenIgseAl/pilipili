@@ -4,7 +4,7 @@
 
         <div class="major-cover"
             :style="{ 
-                backgroundImage: `url(https://images.weserv.nl/?url=${props.archive.cover}@1000w.webp)` 
+                backgroundImage: `url(${props.archive.cover}@1000w.webp)` 
             }">
         </div>
         

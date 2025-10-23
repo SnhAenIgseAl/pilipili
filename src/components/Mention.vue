@@ -14,7 +14,7 @@
                     <div v-for="(item, index) in atList" :key="index"
                         class="at-item"
                         @click="handleAt(item.name)">
-                        <img :src="`https://images.weserv.nl/?url=${item.face}@60w.webp`" class="at-face" />
+                        <img :src="`${item.face}@60w.webp`" class="at-face" />
                         <el-text>{{ item.name }}</el-text>
                     </div>
                 </el-scrollbar>

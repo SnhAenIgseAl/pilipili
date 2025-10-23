@@ -3,7 +3,7 @@
     <el-carousel height="250px" class="comment-img_box">
         <el-carousel-item v-for="(item, index) in props.imgList" :key="index"
             @click="viewImg(item.img_src)">
-            <img :src="`https://images.weserv.nl/?url=${item.img_src}@500w.webp`" class="comment-img" />
+            <img :src="`${item.img_src}@500w.webp`" class="comment-img" />
         </el-carousel-item>
     </el-carousel>
 
@@ -31,7 +31,7 @@ const imgVisible: Ref<boolean> = ref(false)
 const imgSrc: Ref<string> = ref('')
 const viewImg = (img_src: string) => {
     imgVisible.value = true
-    imgSrc.value = `https://images.weserv.nl/?url=${img_src}@500w.webp`
+    imgSrc.value = `${img_src}@500w.webp`
 }
 
 </script>

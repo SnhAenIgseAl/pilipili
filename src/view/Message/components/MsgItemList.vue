@@ -3,9 +3,9 @@
 
         <div class="msg-avatar-container">
             <img v-if="props.users" v-for="(user, user_index) in props.users" :key="user_index"
-                :src="`https://images.weserv.nl/?url=${user.avatar}@120w.webp`" class="msg-avatar" />
+                :src="`${user.avatar}@120w.webp`" class="msg-avatar" />
             <img v-if="props.user"
-                :src="`https://images.weserv.nl/?url=${props.user.avatar}@120w.webp`" class="msg-avatar" />
+                :src="`${props.user.avatar}@120w.webp`" class="msg-avatar" />
         </div>
 
         <div class="msg-info">
@@ -37,7 +37,7 @@
              </div>
         </div>
 
-        <div :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${props.image}@120w.webp)` }"
+        <div :style="{ backgroundImage: `url(${props.image}@120w.webp)` }"
             class="msg-img" />
     </div>
 </template>

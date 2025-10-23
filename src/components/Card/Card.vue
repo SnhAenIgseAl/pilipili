@@ -4,9 +4,9 @@
 
         <!-- 头像及头像框 -->
         <div class="avater-img">
-            <img :src="`https://images.weserv.nl/?url=${props.author!.face}@100w.webp`" class="avater-face" />
+            <img :src="`${props.author!.face}@100w.webp`" class="avater-face" />
             <img v-if="props.author!.pendant?.image" class="pendant"
-                :src="`https://images.weserv.nl/?url=${props.author!.pendant.image}@100w.webp`" />
+                :src="`${props.author!.pendant.image}@100w.webp`" />
         </div>
 
 

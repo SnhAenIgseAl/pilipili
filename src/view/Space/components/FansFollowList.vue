@@ -4,7 +4,7 @@
         <div v-for="(item, index) in props.list" :key="index" 
             class="list">
 
-            <img :src="`https://images.weserv.nl/?url=${item.face}@100w.webp`" />
+            <img :src="`${item.face}@100w.webp`" />
             
             <div class="list-info">
                 <div class="list-name">

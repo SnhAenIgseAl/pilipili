@@ -10,7 +10,7 @@
             v-for="(item, index) in porps.draw.items" :key="index" 
             class="draw-carousel">
 
-            <img :src="`https://images.weserv.nl/?url=${item.src}@1000h.webp`" class="draw-item"/>
+            <img :src="`${item.src}@1000h.webp`" class="draw-item"/>
         
         </el-carousel-item>
     </el-carousel>

@@ -4,7 +4,7 @@
 
         <!-- 视频封面 -->
         <RouterLink :to="`/video/${item.bvid}`">
-            <div class="pic" :style="{ backgroundImage: `url(https://images.weserv.nl/?url=http:${item.pic}@300w.webp)` }">
+            <div class="pic" :style="{ backgroundImage: `url(http:${item.pic}@300w.webp)` }">
                 <div class="stat">
                     <span><i>&#xe73d;</i>{{ item.play }}</span>
                     <span><i>&#xe644;</i>{{ item.like }}</span>
@@ -17,7 +17,7 @@
                 <div class="info">
                     <div class="info-title" v-html="item.title"></div>
                     <div class="info-author">
-                        <img :src="`https://images.weserv.nl/?url=${item.upic}@30w.webp`" class="upic" />
+                        <img :src="`${item.upic}@30w.webp`" class="upic" />
                         <el-text type="info">{{ item.author }} · {{ item.pubdate }}</el-text>
                     </div>
                 </div>

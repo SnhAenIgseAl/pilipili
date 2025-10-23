@@ -7,7 +7,7 @@
         <el-text type="info">
             {{ props.article?.desc }}
         </el-text>
-        <img :src="`https://images.weserv.nl/?url=${props.article?.covers[0]}@1000w.webp`" 
+        <img :src="`${props.article?.covers[0]}@1000w.webp`" 
             class="read-img"/>
     </a>
 

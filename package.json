@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "homepage": "https://SnhAenIgseAl.github.io/pilipili",
+  "homepage": "https://pilipili.snhaenigseal.cn",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",

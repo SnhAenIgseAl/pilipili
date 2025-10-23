@@ -7,7 +7,7 @@
             <RouterLink v-if="item.badge === ''" :to="`/video/${item.history.bvid}`">
                 <div class="item">
                     <div class="item-cover"
-                        :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.cover}@400w.webp)` }"></div>
+                        :style="{ backgroundImage: `url(${item.cover}@400w.webp)` }"></div>
 
                     <div class="item-info">
                         <div class="item-title">
@@ -17,7 +17,7 @@
                         <div>
                             <el-text type="info" class="item-author">
 
-                                <img :src="`https://images.weserv.nl/?url=${item.author_face}@60w.webp`"
+                                <img :src="`${item.author_face}@60w.webp`"
                                     class="author-face" />
 
                                 <span>{{ item.author_name }} · {{ item.tag_name }}</span>
@@ -34,7 +34,7 @@
             <RouterLink v-if="item.badge === '专栏'" :to="`/read/${item.history.oid}`">
                 <div class="item">
                     <div class="item-cover"
-                        :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.covers[0]}@400w.webp)` }"></div>
+                        :style="{ backgroundImage: `url(${item.covers[0]}@400w.webp)` }"></div>
 
                     <div class="item-info">
                         <div class="item-title">
@@ -44,7 +44,7 @@
                         <div>
                             <el-text type="info" class="item-author">
 
-                                <img :src="`https://images.weserv.nl/?url=${item.author_face}@60w.webp`"
+                                <img :src="`${item.author_face}@60w.webp`"
                                     class="author-face" />
 
                                 <span>{{ item.author_name }} · {{ item.tag_name }}</span>

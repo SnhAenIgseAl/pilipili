@@ -73,7 +73,7 @@
 
         <div class="aside-bottom">
             <RouterLink v-if="isLogin" :to="`/space/${info.mid}/home`">
-                <img :src="`https://images.weserv.nl/?url=${info.face}@80h.webp`" class="aside-face"/>
+                <img :src="`${info.face}@80h.webp`" class="aside-face"/>
             </RouterLink>
 
             <Setting />

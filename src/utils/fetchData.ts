@@ -4,7 +4,7 @@ import BiliResType from "../type/BiliResType"
 
 export const fetchData = async (api: string, opition: RequestInit | undefined, callback: Function | undefined) => {
     try {
-        api = api.replace('/api', 'https://pilipili-server.icu')
+        api = api.replace('/api', 'https://pilipili.api.snhaenigseal.cn')
 
         if (opition) {
             opition.mode = 'cors'

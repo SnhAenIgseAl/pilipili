@@ -7,7 +7,7 @@
     <div v-if="topVideo || masterVideo" class="top-master">
 
         <div v-if="topVideo" class="video-item top-video"
-            :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${topVideo.pic})` }">
+            :style="{ backgroundImage: `url(${topVideo.pic})` }">
             
             <RouterLink :to="`/video/${topVideo.bvid}`">
                 <div class="video-info">
@@ -22,7 +22,7 @@
 
         <div v-if="masterVideo" v-for="(item, index) in masterVideo" :key="index" 
             class="video-item master-video"
-            :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.pic})` }">
+            :style="{ backgroundImage: `url(${item.pic})` }">
             
             <RouterLink :to="`/video/${topVideo.bvid}`">
                 <div class="video-info">

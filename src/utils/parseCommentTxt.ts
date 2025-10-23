@@ -50,7 +50,7 @@ function parseEmoji(text: string, emote: EmoteType) {
         console.log(emoteList)
         for (let i = 0; i < emoteList.length; i++) {
             let url = emote[emoteList[i]].url
-            text = text.split(emoteList[i]).join(`<img class='comment-text_img' src='https://images.weserv.nl/?url=${url}@48w.webp' />`)
+            text = text.split(emoteList[i]).join(`<img class='comment-text_img' src='${url}@48w.webp' />`)
         }
     }
 

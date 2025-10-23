@@ -1,6 +1,6 @@
 <template>
 
-    <div class="live-card" :style="{backgroundImage:  `url(https://images.weserv.nl/?url=${liveObj.content.live_play_info.cover})`}">
+    <div class="live-card" :style="{backgroundImage:  `url(${liveObj.content.live_play_info.cover})`}">
 
         <a :href="liveObj.content.live_play_info.link" target="_blank">
         <div class="live-info">

@@ -12,7 +12,7 @@
 
             <div v-for="(item, index) in relatedList" :key="index">
                 <div class="related-item" 
-                    :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.pic}@300w.webp)`}"
+                    :style="{ backgroundImage: `url(${item.pic}@300w.webp)`}"
                     @click="goToVideo(item.bvid)">
                     <div class="related-info">
                         <div class="related-title">

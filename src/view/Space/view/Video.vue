@@ -5,7 +5,7 @@
 
     <div v-if="videoList" class="video-list">
         <div v-for="(item, index) in videoList" :key="index" class="video-item"
-            :style="{ backgroundImage: `url(https://images.weserv.nl/?url=${item.cover}@600w.webp)` }">
+            :style="{ backgroundImage: `url(${item.cover}@600w.webp)` }">
 
             <RouterLink :to="`/video/${item.bvid}`">
                 <div class="video-info">

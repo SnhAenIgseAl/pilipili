@@ -1,7 +1,7 @@
 <template>
     
     <div class="decorate">
-        <img :src="`https://images.weserv.nl/?url=${props.decorate!.card_url}@100h.webp`" class="card-url" />
+        <img :src="`${props.decorate!.card_url}@100h.webp`" class="card-url" />
         <div class="fan-number" :style="{color: `${props.decorate!.fan.color}`}">No. {{ props.decorate!.fan.number }}</div>
     </div>
 

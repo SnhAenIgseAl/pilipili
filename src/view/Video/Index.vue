@@ -27,7 +27,7 @@
             <!-- up信息 -->
             <div class="video-up">
                 <RouterLink :to="`/space/${videoInfo.owner.mid}/home`" class="up-link">
-                    <img :src="`https://images.weserv.nl/?url=${videoInfo.owner.face}@80w.webp`" class="up-face" />
+                    <img :src="`${videoInfo.owner.face}@80w.webp`" class="up-face" />
                     <el-text type="info" class="up-name">
                         {{ videoInfo.owner.name }}
                     </el-text>
