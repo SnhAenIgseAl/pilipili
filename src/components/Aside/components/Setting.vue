@@ -59,7 +59,7 @@
 
 
 
-        <div class="setting-item">
+        <!-- <div class="setting-item">
             <div class="setting-item_title">
                 首页视频推荐数量
             </div>
@@ -73,7 +73,7 @@
                     :max="14"
                     show-stops />
             </div>
-        </div>
+        </div> -->
 
 
 
@@ -218,7 +218,7 @@ import { useSettingStore } from '../../../stores/setting';
 
 const { 
     USER_THEME,
-    USER_RECOMMEND_VIDEO_NUM,
+    // USER_RECOMMEND_VIDEO_NUM,
     USER_RECOMMEND_VIDEO_PLATFORM,
     USER_RECOMMEND_VIDEO_FRESH,
     USER_FILTER_EMOJI,
@@ -250,9 +250,9 @@ const changeVideoPlatform = (platform: string) => {
 
 
 // 设置首页视频推荐数量
-const changeVideoNum = (num: any) => {
-    USER_RECOMMEND_VIDEO_NUM.value = num
-}
+// const changeVideoNum = (num: any) => {
+//     USER_RECOMMEND_VIDEO_NUM.value = num
+// }
 
 
 

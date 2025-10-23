@@ -4,14 +4,13 @@ import BiliResType from "../type/BiliResType"
 
 export const fetchData = async (api: string, opition: RequestInit | undefined, callback: Function | undefined) => {
     try {
-        // api = api.replace('/api', 'https://pilipili.api.snhaenigseal.cn')
+        api = api.replace('/api', 'https://pilipili.api.snhaenigseal.cn')
+        // api = api.replace('/api', 'http://127.0.0.1:18848')
 
         if (opition) {
             opition.mode = 'cors'
             opition.credentials = 'include'
         }
-        
-        // api = api.replace('/api', 'http://127.0.0.1:18848')
 
         let res = await fetch(api, opition)
         let data: BiliResType = await res.json()

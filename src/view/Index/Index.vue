@@ -97,16 +97,6 @@ const {
 
 const videoList: any = ref([])
 
-const initVideo = async () => {
-	if (isLogin) {
-		for (let i = 1; i <= 3; i++) {
-			await getVideo()
-			await sleep(500)
-		}
-	}
-}
-initVideo()
-
 const getVideo = async () => {
 
 	let platform = USER_RECOMMEND_VIDEO_PLATFORM
@@ -148,8 +138,13 @@ const getVideo = async () => {
 	})
 }
 
-
-
+const initVideo = async () => {
+	for (let i = 1; i <= 3; i++) {
+		await getVideo()
+		await sleep(500)
+	}
+}
+initVideo()
 
 const getMore = debounce(wheelBottom(1000, async () => {
 	await getVideo()
