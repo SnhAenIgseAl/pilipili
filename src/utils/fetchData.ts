@@ -1,4 +1,3 @@
-import { ElMessage } from "element-plus"
 import BiliResType from "../type/BiliResType"
 
 
@@ -17,6 +16,6 @@ export const fetchData = async (api: string, opition: RequestInit | undefined, c
 
         callback && callback(data)
     } catch (err) {
-        ElMessage.warning({ message: '服务器未连接' + err})
+        throw new Error(err as string)
     }
 }

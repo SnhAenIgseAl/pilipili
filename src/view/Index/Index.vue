@@ -146,12 +146,13 @@ const initVideo = async () => {
 }
 initVideo()
 
-const getMore = debounce(wheelBottom(1000, async () => {
-	await getVideo()
-}), 400)
-
-
-
+const getMore = debounce(
+	wheelBottom(
+		1000,
+		async () => {
+			await getVideo()
+		}),
+	400)
 
 // 滚轮触底了加载更多视频
 onMounted(() => {

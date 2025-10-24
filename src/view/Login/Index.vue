@@ -15,6 +15,7 @@ import { useUserStore } from '../../stores/user';
 import { fetchData } from '../../utils/fetchData';
 import type BiliResType from '../../type/BiliResType';
 import { ElMessage } from 'element-plus';
+import { onUnmounted } from 'vue';
 
 const userStore = useUserStore()
 const { getInfo } = userStore
@@ -59,6 +60,10 @@ const login = async () => {
 	})
 }
 const doLogin = setInterval(login, 2000)
+
+onUnmounted(() => {
+	clearInterval(doLogin)
+})
 
 </script>
 
