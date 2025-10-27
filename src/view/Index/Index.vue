@@ -11,7 +11,7 @@
 
 				<!-- 视频封面 -->
 				<div class="pic"
-					:style="{ backgroundImage: `url(${item.pic}@360w_288h.webp)` }">
+					:style="{ backgroundImage: `url(${IMG_CDN}${item.pic}@360w_288h.webp)` }">
 					<div class="stat">
 						<span><i>&#xe81a;</i>{{ item.stat.view }}</span>
 						<span><i>&#xe644;</i>{{ item.stat.like }}</span>
@@ -46,7 +46,7 @@
 
 				<!-- 视频封面 -->
 				<div class="pic"
-					:style="{ backgroundImage: `url(${item.cover}@360w_288h.webp)` }">
+					:style="{ backgroundImage: `url(${IMG_CDN}${item.cover}@360w_288h.webp)` }">
 					<div class="stat">
 						<span><i>&#xe81a;</i>{{ item.cover_left_1_content_description }}</span>
 						<span><i>&#xe6ee;</i>{{ item.cover_left_2_content_description }}</span>
@@ -84,6 +84,7 @@ import { debounce } from '../../utils/debounce';
 import { ElMessage } from 'element-plus';
 import { fetchData } from '../../utils/fetchData';
 import { sleep } from '../../utils/common';
+import { IMG_CDN } from '../../config/img.config';
 
 const {
 	USER_RECOMMEND_VIDEO_PLATFORM,

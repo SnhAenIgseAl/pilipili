@@ -17,7 +17,7 @@
                 :business="item.item.business"
                 :content="item.item.source_content"
                 :root="item.item.root_reply_content"
-                :image="item.item.image">
+                :image="IMG_CDN + item.item.image">
             </MsgItemList>
             
         </el-timeline-item>
@@ -33,6 +33,7 @@ import { parseTime } from '../../../utils/parseTime';
 import BiliResType from '../../../type/BiliResType';
 import { ElMessage } from 'element-plus';
 import MsgItemList from '../components/MsgItemList.vue';
+import { IMG_CDN } from '../../../config/img.config';
 
 const atMeList: any = ref(null)
 const getAtMeList = async () => {

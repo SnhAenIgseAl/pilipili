@@ -4,7 +4,7 @@
 
         <div class="major-cover"
             :style="{ 
-                backgroundImage: `url(${props.archive.cover}@1000w.webp)` 
+                backgroundImage: `url(${IMG_CDN}${props.archive.cover}@1000w.webp)` 
             }">
         </div>
         
@@ -21,6 +21,7 @@
 </template>
 
 <script setup lang="ts">
+import { IMG_CDN } from '../../../config/img.config'
 
 const props = defineProps({
     archive: Object

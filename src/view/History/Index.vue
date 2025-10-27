@@ -7,7 +7,7 @@
             <RouterLink v-if="item.badge === ''" :to="`/video/${item.history.bvid}`">
                 <div class="item">
                     <div class="item-cover"
-                        :style="{ backgroundImage: `url(${item.cover}@400w.webp)` }"></div>
+                        :style="{ backgroundImage: `url(${IMG_CDN}${item.cover}@400w.webp)` }"></div>
 
                     <div class="item-info">
                         <div class="item-title">
@@ -34,7 +34,7 @@
             <RouterLink v-if="item.badge === '专栏'" :to="`/read/${item.history.oid}`">
                 <div class="item">
                     <div class="item-cover"
-                        :style="{ backgroundImage: `url(${item.covers[0]}@400w.webp)` }"></div>
+                        :style="{ backgroundImage: `url(${IMG_CDN}${item.covers[0]}@400w.webp)` }"></div>
 
                     <div class="item-info">
                         <div class="item-title">
@@ -65,6 +65,7 @@ import { ElMessage } from 'element-plus';
 import type BiliResType from '../../type/BiliResType'
 import { fetchData } from '../../utils/fetchData';
 import { parseTime } from '../../utils/parseTime';
+import { IMG_CDN } from '../../config/img.config';
 
 const historyList: any = ref(null)
 const getHistory = async () => {

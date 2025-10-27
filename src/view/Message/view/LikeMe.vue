@@ -17,7 +17,7 @@
                 :counts="item.counts"
                 :business="item.item.business"
                 :root="item.item.title"
-                :image="item.item.image">
+                :image="IMG_CDN + item.item.image">
             </MsgItemList>
             
         </el-timeline-item>
@@ -38,7 +38,7 @@
                 :counts="item.counts"
                 :business="item.item.business"
                 :root="item.item.title"
-                :image="item.item.image">
+                :image="IMG_CDN + item.item.image">
             </MsgItemList>
             
         </el-timeline-item>
@@ -54,7 +54,7 @@ import { parseTime } from '../../../utils/parseTime';
 import BiliResType from '../../../type/BiliResType';
 import { ElMessage } from 'element-plus';
 import MsgItemList from '../components/MsgItemList.vue';
-
+import { IMG_CDN } from '../../../config/img.config';
 
 // 获取点赞我的列表
 const likeList: any = ref(null)

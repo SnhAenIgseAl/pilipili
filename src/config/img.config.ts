@@ -1,0 +1,1 @@
+export const IMG_CDN = '//wsrv.nl/?url='
