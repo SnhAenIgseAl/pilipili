@@ -4,7 +4,9 @@
 
         <!-- 视频封面 -->
         <RouterLink :to="`/video/${item.bvid}`">
-            <div class="pic" :style="{ backgroundImage: `url(http:${item.pic}@300w.webp)` }">
+            <div class="pic" :style="{ 
+                backgroundImage: `url(http:${IMG_CDN}${item.pic}@300w.webp)` 
+            }">
                 <div class="stat">
                     <span><i>&#xe73d;</i>{{ item.play }}</span>
                     <span><i>&#xe644;</i>{{ item.like }}</span>
@@ -28,6 +30,7 @@
 </template>
 
 <script setup lang="ts">
+import { IMG_CDN } from '@/config/img.config';
 import { parseTime } from '../../../utils/parseTime';
 
 

@@ -1,6 +1,9 @@
 <template>
 
-    <div class="live-card" :style="{backgroundImage:  `url(${liveObj.content.live_play_info.cover})`}">
+    <div class="live-card" 
+    :style="{
+        backgroundImage: `url(${IMG_CDN}${liveObj.content.live_play_info.cover})`
+    }">
 
         <a :href="liveObj.content.live_play_info.link" target="_blank">
         <div class="live-info">
@@ -16,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+import { IMG_CDN } from '@/config/img.config';
 import { reactive } from 'vue'
 
 const props = defineProps({

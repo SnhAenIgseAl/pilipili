@@ -1,6 +1,7 @@
-import { createWebHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter, RouteRecordRaw } from 'vue-router'
 
-const routes = [
+
+const routes: RouteRecordRaw[] = [
 	{
 		path: '/',
 		redirect: '/index'
@@ -87,7 +88,6 @@ const routes = [
 	},
 	{
 		path: '/video/:bvid',
-		query: 'p',
 		component: () => import('@/view/Video/Index.vue')
 	},
 	{
