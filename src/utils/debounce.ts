@@ -7,7 +7,7 @@ export const debounce = function (callback: Function, wait: number) {
         }
 
         timeout = setTimeout(() => {
-            callback.apply(this, ...args)
+            callback.apply(this, args)
             timeout = null
         }, wait)
     }
