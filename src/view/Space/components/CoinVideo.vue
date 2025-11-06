@@ -6,9 +6,8 @@
 
     <div v-if="coinVideoList" class="video-list">
         <div v-for="(item, index) in coinVideoList" :key="index" 
-            class="video-item"
-            :style="{backgroundImage: `url(${item.pic}@600w.webp)`}">
-            
+            class="video-item">
+            <el-image :src="item.pic" fit="cover" lazy class="video-bg"/>
             <RouterLink :to="`/video/${item.bvid}`">
                 <div class="video-info">
                     <div class="video-title">{{ item.title }}</div>

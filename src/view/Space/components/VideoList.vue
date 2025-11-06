@@ -5,7 +5,7 @@
 
     <div v-if="props.videoList" class="video-list">
         <div v-for="(item, index) in props.videoList" :key="index" class="video-item"
-            :style="{ backgroundImage: `url(${item.cover}@600w.webp)` }">
+            :style="{ backgroundImage: `url(${IMG_CDN}${item.cover}@600w.webp)` }">
 
             <RouterLink :to="`/video/${item.bvid}`">
                 <div class="video-info">
@@ -26,6 +26,7 @@
 // import { ref, watch } from "vue";
 // import { useRoute } from "vue-router";
 // import { ElMessage } from "element-plus";
+import { IMG_CDN } from "../../../config/img.config";
 
 const props = defineProps({
     videoList: Object

@@ -4,8 +4,9 @@
     </el-divider>
 
     <div v-if="likeVideoList" class="video-list">
-        <div v-for="(item, index) in likeVideoList" :key="index" class="video-item"
-            :style="{ backgroundImage: `url(${item.pic}@600w.webp)` }">
+        <div v-for="(item, index) in likeVideoList" :key="index" class="video-item">
+
+            <el-image :src="item.pic" fit="cover" lazy class="video-bg"/>
 
             <RouterLink :to="`/video/${item.bvid}`">
                 <div class="video-info">

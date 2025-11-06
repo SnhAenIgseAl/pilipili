@@ -1,11 +1,11 @@
 <template>
 
 	<div v-if="spaceInfo.card" class="space-top">
-		<div class="top-photo" :style="{backgroundImage: `url(${spaceInfo.space?.l_img})`}"></div>
+		<el-image :src="spaceInfo.space?.l_img" fit="cover" class="top-photo"/>
 	
 		<div class="space-info">
 			<div class="face" 
-				:style="{backgroundImage: `url(${spaceInfo.card?.face}@160w.webp)`}">
+				:style="{backgroundImage: `url(${IMG_CDN}${spaceInfo.card?.face}@160w.webp)`}">
 				<img v-if="spaceInfo.card?.pendant.image" 
 					:src="`${spaceInfo.card?.pendant.image}@160w.webp`" class="pendant" />
 			</div>
@@ -74,6 +74,7 @@ import type BiliResType from '../../type/BiliResType';
 import Level from '../../components/Level.vue';
 import BasicInfo from './components/BasicInfo.vue'
 import { fetchData } from '../../utils/fetchData';
+import { IMG_CDN } from '../../config/img.config'
 
 
 // 获取空间信息

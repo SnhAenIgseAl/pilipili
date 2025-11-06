@@ -6,9 +6,9 @@
 
     <div v-if="topVideo || masterVideo" class="top-master">
 
-        <div v-if="topVideo" class="video-item top-video"
-            :style="{ backgroundImage: `url(${topVideo.pic})` }">
-            
+        <div v-if="topVideo" class="video-item top-video">
+            <el-image :src="topVideo.pic" fit="cover" lazy class="video-bg"/>
+
             <RouterLink :to="`/video/${topVideo.bvid}`">
                 <div class="video-info">
                     <div class="video-title">{{ topVideo.title }}</div>
@@ -21,8 +21,9 @@
         </div>
 
         <div v-if="masterVideo" v-for="(item, index) in masterVideo" :key="index" 
-            class="video-item master-video"
-            :style="{ backgroundImage: `url(${item.pic})` }">
+            class="video-item master-video">
+
+            <el-image :src="item.pic" fit="cover" lazy class="video-bg"/>
             
             <RouterLink :to="`/video/${topVideo.bvid}`">
                 <div class="video-info">
