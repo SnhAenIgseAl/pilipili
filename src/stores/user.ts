@@ -46,7 +46,7 @@ export const useUserStore = defineStore('user', () => {
         USER_COMMENT_CHILD_TXT.value = ''
         USER_DYNAMIC_TXT.value = ''
         JUMP_VIDEO_TIME.value = 0
-        window.location.href = '/index'
+        // window.location.href = '/index'
     }
 
     return { 

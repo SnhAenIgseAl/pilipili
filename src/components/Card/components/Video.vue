@@ -61,7 +61,7 @@ const props = defineProps({
 
     .major-info {
         position: absolute;
-        z-index: 9;
+        z-index: 2;
         bottom: 0px;
         width: 100%;
         padding: 8px 16px;
