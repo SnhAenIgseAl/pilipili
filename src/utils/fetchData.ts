@@ -5,8 +5,8 @@ export const fetchData = async (api: string, option: RequestInit | undefined, ca
     
     // 为什么我一年前写的代码会这么烂 😭😭😭
     try {
-        // api = api.replace('/api', 'https://pilipili.api.snhaenigseal.cn')
-        api = api.replace('/api', 'http://127.0.0.1:18848')
+        api = api.replace('/api', 'https://pilipili.api.snhaenigseal.cn')
+        // api = api.replace('/api', 'http://127.0.0.1:18848')
 
         const time = new Date().getTime()
         if (api.includes('?')) {
