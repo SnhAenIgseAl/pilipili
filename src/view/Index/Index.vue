@@ -13,7 +13,7 @@
 				<!-- <div class="pic"
 					:style="{ backgroundImage: `url(${IMG_CDN}${item.pic}@360w_288h.webp)` }"> -->
 				<div class="pic">
-					<image :src="`${item.pic}@720w_480h.webp)`" class="video-pic" />
+					<img :src="`${item.pic}@720w_480h.webp`" class="video-pic" />
 					<div class="stat">
 						<span><i>&#xe81a;</i>{{ item.stat.view }}</span>
 						<span><i>&#xe644;</i>{{ item.stat.like }}</span>
@@ -50,7 +50,7 @@
 				<!-- <div class="pic"
 					:style="{ backgroundImage: `url(${IMG_CDN}${item.cover}@360w_288h.webp)` }"> -->
 				<div class="pic">
-					<image :src="`${item.cover}@720w_480h.webp)`" class="video-pic" />
+					<img :src="`${item.cover}@720w_480h.webp`" class="video-pic" />
 					<div class="stat">
 						<span><i>&#xe81a;</i>{{ item.cover_left_1_content_description }}</span>
 						<span><i>&#xe6ee;</i>{{ item.cover_left_2_content_description }}</span>
