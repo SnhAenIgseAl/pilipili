@@ -76,6 +76,10 @@
                 <img :src="`${info.face}@80h.webp`" class="aside-face"/>
             </RouterLink>
 
+            <div v-if="isLogin" class="aside-item" @click="user.logout()">
+                <i>&#xe7cb;</i>
+            </div>
+
             <Setting />
         </div>
     </div>
@@ -89,6 +93,8 @@ import { ElMessage } from 'element-plus'
 import { fetchData } from '../../utils/fetchData';
 import type BiliResType from '../../type/BiliResType';
 import Setting from './components/Setting.vue'
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 
 
 
@@ -98,9 +104,16 @@ const {
     isLogin,
     info,
     baseline
-} = toRefs(user)
-const { getInfo } = user
-getInfo()
+} = storeToRefs(user)
+const {
+    getInfo
+} = user
+
+onMounted(() => {
+    if (isLogin.value) {
+        getInfo()
+    }
+})
 
 
 

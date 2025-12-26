@@ -37,6 +37,18 @@ export const useUserStore = defineStore('user', () => {
         })
     }
 
+    // 登出
+    async function logout() {
+        isLogin.value = false
+        info.value = {}
+        baseline.value = ''
+        USER_COMMENT_TXT.value = ''
+        USER_COMMENT_CHILD_TXT.value = ''
+        USER_DYNAMIC_TXT.value = ''
+        JUMP_VIDEO_TIME.value = 0
+        window.location.href = '/index'
+    }
+
     return { 
         isLogin,
         info,
@@ -45,7 +57,8 @@ export const useUserStore = defineStore('user', () => {
         USER_COMMENT_TXT,
         USER_COMMENT_CHILD_TXT,
         USER_DYNAMIC_TXT,
-        JUMP_VIDEO_TIME
+        JUMP_VIDEO_TIME,
+        logout
     }
 }, {
     persist: true
