@@ -2,10 +2,12 @@
     <div v-if="props.archive" class="major-video">
         <RouterLink :to="`/video/${props.archive.bvid}`">
 
-        <div class="major-cover"
+        <!-- <div class="major-cover"
             :style="{ 
                 backgroundImage: `url(${IMG_CDN}${props.archive.cover}@1000w.webp)` 
-            }">
+            }"> -->
+        <div class="major-cover">
+            <img :src="`${props.archive.cover}@1000w.webp`" class="major-cover_img" />
         </div>
         
         <div class="major-info">
@@ -39,14 +41,27 @@ const props = defineProps({
     overflow: hidden;
 
     .major-cover {
+        position: relative;
+        z-index: 1;
         width: auto;
         height: 100%;
         background-size: cover;
         background-position: center;
     }
 
+    .major-cover_img {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        object-fit: cover;
+    }
+
     .major-info {
         position: absolute;
+        z-index: 9;
         bottom: 0px;
         width: 100%;
         padding: 8px 16px;

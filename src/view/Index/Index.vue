@@ -10,8 +10,10 @@
 			<RouterLink :to="`/video/${item.bvid}`">
 
 				<!-- 视频封面 -->
-				<div class="pic"
-					:style="{ backgroundImage: `url(${IMG_CDN}${item.pic}@360w_288h.webp)` }">
+				<!-- <div class="pic"
+					:style="{ backgroundImage: `url(${IMG_CDN}${item.pic}@360w_288h.webp)` }"> -->
+				<div class="pic">
+					<image :src="`${item.pic}@720w_480h.webp)`" class="video-pic" />
 					<div class="stat">
 						<span><i>&#xe81a;</i>{{ item.stat.view }}</span>
 						<span><i>&#xe644;</i>{{ item.stat.like }}</span>
@@ -45,8 +47,10 @@
 			<RouterLink :to="`/video/${item.player_args.aid}`">
 
 				<!-- 视频封面 -->
-				<div class="pic"
-					:style="{ backgroundImage: `url(${IMG_CDN}${item.cover}@360w_288h.webp)` }">
+				<!-- <div class="pic"
+					:style="{ backgroundImage: `url(${IMG_CDN}${item.cover}@360w_288h.webp)` }"> -->
+				<div class="pic">
+					<image :src="`${item.cover}@720w_480h.webp)`" class="video-pic" />
 					<div class="stat">
 						<span><i>&#xe81a;</i>{{ item.cover_left_1_content_description }}</span>
 						<span><i>&#xe6ee;</i>{{ item.cover_left_2_content_description }}</span>
@@ -196,6 +200,8 @@ onUnmounted(() => {
 }
 
 .pic {
+	position: relative;
+	z-index: 1;
 	display: flex;
 	align-items: end;
 	width: 100%;
@@ -206,7 +212,19 @@ onUnmounted(() => {
 	background-position: center;
 }
 
+.video-pic {
+	position: absolute;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+}
+
 .stat {
+	position: absolute;
+	z-index: 9;
 	width: 100%;
 	padding: 12px;
 	color: #fff;
